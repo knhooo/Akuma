@@ -13,4 +13,17 @@ public class SelectButton : MonoBehaviour
     {
         Application.Quit();//게임 종료
     }
+
+    public void WarriorButton()//전사 선택
+    {
+        SceneManager.LoadScene("MainGame");//캐릭터 선택 씬 로드
+    }
+    public void WizardButton()//마법사 선택
+    {
+        SceneManager.LoadScene("MainGame");//캐릭터 선택 씬 로드
+    }
+    public void ArcherButton()//궁수 선택
+    {
+        SceneManager.LoadScene("MainGame");//캐릭터 선택 씬 로드
+    }
 }
