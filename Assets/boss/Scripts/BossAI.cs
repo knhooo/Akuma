@@ -1,76 +1,136 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BossAI : MonoBehaviour
 {
-    public Transform player;  // ÇÃ·¹ÀÌ¾îÀÇ Transform
-    public float followRange = 10f;  // ÇÃ·¹ÀÌ¾î¸¦ ÃßÀûÇÒ °Å¸®
-    public float attackRange = 2f;  // °ø°İ ¹üÀ§
+    public Transform player;  // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
+    public float followRange = 10f;  // í”Œë ˆì´ì–´ë¥¼ ì¶”ì í•  ê±°ë¦¬
+    public float attackRange = 1f;  // ê³µê²© ë²”ìœ„
 
-    private NavMeshAgent agent;  // NavMeshAgent
+    public float moveSpeed = 1f;  // ì´ë™ ì†ë„
+    public float stoppingDistance = 0.5f;  // ëª©í‘œì™€ì˜ ìµœì†Œ ê±°ë¦¬
+
+
+    private bool isHurt = false; // í”¼í•´ ìƒíƒœ ì²´í¬
+    private SpriteRenderer spriteRenderer;  // ìŠ¤í”„ë¼ì´íŠ¸ ë Œë”ëŸ¬
     private Animator animator;   // Animator
-    private bool isDead = false; // º¸½ºÀÇ »óÅÂ Ã¼Å©
+    private bool isDead = false; // ë³´ìŠ¤ì˜ ìƒíƒœ ì²´í¬
 
-    int health = 0;
+    int health = 100;  // ë³´ìŠ¤ ì²´ë ¥
 
     void Start()
     {
-        // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
-        agent = GetComponent<NavMeshAgent>();
+        // ìŠ¤í”„ë¼ì´íŠ¸ ë Œë”ëŸ¬ì™€ Animator ì´ˆê¸°í™”
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        animator.SetTrigger("Idle");  // ÃÊ±â ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Idle·Î ¼³Á¤
 
-        // ¼ÒÈ¯µÇÀÚ¸¶ÀÚ ÇÃ·¹ÀÌ¾î¸¦ ÃßÀûÇÏ±â ½ÃÀÛ
-        agent.SetDestination(player.position);  // ¼ÒÈ¯µÇÀÚ¸¶ÀÚ ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡·Î ÀÌµ¿
+        // ì´ˆê¸° ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •
+        animator.SetBool("isWalking", false);  // ì´ˆê¸° ìƒíƒœëŠ” ê±·ì§€ ì•ŠìŒ
+        animator.SetBool("isAttacking", false);  // ì´ˆê¸° ìƒíƒœëŠ” ê³µê²©í•˜ì§€ ì•ŠìŒ
+        animator.SetBool("isDead", false);  // ì´ˆê¸° ìƒíƒœëŠ” ì£½ì§€ ì•ŠìŒ
     }
 
     void Update()
     {
-        if (isDead) return; // º¸½º°¡ Á×¾úÀ¸¸é ´õ ÀÌ»ó Çàµ¿ÇÏÁö ¾ÊÀ½
+        if (isHurt) return;  // í”¼í•´ ì¤‘ì´ë©´ ì´ë™ & ê³µê²© ë©ˆì¶¤
 
-        // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸® °è»ê
+        if (isDead) return;  // ë³´ìŠ¤ê°€ ì£½ì—ˆìœ¼ë©´ ë” ì´ìƒ í–‰ë™í•˜ì§€ ì•ŠìŒ
+
+        // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬ ê³„ì‚°
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // ÇÃ·¹ÀÌ¾î¸¦ ÃßÀû
-        if (distanceToPlayer <= followRange)
+        // í”Œë ˆì´ì–´ë¥¼ ì¶”ì 
+        if (distanceToPlayer <= followRange && distanceToPlayer > stoppingDistance)
         {
-            agent.SetDestination(player.position);  // ÇÃ·¹ÀÌ¾î À§Ä¡·Î ÀÌµ¿
-            animator.SetBool("isWalking", true);  // °È´Â ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+            animator.SetBool("isWalking", true);  // ê±·ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+            MoveTowardsPlayer();  // í”Œë ˆì´ì–´ë¥¼ ë”°ë¼ ì´ë™
         }
         else
         {
-            animator.SetBool("isWalking", false);  // °È´Â ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·á
+            animator.SetBool("isWalking", false);  // ê±·ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ
         }
 
-        // °ø°İ ¹üÀ§¿¡ µé¾î°¬À» ¶§ °ø°İ ½ÃÀÛ
+        // ê³µê²© ë²”ìœ„ì— ë“¤ì–´ê°”ì„ ë•Œ ê³µê²© ì‹œì‘
         if (distanceToPlayer <= attackRange)
         {
-            animator.SetTrigger("Attack");  // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+            animator.SetBool("isAttacking", true);  // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+        }
+        else
+        {
+            animator.SetBool("isAttacking", false);  // ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ
         }
 
-        // º¸½º°¡ ÇÇÇØ¸¦ ÀÔ¾úÀ» ¶§
-        if (Input.GetKeyDown(KeyCode.H)) // ¿¹½Ã·Î HÅ°¸¦ ´©¸£¸é ÇÇÇØ ÀÔÀ½
+        // ë³´ìŠ¤ê°€ í”¼í•´ë¥¼ ì…ì—ˆì„ ë•Œ
+        if (Input.GetKeyDown(KeyCode.Space)) // ì˜ˆì‹œë¡œ Spaceí‚¤ë¥¼ ëˆ„ë¥´ë©´ í”¼í•´ ì…ìŒ
         {
-            animator.SetTrigger("Hurt");  // ÇÇÇØ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+            Debug.Log("Hurt Trigger ì‹¤í–‰ë¨");
+            StartCoroutine(PlayHurtAnimation());
         }
 
-        // º¸½º°¡ Á×¾úÀ» ¶§
-        if (health <= 0)  // Ã¼·ÂÀÌ 0 ÀÌÇÏÀÏ °æ¿ì Á×À½ Ã³¸®
+        // ë³´ìŠ¤ê°€ ì£½ì—ˆì„ ë•Œ
+        if (health <= 0)
         {
-            Die();
+            Die();  // ì£½ìŒ ì²˜ë¦¬
         }
 
-        // ¼ÒÈ¯ ÈÄ¿¡µµ °è¼ÓÇØ¼­ ÇÃ·¹ÀÌ¾î¸¦ ÃßÀû
-        if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        // ë³´ìŠ¤ê°€ í”Œë ˆì´ì–´ë¥¼ ë”°ë¼ê°€ë©´ì„œ ì¢Œìš° ë°˜ì „ ì²˜ë¦¬
+        if (player.position.x < transform.position.x)
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡·Î °è¼Ó ÃßÀû
-            agent.SetDestination(player.position);
+            // í”Œë ˆì´ì–´ê°€ ë³´ìŠ¤ì˜ ì˜¤ë¥¸ìª½ì— ìˆìœ¼ë©´ ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ë°˜ì „
+            spriteRenderer.flipX = false;
+        }
+        else if (player.position.x > transform.position.x)
+        {
+            // í”Œë ˆì´ì–´ê°€ ë³´ìŠ¤ì˜ ì™¼ìª½ì— ìˆìœ¼ë©´ ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ì •ìƒì ìœ¼ë¡œ ìœ ì§€
+            spriteRenderer.flipX = true;
         }
     }
+
+    void MoveTowardsPlayer()
+    {
+        // í”Œë ˆì´ì–´ ë°©í–¥ìœ¼ë¡œ ì´ë™
+        Vector3 direction = (player.position - transform.position).normalized;
+
+        // transformì„ ì§ì ‘ ìˆ˜ì •í•˜ì—¬ ì´ë™
+        transform.position += direction * moveSpeed * Time.deltaTime;
+    }
+    public void TakeDamage(int damage)
+    {
+        if (isHurt) return; // ì´ë¯¸ í”¼í•´ ìƒíƒœë©´ ì‹¤í–‰ ì•ˆ í•¨
+
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+            return;
+        }
+
+        StartCoroutine(PlayHurtAnimation());
+    }
+
+    private IEnumerator PlayHurtAnimation()
+    {
+        isHurt = true;  // ë³´ìŠ¤ë¥¼ í”¼í•´ ìƒíƒœë¡œ ì„¤ì •
+        animator.SetTrigger("HurtTrigger");  // í”¼í•´ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+
+        // 1ï¸. ì´ë™ ë©ˆì¶¤
+        float originalSpeed = moveSpeed;
+        moveSpeed = 0f;
+
+        // 2ï¸. ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ ì‹œê°„ë§Œí¼ ëŒ€ê¸°
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        // 3ï¸. ì´ë™ ì¬ê°œ
+        moveSpeed = originalSpeed;
+        isHurt = false;
+    }
+
     void Die()
     {
-        isDead = true;
-        animator.SetTrigger("Death");  // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
-        agent.isStopped = true;  // Á×À¸¸é ÀÌµ¿ ¸ØÃß±â
+        isDead = true;  // ë³´ìŠ¤ ì£½ìŒ ìƒíƒœë¡œ ì„¤ì •
+        animator.SetBool("isDead", true);  // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+
+        // ì£½ì€ í›„ ì²˜ë¦¬ (ì˜ˆì‹œë¡œ ë³´ìŠ¤ë¥¼ ë¹„í™œì„±í™”)
+        Destroy(gameObject, 2f);  // 2ì´ˆ í›„ ë³´ìŠ¤ ê°ì²´ ì œê±° (ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ í›„)
     }
 }
