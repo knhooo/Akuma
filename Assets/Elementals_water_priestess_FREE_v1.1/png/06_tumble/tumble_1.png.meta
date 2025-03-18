@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tumble_1_0: -6000205424024557809
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
