@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
                 moveSpeed = 5f;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 if (transform.localScale.x == 1f)
                 {
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
                 moveSpeed = 5f;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 if (transform.localScale.x == 1f)
                 {
@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
             moveSpeed = 5f;
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButton(0))
         {
             if(transform.localScale.x==1f)
             {
