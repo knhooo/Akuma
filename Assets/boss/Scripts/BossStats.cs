@@ -9,14 +9,12 @@ public class BossStats : MonoBehaviour
     public float defense = 5f;      // 보스의 방어력 (임의로 추가할 수 있음)
     public bool isDead = false;     // 보스가 죽었는지 확인하는 변수
 
-    private NavMeshAgent agent;     // NavMeshAgent
     private Animator animator;      // Animator
 
     void Start()
     {
         // 초기 체력 설정
         currentHealth = maxHealth;
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
     }
 

@@ -236,7 +236,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      demon_cleave_12_0: -8794925151841889587
+      demon_cleave_12_1: -8083789462139286189
+      demon_cleave_12_2: 1603027281725500559
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

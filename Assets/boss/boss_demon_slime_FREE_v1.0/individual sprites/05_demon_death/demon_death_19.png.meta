@@ -211,7 +211,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      demon_death_19_0: 250343601184457805
+      demon_death_19_1: 4180143359444513867
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
