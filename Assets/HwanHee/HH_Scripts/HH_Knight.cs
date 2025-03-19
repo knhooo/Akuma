@@ -19,6 +19,7 @@ public class HH_Knight : MonoBehaviour
     private Dir dir = Dir.right;
     bool isAttacking = false;
     bool isDefending = false;
+    bool canTakeDamage = true;
 
     enum KnightState { Idle, Run, Attack, Defend, TakeDmg, Die }
     KnightState state = KnightState.Idle;
@@ -144,43 +145,35 @@ public class HH_Knight : MonoBehaviour
     private void DIE()
     {
         state = KnightState.Die;
-        anim.SetBool("Die", true);
+        anim.SetTrigger("Die");
     }
 
     public void TakeDamage(int dmg)
     {
-        if (state == KnightState.Defend || state == KnightState.Defend)
+        if (state == KnightState.Defend || state == KnightState.Defend || !canTakeDamage)
             return;
         Hp -= dmg;
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.CompareTag("Monster"))
-        //{
-        //    if (state == KnightState.Defend || state == KnightState.Defend)
-        //        return;
-        //}
-    }
-
-    // 애니메이션 이벤트용 함수
-    private void ActivateSword()
-    {
-        sword.SetActive(true);
-
-        if (dir == Dir.left)
+        if (collision.CompareTag("Monster") && canTakeDamage)
         {
-            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
-        }
-        else
-        {
-            sword.transform.rotation = Quaternion.Euler(0, 0, 0);
+            TakeDamage();
         }
     }
 
-    private void InctivateSword()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        sword.SetActive(false);
+        if (collision.CompareTag("Monster") && canTakeDamage)
+        {
+            TakeDamage();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        TakeDamageFinish();
     }
 
     private void ActivateSheild()
@@ -199,11 +192,43 @@ public class HH_Knight : MonoBehaviour
         }
     }
 
-
-    private void AnimationStop()
+    private void TakeDamage()
     {
-        anim.speed = 0f;
+        if (state == KnightState.Defend || state == KnightState.Defend)
+            return;
+
+        Debug.Log("TakeDamage");
+        state = KnightState.TakeDmg;
+        anim.SetBool("TakeDmg", true);
+        canTakeDamage = false;
     }
+
+    private void TakeDamageFinish()
+    {
+        anim.SetBool("TakeDmg", false);
+        canTakeDamage = true;
+        state = KnightState.Idle;
+    }
+
+    // 애니메이션 이벤트용 함수
+    private void ActivateSword()
+    {
+        sword.SetActive(true);
+
+        if (dir == Dir.left)
+        {
+            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        else
+        {
+            sword.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    private void InctivateSword() { sword.SetActive(false); }
+
+
+    private void AnimationStop() { anim.speed = 0f; }
 
     private void AttackOver()
     {
