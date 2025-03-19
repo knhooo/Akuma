@@ -1,5 +1,7 @@
 using System.Collections;
 using System.ComponentModel.Design.Serialization;
+using TMPro.SpriteAssetUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HH_Knight : MonoBehaviour
@@ -7,131 +9,161 @@ public class HH_Knight : MonoBehaviour
     [SerializeField]
     private GameObject sword;
     [SerializeField]
+    private GameObject shield;
+    [SerializeField]
     private int Hp = 100;
     [SerializeField]
     private int Attack = 10;
 
     enum Dir { left, right }
     private Dir dir = Dir.right;
+    bool isAttacking = false;
+    bool isDefending = false;
 
-    enum KnightState { Idle, Run, Attack, Defend, Die }
+    enum KnightState { Idle, Run, Attack, Defend, TakeDmg, Die }
     KnightState state = KnightState.Idle;
 
     private SpriteRenderer spriteRenderer;
-    private Animator ani;
-    private float nextAttackTime = 0f;
-    private float attackCooldown = 0.11f;
+    private Animator anim;
+
+    private Rigidbody2D rigid;
+    private Vector2 inputVec;
 
     [SerializeField]
     private int speed = 3;
 
-    private void Start()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        ani = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if (Hp <= 0)
-        {
-            DIE();
-            return;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            if (Time.time >= nextAttackTime)
-            {
-                nextAttackTime = Time.time + attackCooldown;
-            }
-
-            if (state != KnightState.Attack)
-            {
-                state = KnightState.Attack;
-            }
-        }
-
-        else if (Input.GetMouseButtonUp(0) && state == KnightState.Attack)
-        {
-            state = KnightState.Idle;
-            ani.SetBool("Attack", false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (state != KnightState.Defend)
-            {
-                state = KnightState.Defend;
-            }
-        }
-
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && state == KnightState.Defend)
-        {
-            ani.speed = 1f;
-            state = KnightState.Idle;
-            ani.SetBool("Defend", false);
-        }
-
-        switch (state)
-        {
-            case KnightState.Idle:
-                ani.SetBool("Run", false);
-                break;
-            case KnightState.Run:
-                ani.SetBool("Run", true);
-                break;
-            case KnightState.Attack:
-                ani.SetBool("Attack", true);
-                break;
-            case KnightState.Defend:
-                ani.SetBool("Defend", true);
-                break;
-        }
+        HandleKnightInput();
     }
 
     private void FixedUpdate()
     {
-        float moveX = speed * Time.deltaTime * Input.GetAxisRaw("Horizontal");
-        float moveY = speed * Time.deltaTime * Input.GetAxisRaw("Vertical");
-
-        if (moveX > 0.01f)
+        if (state == KnightState.Die || state == KnightState.Defend)
         {
-            if (spriteRenderer.flipX == true)
-            {
-                dir = Dir.right;
-                spriteRenderer.flipX = false;
-            }
+            return;
         }
 
-        else if (moveX < -0.01f)
+        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
+    }
+
+    private void LateUpdate()
+    {
+        if (inputVec.x != 0)
         {
-            if (spriteRenderer.flipX == false)
-            {
-                dir = Dir.left;
-                sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
-                spriteRenderer.flipX = true;
-            }
+            dir = Dir.left;
+            spriteRenderer.flipX = inputVec.x < 0;
+
+            if (isDefending && shield != null)
+                shield.transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+
+        if (!spriteRenderer.flipX)
+        {
+            dir = Dir.right;
+
+            if (isDefending && shield != null)
+                shield.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        }
+
+        if (state == KnightState.Die || state == KnightState.Defend)
+        {
+            return;
+        }
+
+        anim.SetFloat("Speed", inputVec.magnitude);
+        if (inputVec.magnitude != 0)
+            state = KnightState.Run;
+        else
+            state = KnightState.Idle;
+
+    }
+
+    private void HandleKnightInput()
+    {
+        if (state == KnightState.Die)
+            return;
+
+        inputVec.x = Input.GetAxisRaw("Horizontal");
+        inputVec.y = Input.GetAxisRaw("Vertical");
+
+        // 방어 끝
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            anim.speed = 1f;
+            state = KnightState.Idle;
+            anim.SetBool("Defend", false);
+            shield.SetActive(false);
+            isDefending = false;
+        }
+
+        if (state != KnightState.Defend && anim.speed == 0)
+        {
+            anim.speed = 1f;
         }
 
         if (state == KnightState.Defend)
             return;
 
-        if (moveX != 0 || moveY != 0)
-
+        // 좌클릭 -> 공격
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
-            state = KnightState.Run;
+            if (state != KnightState.Attack)
+            {
+                isAttacking = true;
+                state = KnightState.Attack;
+                anim.SetBool("Attack", true);
+            }
         }
 
-        else
+        // 좌쉬프트 -> 방어
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            state = KnightState.Idle;
-        }
+            if (state != KnightState.Defend)
+            {
+                ActivateSheild();
+                state = KnightState.Defend;
+                anim.SetBool("Defend", true);
+                shield.SetActive(true);
+                if (anim.GetBool("Attack"))
+                    anim.SetBool("Attack", false);
 
-        transform.Translate(moveX, moveY, 0);
+            }
+        }
     }
 
+    private void DIE()
+    {
+        state = KnightState.Die;
+        anim.SetBool("Die", true);
+    }
 
+    public void TakeDamage(int dmg)
+    {
+        if (state == KnightState.Defend || state == KnightState.Defend)
+            return;
+        Hp -= dmg;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        //if (collision.CompareTag("Monster"))
+        //{
+        //    if (state == KnightState.Defend || state == KnightState.Defend)
+        //        return;
+        //}
+    }
+
+    // 애니메이션 이벤트용 함수
     private void ActivateSword()
     {
         sword.SetActive(true);
@@ -151,14 +183,32 @@ public class HH_Knight : MonoBehaviour
         sword.SetActive(false);
     }
 
-    private void AnimationStop()
+    private void ActivateSheild()
     {
-        ani.speed = 0f;
+        isDefending = true;
+
+        shield.SetActive(true);
+
+        if (dir == Dir.left)
+        {
+            shield.transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        else
+        {
+            shield.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 
-    private void DIE()
+
+    private void AnimationStop()
     {
-        state = KnightState.Die;
-        ani.SetBool("Die", true);
+        anim.speed = 0f;
+    }
+
+    private void AttackOver()
+    {
+        isAttacking = false;
+        state = KnightState.Idle;
+        anim.SetBool("Attack", false);
     }
 }
