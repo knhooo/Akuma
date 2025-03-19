@@ -9,11 +9,10 @@ public class HH_Knight : MonoBehaviour
     [SerializeField]
     private GameObject sword;
     [SerializeField]
-    private GameObject shield;
+    private int hp = 100;
     [SerializeField]
-    private int Hp = 100;
-    [SerializeField]
-    private int Attack = 10;
+    private int attack = 10;
+    public int Attack { get { return attack; } }
 
     enum Dir { left, right }
     private Dir dir = Dir.right;
@@ -26,7 +25,6 @@ public class HH_Knight : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
-
     private Rigidbody2D rigid;
     private Vector2 inputVec;
 
@@ -42,6 +40,12 @@ public class HH_Knight : MonoBehaviour
 
     private void Update()
     {
+        if(state == KnightState.Die) 
+        {
+            DIE();
+            return;                
+        }
+
         HandleKnightInput();
     }
 
@@ -63,16 +67,12 @@ public class HH_Knight : MonoBehaviour
             dir = Dir.left;
             spriteRenderer.flipX = inputVec.x < 0;
 
-            if (isDefending && shield != null)
-                shield.transform.rotation = Quaternion.Euler(0, 180f, 0);
         }
 
         if (!spriteRenderer.flipX)
         {
             dir = Dir.right;
 
-            if (isDefending && shield != null)
-                shield.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         }
 
@@ -103,7 +103,6 @@ public class HH_Knight : MonoBehaviour
             anim.speed = 1f;
             state = KnightState.Idle;
             anim.SetBool("Defend", false);
-            shield.SetActive(false);
             isDefending = false;
         }
 
@@ -131,10 +130,8 @@ public class HH_Knight : MonoBehaviour
         {
             if (state != KnightState.Defend)
             {
-                ActivateSheild();
                 state = KnightState.Defend;
                 anim.SetBool("Defend", true);
-                shield.SetActive(true);
                 if (anim.GetBool("Attack"))
                     anim.SetBool("Attack", false);
 
@@ -142,62 +139,53 @@ public class HH_Knight : MonoBehaviour
         }
     }
 
+
     private void DIE()
     {
         state = KnightState.Die;
-        anim.SetTrigger("Die");
+        anim.SetTrigger("Die"); 
     }
 
     public void TakeDamage(int dmg)
     {
         if (state == KnightState.Defend || state == KnightState.Defend || !canTakeDamage)
             return;
-        Hp -= dmg;
+
+        SetTakeDamage();
+
+        hp -= dmg;
+        if(hp <= 0) 
+            state = KnightState.Die;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster") && canTakeDamage)
-        {
-            SetTakeDamage();
-        }
+        //if (collision.CompareTag("Monster") && canTakeDamage)
+        //{
+        //    SetTakeDamage();
+        //}
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster") && canTakeDamage)
-        {
-            SetTakeDamage();
-        }
+        //if (collision.CompareTag("Monster") && canTakeDamage)
+        //{
+        //    SetTakeDamage();
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster"))
-        {
-            TakeDamageFinish();
-        }
+        //if (collision.CompareTag("Monster"))
+        //{
+        //    TakeDamageFinish();
+        //}
     }
 
-    private void ActivateSheild()
-    {
-        isDefending = true;
-
-        shield.SetActive(true);
-
-        if (dir == Dir.left)
-        {
-            shield.transform.rotation = Quaternion.Euler(0, 180f, 0);
-        }
-        else
-        {
-            shield.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-    }
 
     private void SetTakeDamage()
     {
-        if (state == KnightState.Defend || state == KnightState.Defend)
+        if (state == KnightState.Defend || state == KnightState.Die)
             return;
 
         state = KnightState.TakeDmg;
@@ -235,6 +223,7 @@ public class HH_Knight : MonoBehaviour
 
 
     private void AnimationStop() { anim.speed = 0f; }
+
 
     private void AttackOver()
     {
