@@ -4,35 +4,30 @@ public class ArcherAnim : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody2D rb;
-    public float moveSpeed = 5f;
-    private bool isAttacking = false;
+    public float moveSpeed = 5f; // 이동 속도
+    public bool allowVerticalMovement = true; // 상하 이동 여부
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0; // 중력 제거 (Y축 이동 가능하도록 설정)
     }
 
     void Update()
     {
         HandleMovement();
         HandleAttackInput();
-        HandleIdleState();
     }
 
     void HandleMovement()
     {
         float moveX = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
+        float moveY = allowVerticalMovement ? Input.GetAxis("Vertical") : 0f; // 위/아래 입력 받기
 
-        if (moveX != 0)
-        {
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
+        rb.linearVelocity = new Vector2(moveX * moveSpeed, moveY * moveSpeed); // X, Y 이동
+
+        animator.SetBool("isMoving", moveX != 0 || moveY != 0);
 
         if (moveX > 0)
             transform.localScale = new Vector3(1, 1, 1);
@@ -42,32 +37,13 @@ public class ArcherAnim : MonoBehaviour
 
     void HandleAttackInput()
     {
-        if (Input.GetMouseButtonDown(0)) // Left Mouse Click for First Attack
+        if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("1Attack");
-            isAttacking = true;
         }
-        else if (Input.GetMouseButtonDown(1)) // Right Mouse Click for Second Attack
+        else if (Input.GetMouseButtonDown(1))
         {
             animator.SetTrigger("2Attack");
-            isAttacking = true;
         }
-    }
-
-    void HandleIdleState()
-    {
-        if (!isAttacking)
-        {
-            animator.ResetTrigger("1Attack");
-            animator.ResetTrigger("2Attack");
-        }
-    }
-
-    // Call this method in animation event to reset attack state after animation completes
-    public void ResetAttack()
-    {
-        isAttacking = false;
-        animator.ResetTrigger("1Attack");
-        animator.ResetTrigger("2Attack");
     }
 }
