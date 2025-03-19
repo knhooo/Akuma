@@ -159,7 +159,7 @@ public class HH_Knight : MonoBehaviour
     {
         if (collision.CompareTag("Monster") && canTakeDamage)
         {
-            TakeDamage();
+            SetTakeDamage();
         }
     }
 
@@ -167,13 +167,16 @@ public class HH_Knight : MonoBehaviour
     {
         if (collision.CompareTag("Monster") && canTakeDamage)
         {
-            TakeDamage();
+            SetTakeDamage();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        TakeDamageFinish();
+        if (collision.CompareTag("Monster"))
+        {
+            TakeDamageFinish();
+        }
     }
 
     private void ActivateSheild()
@@ -192,12 +195,11 @@ public class HH_Knight : MonoBehaviour
         }
     }
 
-    private void TakeDamage()
+    private void SetTakeDamage()
     {
         if (state == KnightState.Defend || state == KnightState.Defend)
             return;
 
-        Debug.Log("TakeDamage");
         state = KnightState.TakeDmg;
         anim.SetBool("TakeDmg", true);
         canTakeDamage = false;
@@ -205,6 +207,10 @@ public class HH_Knight : MonoBehaviour
 
     private void TakeDamageFinish()
     {
+        if (canTakeDamage)
+            return;
+
+        Debug.Log("DamageFinish");
         anim.SetBool("TakeDmg", false);
         canTakeDamage = true;
         state = KnightState.Idle;
