@@ -1,22 +1,24 @@
-using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
+
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
-public class HH_Mushroom : MonoBehaviour
+public class HH_Monster : MonoBehaviour
 {
-    enum MSMState { Run, Attack, TakeHit, Death }
-    enum Dir { left, right }
+    enum State { Run, Attack, TakeHit, Death }
 
     private Rigidbody2D rigid;
     private SpriteRenderer spriteRenderer;
     private Animator anim;
 
     private GameObject player;
-    MSMState state = MSMState.Run;
-    private Dir dir = Dir.right;
+    State state = State.Run;
     float distanceToPlayer;
     bool isAttackOver = true;
     bool isTakeHitOver = true;
+    Vector3 dir;
+    bool isCollisionStay = false;
+    float knockBack = 0.3f;
 
     [SerializeField]
     int hp = 50;
@@ -24,8 +26,6 @@ public class HH_Mushroom : MonoBehaviour
     int attack = 10;
     [SerializeField]
     float speed = 2;
-    [SerializeField]
-    float chaseRange = 10f;
     [SerializeField]
     float attackRange = 2f;
 
@@ -43,20 +43,20 @@ public class HH_Mushroom : MonoBehaviour
 
     private void Update()
     {
-        if (state == MSMState.Death)
+        if (state == State.Death)
             return;
 
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         switch (state)
         {
-            case MSMState.Run:
+            case State.Run:
                 Run();
                 break;
-            case MSMState.Attack:
+            case State.Attack:
                 Attack();
                 break;
-            case MSMState.TakeHit:
+            case State.TakeHit:
                 TakeHit();
                 break;
             default:
@@ -66,18 +66,58 @@ public class HH_Mushroom : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (state != MSMState.Run)
-            return;
-        Rigidbody2D _player = player.GetComponent<Rigidbody2D>();
+        if (isCollisionStay)
+        {
+            HH_Knight _player = player.GetComponent<HH_Knight>();
+            transform.Translate(-dir * _player.Speed * Time.fixedDeltaTime);
+        }
 
-        Vector2 dirVec = _player.position - rigid.position;
-        Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+        if (state != State.Run || state == State.TakeHit)
+            return;
+
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.fixedDeltaTime);
+            dir = Vector3.Normalize(player.transform.position - transform.position);
+        }
     }
 
     private void LateUpdate()
     {
         spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isCollisionStay = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isCollisionStay = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (state == State.Death)
+            return;
+
+        if (collision.CompareTag("PlayerAttack"))
+        {
+            isAttackOver = true;
+            isTakeHitOver = false;
+            hp -= player.GetComponent<HH_Knight>().Attack;
+            state = State.TakeHit;
+            anim.SetBool("Run", false);
+            anim.SetBool("Attack", false);
+            anim.SetBool("TakeHit", true);
+        }
     }
 
     private void Run()
@@ -88,7 +128,7 @@ public class HH_Mushroom : MonoBehaviour
             isAttackOver = false;
             anim.SetBool("Run", false);
             anim.SetBool("Attack", true);
-            state = MSMState.Attack;
+            state = State.Attack;
         }
     }
 
@@ -106,7 +146,7 @@ public class HH_Mushroom : MonoBehaviour
         {
             anim.SetBool("Attack", false);
             anim.SetBool("Run", true);
-            state = MSMState.Run;
+            state = State.Run;
         }
     }
 
@@ -116,7 +156,7 @@ public class HH_Mushroom : MonoBehaviour
         {
             anim.SetBool("TakeHit", false);
             anim.SetBool("Run", true);
-            state = MSMState.Run;
+            state = State.Run;
             return;
         }
 
@@ -124,31 +164,24 @@ public class HH_Mushroom : MonoBehaviour
         {
             anim.SetBool("TakeHit", false);
             anim.SetBool("Death", true);
-            state = MSMState.Death;
+            state = State.Death;
         }
+
+        // 뒤로 밀려남
+        if (isCollisionStay)
+        {
+            HH_Knight _player = player.GetComponent<HH_Knight>();
+            transform.Translate(-dir * (knockBack + _player.Speed) * Time.fixedDeltaTime);
+        }
+
+        else
+            transform.Translate(-dir * knockBack * Time.fixedDeltaTime);
 
         if (isTakeHitOver)
         {
-            state = MSMState.Run;
+            state = State.Run;
             anim.SetBool("TakeHit", false);
             anim.SetBool("Run", true);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (state == MSMState.Death)
-            return;
-
-        if (collision.CompareTag("PlayerAttack"))
-        {
-            isAttackOver = true;
-            isTakeHitOver = false;
-            hp -= player.GetComponent<HH_Knight>().Attack;
-            state = MSMState.TakeHit;
-            anim.SetBool("Run", false);
-            anim.SetBool("Attack", false);
-            anim.SetBool("TakeHit", true);
         }
     }
 
@@ -161,15 +194,16 @@ public class HH_Mushroom : MonoBehaviour
         }
     }
 
-    private void DestroyMushroom()
-    {
-        Destroy(gameObject);
-    }
-
     private void SetAttcakOver()
     {
         isAttackOver = true;
     }
+
+    private void DestroyMonster()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     private void SetTakeHitOver()
     {

@@ -239,7 +239,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -285,11 +285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
---- !u!4 &792863546 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 888828246329416660, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-  m_PrefabInstance: {fileID: 1085699573}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1085699573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -360,24 +355,40 @@ PrefabInstance:
       objectReference: {fileID: 1237028363}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: spellCount
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: attackRange
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: spellPrefab
       value: 
-      objectReference: {fileID: 3767532921590014603, guid: 2ee4db9bc1b9ada47b261ae02c2029a6, type: 3}
+      objectReference: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: redDotPrefab
+      value: 
+      objectReference: {fileID: 2157965776959129687, guid: ad678a7e7d47b8a4a8fd1bf9ec412ca0, type: 3}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: bossSpellPrefab
+      value: 
+      objectReference: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: spellSpawnPoint
       value: 
-      objectReference: {fileID: 792863546}
+      objectReference: {fileID: 623298745}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: stoppingDistance
-      value: 1
+      value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: warningEffectPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: explosionEffectPrefab
+      value: 
+      objectReference: {fileID: 1337298340183597327, guid: 44bb5851a82e2b145bd9046cca26f3a1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
