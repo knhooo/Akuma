@@ -15,7 +15,6 @@ public class HH_Mushroom : MonoBehaviour
     MSMState state = MSMState.Run;
     private Dir dir = Dir.right;
     float distanceToPlayer;
-    bool isLookAround = true;
     bool isAttackOver = true;
     bool isTakeHitOver = true;
 
@@ -81,7 +80,6 @@ public class HH_Mushroom : MonoBehaviour
         spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
     }
 
-
     private void Run()
     {
         // 공격범위 들어올 경우
@@ -91,14 +89,6 @@ public class HH_Mushroom : MonoBehaviour
             anim.SetBool("Run", false);
             anim.SetBool("Attack", true);
             state = MSMState.Attack;
-        }
-
-        // 멀어졌을 경우
-        if (distanceToPlayer > chaseRange)
-        {
-            anim.SetBool("Run", false);
-            anim.SetBool("Idle", true);
-            isLookAround = true;
         }
     }
 
@@ -125,9 +115,8 @@ public class HH_Mushroom : MonoBehaviour
         if (!player)
         {
             anim.SetBool("TakeHit", false);
-            anim.SetBool("Idle", true);
+            anim.SetBool("Run", true);
             state = MSMState.Run;
-            isLookAround = true;
             return;
         }
 
@@ -150,19 +139,18 @@ public class HH_Mushroom : MonoBehaviour
     {
         if (state == MSMState.Death)
             return;
+
         if (collision.CompareTag("PlayerAttack"))
         {
             isAttackOver = true;
             isTakeHitOver = false;
             hp -= player.GetComponent<HH_Knight>().Attack;
             state = MSMState.TakeHit;
-            anim.SetBool("Idle", false);
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
             anim.SetBool("TakeHit", true);
         }
     }
-
 
     private void AttackPlayer()
     {
