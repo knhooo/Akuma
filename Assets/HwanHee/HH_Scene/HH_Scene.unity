@@ -219,17 +219,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4101652942557307866, guid: e895804e2bfb67640899240228f4b89f, type: 3}
+      propertyPath: attack
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5534838947949792760, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_Name
       value: Knight
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.8
+      value: -1.11
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.09
+      value: 1.74
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.z

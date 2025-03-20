@@ -40,13 +40,21 @@ public class HH_Knight : MonoBehaviour
 
     private void Update()
     {
-        if(state == KnightState.Die) 
+        if (state == KnightState.Die)
         {
-            DIE();
-            return;                
+            return;
         }
 
         HandleKnightInput();
+
+        if (dir == Dir.left)
+        {
+            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        else
+        {
+            sword.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -62,31 +70,27 @@ public class HH_Knight : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (state == KnightState.Die)
+            return;
         if (inputVec.x != 0)
         {
             dir = Dir.left;
             spriteRenderer.flipX = inputVec.x < 0;
-
         }
 
         if (!spriteRenderer.flipX)
         {
             dir = Dir.right;
-
-
         }
 
-        if (state == KnightState.Die || state == KnightState.Defend)
-        {
+        if (state == KnightState.Defend)
             return;
-        }
 
         anim.SetFloat("Speed", inputVec.magnitude);
         if (inputVec.magnitude != 0)
             state = KnightState.Run;
         else
             state = KnightState.Idle;
-
     }
 
     private void HandleKnightInput()
@@ -134,16 +138,14 @@ public class HH_Knight : MonoBehaviour
                 anim.SetBool("Defend", true);
                 if (anim.GetBool("Attack"))
                     anim.SetBool("Attack", false);
-
             }
         }
     }
 
-
     private void DIE()
     {
         state = KnightState.Die;
-        anim.SetTrigger("Die"); 
+        anim.SetTrigger("Die");
     }
 
     public void TakeDamage(int dmg)
@@ -151,46 +153,13 @@ public class HH_Knight : MonoBehaviour
         if (state == KnightState.Defend || state == KnightState.Defend || !canTakeDamage)
             return;
 
-        SetTakeDamage();
-
-        hp -= dmg;
-        if(hp <= 0) 
-            state = KnightState.Die;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Monster") && canTakeDamage)
-        //{
-        //    SetTakeDamage();
-        //}
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Monster") && canTakeDamage)
-        //{
-        //    SetTakeDamage();
-        //}
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Monster"))
-        //{
-        //    TakeDamageFinish();
-        //}
-    }
-
-
-    private void SetTakeDamage()
-    {
-        if (state == KnightState.Defend || state == KnightState.Die)
-            return;
-
         state = KnightState.TakeDmg;
         anim.SetBool("TakeDmg", true);
         canTakeDamage = false;
+
+        hp -= dmg;
+        if (hp <= 0)
+            DIE();
     }
 
     private void TakeDamageFinish()
