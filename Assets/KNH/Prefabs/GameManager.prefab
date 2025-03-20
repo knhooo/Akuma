@@ -47,6 +47,7 @@ MonoBehaviour:
   playerClass: 0
   playerPrefabs:
   - {fileID: 5534838947949792760, guid: e895804e2bfb67640899240228f4b89f, type: 3}
+  - {fileID: 7931621950136777158, guid: 5fd9a502faeae8c40865190e674f21ab, type: 3}
   player: {fileID: 0}
   areaPrefab: {fileID: 6613276042633818117, guid: 62cf06e0204548d4485307471b8c9d36, type: 3}
   mainCamera: {fileID: 0}

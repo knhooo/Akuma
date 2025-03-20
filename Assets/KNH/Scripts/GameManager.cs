@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         areaObject = Instantiate(areaPrefab) as GameObject;
-        
+        playerClass = PlayerPrefs.GetInt("classNo");
+
         if (SceneManager.GetActiveScene().name == "MainGame")//MainGame씬에서
         {
             //플레이어 프리팹 생성
