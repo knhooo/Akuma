@@ -1,14 +1,12 @@
 using System.Collections;
-using System.ComponentModel.Design.Serialization;
-using System.Runtime.CompilerServices;
-using Unity.Collections.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HH_Mushroom : MonoBehaviour
 {
-    enum MSMState { Idle, Run, Attack, TakeDmg, Death }
+    enum MSMState { Idle, Run, Attack, TakeHit, Death }
     enum Dir { left, right }
+
+    private Rigidbody2D rigid;
     private SpriteRenderer spriteRenderer;
     private Animator anim;
 
@@ -17,7 +15,6 @@ public class HH_Mushroom : MonoBehaviour
     private Dir dir = Dir.right;
     float distanceToPlayer;
     bool isLookAround = true;
-    bool isAttackFinish = true;
 
     [SerializeField]
     int hp = 50;
@@ -32,6 +29,7 @@ public class HH_Mushroom : MonoBehaviour
 
     private void Awake()
     {
+        rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
@@ -49,60 +47,91 @@ public class HH_Mushroom : MonoBehaviour
 
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        // 플레이어가 추적 범위 안에 있으면 추적 시작
-        if (distanceToPlayer <= chaseRange && state != MSMState.Attack)
+        switch (state)
         {
-            ChasePlayer();
-        }
-
-        // 공격하다가 멀어졌을 경우
-        if (distanceToPlayer > attackRange && state == MSMState.Attack && isAttackFinish)
-        {
-            state = MSMState.Run;
-            anim.SetBool("Run", true);
-            anim.SetBool("Attack", false);
-
-        }
-
-        // 추적범위에서 멀어졌을 경우
-        if (distanceToPlayer > chaseRange && state != MSMState.Idle)
-        {
-            isLookAround = true;
-            state = MSMState.Idle;
-            anim.SetBool("Idle", true);
-            anim.SetBool("Run", false);
-            anim.SetBool("Attack", false);
-            anim.SetBool("TakeHit", false);
-        }
-
-        // 쫓아갈 때 방향 설정
-        if (state != MSMState.Run)
-            return;
-        Vector3 forward = transform.forward;
-        Vector3 toTarget = player.transform.position - transform.position;
-        Vector3 crossProduct = Vector3.Cross(forward, toTarget);
-
-        if (crossProduct.y > 0 && dir == Dir.left)
-        {
-            dir = Dir.right;
-            spriteRenderer.flipX = false;
-        }
-
-        else if (crossProduct.y < 0 && dir == Dir.right)
-        {
-            dir = Dir.left;
-            spriteRenderer.flipX = true;
+            case MSMState.Idle:
+                Idle();
+                break;
+            case MSMState.Run:
+                Run();
+                break;
+            case MSMState.Attack:
+                Attack();
+                break;
+            case MSMState.TakeHit:
+                TakeHit();
+                break;
+            default:
+                break;
         }
     }
 
     private void FixedUpdate()
     {
-        if (state == MSMState.Death)
+        if (state != MSMState.Run)
             return;
+        Rigidbody2D _player = player.GetComponent<Rigidbody2D>();
 
-        if (state == MSMState.Run)
+        Vector2 dirVec = _player.position - rigid.position;
+        Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
+    }
+
+    private void LateUpdate()
+    {
+        if (state == MSMState.Run || state == MSMState.Attack)
+            spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
+    }
+
+    private void Idle()
+    {
+        if (distanceToPlayer <= chaseRange)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.fixedDeltaTime);
+            anim.SetBool("Idle", false);
+            anim.SetBool("Run", true);
+            state = MSMState.Run;
+            isLookAround = false;
+        }
+    }
+
+    private void Run()
+    {
+        // 공격범위 들어올 경우
+        if (distanceToPlayer <= attackRange)
+        {
+            anim.SetBool("Run", false);
+            anim.SetBool("Attack", true);
+            state = MSMState.Attack;
+        }
+
+        // 멀어졌을 경우
+        if (distanceToPlayer > chaseRange)
+        {
+            anim.SetBool("Run", false);
+            anim.SetBool("Idle", true);
+            state = MSMState.Idle;
+            isLookAround = true;
+        }
+    }
+
+    private void Attack()
+    {
+        // 멀어졌을 경우
+        if (distanceToPlayer > attackRange)
+        {
+            anim.SetBool("Attack", false);
+            anim.SetBool("Run", true);
+            state = MSMState.Run;
+        }
+    }
+
+    private void TakeHit()
+    {
+        if (hp <= 0)
+        {
+            anim.SetBool("TakeHit", false);
+            anim.SetBool("Death", true);
+            state = MSMState.Death;
         }
     }
 
@@ -113,45 +142,9 @@ public class HH_Mushroom : MonoBehaviour
 
         if (collision.CompareTag("PlayerAttack"))
         {
-            if (!player)
-                return;
-            TakeDamage(player.GetComponent<HH_Knight>().Attack);
-
+            hp -= player.GetComponent<HH_Knight>().Attack;
+            state = MSMState.TakeHit;
         }
-    }
-
-    private void ChasePlayer()
-    {
-        isLookAround = false;
-        state = MSMState.Run;
-        anim.SetBool("Run", true);
-        anim.SetBool("Idle", false);
-
-        // 공격범위에 들어올 경우
-        if (distanceToPlayer <= attackRange)
-        {
-            isAttackFinish = false;
-            state = MSMState.Attack;
-            anim.SetBool("Run", false);
-            anim.SetBool("Attack", true);
-        }
-    }
-
-    private void Attack()
-    {
-        if (state == MSMState.Death)
-            return;
-
-        HH_Knight _player = player.GetComponent<HH_Knight>();
-        _player.TakeDamage(attack);
-    }
-
-    private void AttackFinish()
-    {
-        if (state == MSMState.Death)
-            return;
-
-        isAttackFinish = true;
     }
 
     IEnumerator LookAround()
@@ -177,23 +170,10 @@ public class HH_Mushroom : MonoBehaviour
         }
     }
 
-
-    public void TakeDamage(int dmg)
+    private void AttackPlayer()
     {
-        if (state == MSMState.Death)
-            return;
-
-        state = MSMState.TakeDmg;
-        anim.SetBool("TakeHit", true);
-        hp -= dmg;
-        if (hp <= 0)
-            DIE();
-    }
-
-    private void DIE()
-    {
-        state = MSMState.Death;
-        anim.SetTrigger("Death");
+        HH_Knight _player = player.GetComponent<HH_Knight>();
+        _player.TakeDamage(attack);
     }
 
     private void DestroyMushroom()

@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4459250571466897968}
+  - component: {fileID: 1002258569321958763}
   - component: {fileID: 7803138656917733008}
   - component: {fileID: 3204603959423404439}
   - component: {fileID: 4125482275705738819}
   - component: {fileID: 5103690914762991652}
-  - component: {fileID: 1002258569321958763}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Monster
@@ -36,6 +36,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1002258569321958763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105094559253308728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35eaa47cab7a3741846862a4992e4f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  attack: 5
+  speed: 1
+  chaseRange: 5
+  attackRange: 1
 --- !u!212 &7803138656917733008
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -186,20 +203,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1002258569321958763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8105094559253308728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e35eaa47cab7a3741846862a4992e4f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 50
-  attack: 50
-  speed: 1
-  chaseRange: 5
-  attackRange: 1
