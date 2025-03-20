@@ -7,7 +7,9 @@ using UnityEngine;
 public class HH_Knight : MonoBehaviour
 {
     [SerializeField]
-    private GameObject sword;
+    private GameObject sword_right;
+    [SerializeField]
+    private GameObject sword_left;
     [SerializeField]
     private int hp = 100;
     [SerializeField]
@@ -25,7 +27,6 @@ public class HH_Knight : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
-    private Rigidbody2D rigid;
     private Vector2 inputVec;
 
     [SerializeField]
@@ -35,15 +36,13 @@ public class HH_Knight : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if(state == KnightState.Die) 
+        if (state == KnightState.Die)
         {
-            DIE();
-            return;                
+            return;
         }
 
         HandleKnightInput();
@@ -56,37 +55,36 @@ public class HH_Knight : MonoBehaviour
             return;
         }
 
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
+
+        Vector3 move = new Vector3(moveX, moveY, 0);
+        transform.Translate(move * speed * Time.fixedDeltaTime);
     }
 
     private void LateUpdate()
     {
+        if (state == KnightState.Die)
+            return;
         if (inputVec.x != 0)
         {
             dir = Dir.left;
             spriteRenderer.flipX = inputVec.x < 0;
-
         }
 
         if (!spriteRenderer.flipX)
         {
             dir = Dir.right;
-
-
         }
 
-        if (state == KnightState.Die || state == KnightState.Defend)
-        {
+        if (state == KnightState.Defend)
             return;
-        }
 
         anim.SetFloat("Speed", inputVec.magnitude);
         if (inputVec.magnitude != 0)
             state = KnightState.Run;
         else
             state = KnightState.Idle;
-
     }
 
     private void HandleKnightInput()
@@ -134,16 +132,14 @@ public class HH_Knight : MonoBehaviour
                 anim.SetBool("Defend", true);
                 if (anim.GetBool("Attack"))
                     anim.SetBool("Attack", false);
-
             }
         }
     }
 
-
     private void DIE()
     {
         state = KnightState.Die;
-        anim.SetTrigger("Die"); 
+        anim.SetTrigger("Die");
     }
 
     public void TakeDamage(int dmg)
@@ -151,46 +147,13 @@ public class HH_Knight : MonoBehaviour
         if (state == KnightState.Defend || state == KnightState.Defend || !canTakeDamage)
             return;
 
-        SetTakeDamage();
-
-        hp -= dmg;
-        if(hp <= 0) 
-            state = KnightState.Die;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Monster") && canTakeDamage)
-        //{
-        //    SetTakeDamage();
-        //}
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Monster") && canTakeDamage)
-        //{
-        //    SetTakeDamage();
-        //}
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        //if (collision.CompareTag("Monster"))
-        //{
-        //    TakeDamageFinish();
-        //}
-    }
-
-
-    private void SetTakeDamage()
-    {
-        if (state == KnightState.Defend || state == KnightState.Die)
-            return;
-
         state = KnightState.TakeDmg;
         anim.SetBool("TakeDmg", true);
         canTakeDamage = false;
+
+        hp -= dmg;
+        if (hp <= 0)
+            DIE();
     }
 
     private void TakeDamageFinish()
@@ -207,19 +170,21 @@ public class HH_Knight : MonoBehaviour
     // 애니메이션 이벤트용 함수
     private void ActivateSword()
     {
-        sword.SetActive(true);
-
         if (dir == Dir.left)
         {
-            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
+            sword_left.SetActive(true);
         }
         else
         {
-            sword.transform.rotation = Quaternion.Euler(0, 0, 0);
+            sword_right.SetActive(true);
         }
     }
 
-    private void InctivateSword() { sword.SetActive(false); }
+    private void InctivateSword()
+    {
+        sword_right.SetActive(false);
+        sword_left.SetActive(false);
+    }
 
 
     private void AnimationStop() { anim.speed = 0f; }

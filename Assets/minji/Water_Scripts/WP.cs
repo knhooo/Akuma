@@ -1,49 +1,67 @@
 using UnityEngine;
+using System.Collections;
 
-public class Player : MonoBehaviour
+public class WP : MonoBehaviour
 {
-    public float moveSpeed = 3f; //움직이는 속도
-    public float speedUp = 5f; //증가된 속도
-    public float keepSpeed = 3f; //속도 저장
+    public float wmoveSpeed = 3f; //움직이는 속도
+    public float wspeedUp = 5f; //증가된 속도
+    public float wkeepSpeed = 3f; //속도 저장
+    public GameObject Skill1up;
 
     Animator ani; //애니메이션 객체 선언
-    public int power = 0; //주문력
-    public int HP = 100; //체력
+    public int wPower = 10; //주문력 
+    public int wHP = 100; //체력 (20씩 증가)
+    public int wL; //레벨
+    //public int wEx = 0; //경험치
+
+
+
+
     public GameObject waterbullet; //물미사일 객체 선언
+
     public Transform pos1 = null;
     public Transform pos2 = null;
+
 
 
     void Start()
     {
         ani = GetComponent<Animator>(); //애니메이션 가져오기
+        wL = gameObject.GetComponent<wLevelUp>().wLevel;
+        Skill1up.gameObject.SetActive(false);
     }
+
 
     void Update()
     {
+        if(wL>=4)
+        {
+            Skill1up.gameObject.SetActive(true);
+        }
+        
         //방향키에 따른 물마법사 x, y좌표
-        float moveX = moveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
-        float moveY = moveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
+        float moveX = wmoveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
+        float moveY = wmoveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
 
 
         //좌우 이동
-        if(Input.GetAxis("Horizontal")<=-0.2) //왼쪽으로 이동할 때
+        if (Input.GetAxis("Horizontal") <= -0.2) //왼쪽으로 이동할 때
         {
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
 
-            if(Input.GetKey(KeyCode.LeftShift)) //왼쪽으로 이동하면서 Shift누를 때
+            if (Input.GetKey(KeyCode.LeftShift)) //왼쪽으로 이동하면서 Shift누를 때
             {
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 ani.SetBool("surf", true); //대쉬 모션 활성화
 
-                moveSpeed = speedUp; //스피드 증가
+                wmoveSpeed = wspeedUp; //스피드 증가
             }
             else //Shift를 땔 때
             {
                 ani.SetBool("walk", true); //걷는 모션 다시 활성화
                 ani.SetBool("surf", false);
-                moveSpeed = keepSpeed; //저장된 속도 원래속도에 집어넣기
+                wmoveSpeed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
             }
 
             if (Input.GetMouseButtonDown(0)) //왼쪽으로 이동하면서 마우스 왼쪽 버튼 누를 때
@@ -60,7 +78,7 @@ public class Player : MonoBehaviour
                 ani.SetBool("sp_atk", false);
             }
         }
-        else if (Input.GetAxis("Horizontal")>=0.2) //오른쪽으로 이동할 때
+        else if (Input.GetAxis("Horizontal") >= 0.2) //오른쪽으로 이동할 때
         {
             ani.SetBool("walk", true); //걷는 모션 활성화
             transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 오른쪽 모습
@@ -70,19 +88,19 @@ public class Player : MonoBehaviour
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 ani.SetBool("surf", true); //대쉬 모션 활성화
 
-                moveSpeed = speedUp; //스피드 증가
+                wmoveSpeed = wspeedUp; //스피드 증가
             }
             else
             {
                 ani.SetBool("walk", true); //걷는 모션 활성화
                 ani.SetBool("surf", false); //대쉬 모션 비활성화
-                moveSpeed = keepSpeed; //저장된 속도 원래속도에 집어넣기
+                wmoveSpeed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
             }
 
             if (Input.GetMouseButtonDown(0)) //오른쪽으로 이동하면서 마우스 좌클릭
             {
                 ani.SetBool("sp_atk", true); //공격 모션 활성화
-                GameObject go=Instantiate(waterbullet, pos1.position, Quaternion.identity); //pos1에서 미사일 발사
+                GameObject go = Instantiate(waterbullet, pos1.position, Quaternion.identity); //pos1에서 미사일 발사
                 Destroy(go, 5); //5초 뒤 삭제
             }
             else
@@ -92,27 +110,27 @@ public class Player : MonoBehaviour
 
 
         }
-        else if(Input.GetAxis("Horizontal") == 0.0f) //멈춰있을 때
+        else if (Input.GetAxis("Horizontal") == 0.0f) //멈춰있을 때
         {
             ani.SetBool("walk", false); //걷는 모션 비활성화
         }
 
         //Shift누를 때
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             ani.SetBool("surf", true);
-            moveSpeed = speedUp; //스피드 증가
+            wmoveSpeed = wspeedUp; //스피드 증가
         }
         else
         {
             ani.SetBool("surf", false);
-            moveSpeed = keepSpeed; //저장된 속도 원래속도에 집어넣기
+            wmoveSpeed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
         }
 
         //마우스 좌클릭
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if(transform.localScale.x==1f)
+            if (transform.localScale.x == 1f)
             {
                 transform.localScale = new Vector3(1f, 1f, 1f);
                 ani.SetBool("sp_atk", true);
@@ -126,7 +144,7 @@ public class Player : MonoBehaviour
                 GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity);
                 Destroy(go, 5);
             }
-            
+
         }
         else
         {
@@ -136,7 +154,7 @@ public class Player : MonoBehaviour
         //캐릭터 좌표
         transform.Translate(moveX, moveY, 0);
 
-        if(HP==0)
+        if (wHP == 0)
         {
             ani.SetBool("death", true);
         }
@@ -145,10 +163,10 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
             ani.SetBool("takehit", true);
-            HP -= 10;
+            wHP -= 10;
         }
     }
 
@@ -159,4 +177,5 @@ public class Player : MonoBehaviour
             ani.SetBool("takehit", false);
         }
     }
+
 }
