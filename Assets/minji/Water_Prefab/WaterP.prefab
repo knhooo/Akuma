@@ -1,50 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1320339614275963262
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 743835791665080459}
-  - component: {fileID: 2446272762190562596}
-  m_Layer: 0
-  m_Name: skill1pos
-  m_TagString: Untagged
-  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &743835791665080459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1320339614275963262}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1439166600535633300}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2446272762190562596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1320339614275963262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27351be765716f84b9b943568c6089b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterskill1: {fileID: 5291913190931041601, guid: 253c528ab1d66674c8a317beec5b11e4, type: 3}
 --- !u!1 &1542937309634921995
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +14,6 @@ GameObject:
   - component: {fileID: 7342565297650798987}
   - component: {fileID: 5532331025948358953}
   - component: {fileID: 8715700363816877969}
-  - component: {fileID: 4581757725289995448}
   m_Layer: 0
   m_Name: WaterP
   m_TagString: Untagged
@@ -82,7 +36,6 @@ Transform:
   m_Children:
   - {fileID: 2853220943928749697}
   - {fileID: 4307643872519116120}
-  - {fileID: 743835791665080459}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3806138196955335369
@@ -250,28 +203,15 @@ MonoBehaviour:
   wmoveSpeed: 3
   wspeedUp: 5
   wkeepSpeed: 3
-  Skill1up: {fileID: 1320339614275963262}
   wPower: 10
   wHP: 100
-  wL: 0
   waterbullet: {fileID: 870406331993294887, guid: bf57f4f2e40b9fa4d87a420fc26bf32b, type: 3}
+  waterbulletU: {fileID: 1748014637760105597, guid: 481516feffbdbaf45aee0d982a074d6c, type: 3}
+  waterbulletR: {fileID: 7629757603934024261, guid: f645c28838bf050439aa4c1ecdd8330b, type: 3}
+  waterbulletL: {fileID: 8921102924600728054, guid: c1361e07dd965cb4986437d6e2ee8a48, type: 3}
+  waterbulletD: {fileID: 91055395023606885, guid: ea6e593e937e82e418312616e7120c24, type: 3}
   pos1: {fileID: 2853220943928749697}
   pos2: {fileID: 4307643872519116120}
---- !u!114 &4581757725289995448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542937309634921995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5468b1ba1d29035439649dcb8bcca145, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wLevel: 1
-  wExperience: 0
-  wExperienceToNextLevel: 100
 --- !u!1 &5715138462740854564
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,9 @@ TagManager:
   - Area
   - Monster
   - PlayerAttack
+  - Enemy
+  - Bullet
+  - skill1pos
   layers:
   - Default
   - TransparentFX

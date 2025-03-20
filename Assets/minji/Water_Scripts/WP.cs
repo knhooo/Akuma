@@ -6,18 +6,19 @@ public class WP : MonoBehaviour
     public float wmoveSpeed = 3f; //움직이는 속도
     public float wspeedUp = 5f; //증가된 속도
     public float wkeepSpeed = 3f; //속도 저장
-    public GameObject Skill1up;
 
     Animator ani; //애니메이션 객체 선언
     public int wPower = 10; //주문력 
     public int wHP = 100; //체력 (20씩 증가)
-    public int wL; //레벨
-    //public int wEx = 0; //경험치
 
 
 
 
     public GameObject waterbullet; //물미사일 객체 선언
+    public GameObject waterbulletU; //물미사일 객체 선언
+    public GameObject waterbulletR; //물미사일 객체 선언
+    public GameObject waterbulletL; //물미사일 객체 선언
+    public GameObject waterbulletD; //물미사일 객체 선언
 
     public Transform pos1 = null;
     public Transform pos2 = null;
@@ -27,17 +28,12 @@ public class WP : MonoBehaviour
     void Start()
     {
         ani = GetComponent<Animator>(); //애니메이션 가져오기
-        wL = gameObject.GetComponent<wLevelUp>().wLevel;
-        Skill1up.gameObject.SetActive(false);
+        StartCoroutine("skill1");
     }
 
 
     void Update()
     {
-        if(wL>=4)
-        {
-            Skill1up.gameObject.SetActive(true);
-        }
         
         //방향키에 따른 물마법사 x, y좌표
         float moveX = wmoveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
@@ -176,6 +172,20 @@ public class WP : MonoBehaviour
         {
             ani.SetBool("takehit", false);
         }
+    }
+
+    IEnumerator skill1()
+    {
+        yield return new WaitForSeconds(10);
+        while (true)
+        {
+            Instantiate(waterbulletU, transform.position, Quaternion.identity);
+            Instantiate(waterbulletR, transform.position, Quaternion.identity);
+            Instantiate(waterbulletL, transform.position, Quaternion.identity);
+            Instantiate(waterbulletD, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(2);
+        }
+        
     }
 
 }
