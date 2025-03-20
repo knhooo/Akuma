@@ -1,59 +1,88 @@
 using System.Collections;
 using System.ComponentModel.Design.Serialization;
+using NUnit.Framework.Constraints;
 using TMPro.SpriteAssetUtilities;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class HH_Knight : MonoBehaviour
 {
     [SerializeField]
-    private GameObject sword_right;
+    int hp = 100;
     [SerializeField]
-    private GameObject sword_left;
+    int attack = 10;
     [SerializeField]
-    private int hp = 100;
+    int speed = 3;
     [SerializeField]
-    private int attack = 10;
-    public int Attack { get { return attack; } }
-
-    enum Dir { left, right }
-    private Dir dir = Dir.right;
-    bool isAttacking = false;
-    bool isDefending = false;
-    bool canTakeDamage = true;
-
-    enum KnightState { Idle, Run, Attack, Defend, TakeDmg, Die }
-    KnightState state = KnightState.Idle;
-
-    private SpriteRenderer spriteRenderer;
-    private Animator anim;
-    private Rigidbody2D rigid;
-    private Vector2 inputVec;
-
+    GameObject sword_right;
     [SerializeField]
-    private int speed = 3;
+    GameObject sword_left;
+    [SerializeField]
+    GameObject shield;
+    [SerializeField]
+    float shieldTime = 3.0f;
+    [SerializeField]
+    float shieldCoolTime = 5.0f;
+    [SerializeField]
+    GameObject blood;
+    [SerializeField]
+    protected Material takeHitMaterial;
+
+    public int Attack { get { return attack; } set { attack = value; } }
+    public int Hp { get { return hp; } set { hp = value; } }
     public int Speed { get { return speed; } }
 
-    private void Awake()
+    enum Dir { left, right }
+    Dir dir = Dir.right;
+
+    enum KnightState { Attack, Defend, Death }
+    KnightState state = KnightState.Attack;
+
+    SpriteRenderer spriteRenderer;
+    Animator anim;
+    Rigidbody2D rigid;
+
+    Material originalMaterial;
+    Coroutine shieldCoroutine;
+    Vector2 inputVec;
+
+    float shieldTimer = 0f;
+    float shieldCoolTimer = 0f;
+
+    void Awake()
     {
+        shieldCoolTimer = shieldCoolTime;
+
+        originalMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    void Update()
     {
-        if (state == KnightState.Die)
+        if (state == KnightState.Death)
         {
             return;
+        }
+
+        switch (state)
+        {
+            case KnightState.Attack:
+                StateAttack();
+                break;
+            case KnightState.Defend:
+                Defend();
+                break;
         }
 
         HandleKnightInput();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (state == KnightState.Die || state == KnightState.Defend)
+        if (state == KnightState.Death || state == KnightState.Defend)
         {
             return;
         }
@@ -62,10 +91,13 @@ public class HH_Knight : MonoBehaviour
         rigid.MovePosition(rigid.position + nextVec);
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
-        if (state == KnightState.Die)
+        if (state == KnightState.Death)
+        {
             return;
+        }
+
         if (inputVec.x != 0)
         {
             dir = Dir.left;
@@ -76,33 +108,52 @@ public class HH_Knight : MonoBehaviour
         {
             dir = Dir.right;
         }
-
-        if (state == KnightState.Defend)
-            return;
-
-        anim.SetFloat("Speed", inputVec.magnitude);
-        if (inputVec.magnitude != 0)
-            state = KnightState.Run;
-        else
-            state = KnightState.Idle;
     }
 
-    private void HandleKnightInput()
+    void StateAttack()
     {
-        if (state == KnightState.Die)
-            return;
+        shieldCoolTimer += Time.deltaTime;
+        if (shieldCoolTimer >= shieldCoolTime)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                shieldCoolTimer = 0f;
 
+                if (shieldCoroutine != null)
+                    StopCoroutine(shieldCoroutine);
+                shieldCoroutine = StartCoroutine(SetShieldAlpha());
+                shield.SetActive(true);
+                SetAlpha(1f);
+
+                state = KnightState.Defend;
+                anim.SetBool("Attack", false);
+                anim.SetBool("Defend", true);
+
+            }
+        }
+    }
+
+    void Defend()
+    {
+        shieldTimer += Time.deltaTime;
+        if (Input.GetKeyUp(KeyCode.LeftShift) || shieldTimer >= shieldTime)
+        {
+            shieldTimer = 0f;
+            anim.speed = 1f;
+
+            StopCoroutine(SetShieldAlpha());
+            shield.SetActive(false);
+
+            state = KnightState.Attack;
+            anim.SetBool("Defend", false);
+            anim.SetBool("Attack", true);
+        }
+    }
+
+    void HandleKnightInput()
+    {
         inputVec.x = Input.GetAxisRaw("Horizontal");
         inputVec.y = Input.GetAxisRaw("Vertical");
-
-        // 방어 끝
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            anim.speed = 1f;
-            state = KnightState.Idle;
-            anim.SetBool("Defend", false);
-            isDefending = false;
-        }
 
         if (state != KnightState.Defend && anim.speed == 0)
         {
@@ -111,64 +162,59 @@ public class HH_Knight : MonoBehaviour
 
         if (state == KnightState.Defend)
             return;
-
-        // 좌클릭 -> 공격
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
-        {
-            if (state != KnightState.Attack)
-            {
-                isAttacking = true;
-                state = KnightState.Attack;
-                anim.SetBool("Attack", true);
-            }
-        }
-
-        // 좌쉬프트 -> 방어
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (state != KnightState.Defend)
-            {
-                state = KnightState.Defend;
-                anim.SetBool("Defend", true);
-                if (anim.GetBool("Attack"))
-                    anim.SetBool("Attack", false);
-            }
-        }
-    }
-
-    private void DIE()
-    {
-        state = KnightState.Die;
-        anim.SetTrigger("Die");
     }
 
     public void TakeDamage(int dmg)
     {
-        if (state == KnightState.Defend || state == KnightState.Defend || !canTakeDamage)
+        if (state == KnightState.Defend || state == KnightState.Death)
             return;
-
-        state = KnightState.TakeDmg;
-        anim.SetBool("TakeDmg", true);
-        canTakeDamage = false;
 
         hp -= dmg;
         if (hp <= 0)
-            DIE();
+        {
+            state = KnightState.Death;
+            anim.SetTrigger("Death");
+            return;
+        }
+
+        StartCoroutine(FlashWhite());
+
+        Vector3 bloodPos = transform.position;
+        bloodPos.y = transform.position.y - 0.92f;
+        Instantiate(blood, bloodPos, Quaternion.Euler(0, 0, 0));
     }
 
-    private void TakeDamageFinish()
+    protected IEnumerator FlashWhite()
     {
-        if (canTakeDamage)
-            return;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.material = takeHitMaterial;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.material = originalMaterial;
+    }
 
-        Debug.Log("DamageFinish");
-        anim.SetBool("TakeDmg", false);
-        canTakeDamage = true;
-        state = KnightState.Idle;
+    IEnumerator SetShieldAlpha()
+    {
+        float t = 0f;
+        float timer = 0f;
+
+        while (true)
+        {
+            timer += Time.deltaTime;
+            t = timer / shieldTime;
+            SetAlpha(Mathf.Lerp(1f, 0.2f, t));
+            yield return null;
+        }
+    }
+
+    void SetAlpha(float alpha)
+    {
+        Color _color = shield.GetComponent<SpriteRenderer>().color;
+        _color.a = Mathf.Clamp01(alpha);
+        shield.GetComponent<SpriteRenderer>().color = _color;
     }
 
     // 애니메이션 이벤트용 함수
-    private void ActivateSword()
+    void ActivateSword()
     {
         if (dir == Dir.left)
         {
@@ -180,20 +226,11 @@ public class HH_Knight : MonoBehaviour
         }
     }
 
-    private void InctivateSword()
+    void InctivateSword()
     {
         sword_right.SetActive(false);
         sword_left.SetActive(false);
     }
 
-
-    private void AnimationStop() { anim.speed = 0f; }
-
-
-    private void AttackOver()
-    {
-        isAttacking = false;
-        state = KnightState.Idle;
-        anim.SetBool("Attack", false);
-    }
+    void AnimationStop() { anim.speed = 0f; }
 }
