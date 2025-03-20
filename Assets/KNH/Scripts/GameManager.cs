@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     GameObject areaObject;
     //public CinemachineCamera virtualCamera; // 시네머신 가상 카메라
     [SerializeField] Camera mainCamera;
+    [SerializeField] GameObject spawner;
+    public PoolManager pool;
 
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
@@ -44,6 +46,8 @@ public class GameManager : MonoBehaviour
         {
             areaObject.transform.SetParent(player.transform, false);
             mainCamera.transform.SetParent(player.transform, false);
+            GameObject spawnerInstance = Instantiate(spawner, player.transform);
+            spawnerInstance.transform.SetParent(player.transform, true);
         }
     }
 
