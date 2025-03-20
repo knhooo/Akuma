@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Area
   - Monster
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX
