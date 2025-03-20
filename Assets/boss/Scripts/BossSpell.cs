@@ -123,14 +123,5 @@ public class BossSpell : MonoBehaviour
         // 도트 지속 시간 후에 사라짐
         yield return new WaitForSeconds(dotDuration);
         Destroy(gameObject);  // 이펙트 삭제
-    }
-
-    // 폭발 범위를 시각적으로 표시 (디버그용)
-    private void OnDrawGizmos()
-    {
-        if (explosionPoint == null) return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(explosionPoint.position, explosionRadius);
-    }
+    }        
 }

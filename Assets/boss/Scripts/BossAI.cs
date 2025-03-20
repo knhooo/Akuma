@@ -305,9 +305,7 @@ public class BossAI : MonoBehaviour
     {
         // 플레이어 근처에 랜덤 위치를 생성
         Vector3 teleportPosition = GetRandomTeleportPosition();
-        // 보스 순간이동 n번
-        transform.position = teleportPosition;
-        transform.position = teleportPosition;
+        // 보스 순간이동
         transform.position = teleportPosition;
         // 순간이동 후 잠시 이동속도 증가 후 원래 속도로 복귀
         StartCoroutine(AfterTeleport());
