@@ -4,14 +4,18 @@ public class ArcherAnim : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody2D rb;
-    public float moveSpeed = 5f; // ÀÌµ¿ ¼Óµµ
-    public bool allowVerticalMovement = true; // »óÇÏ ÀÌµ¿ ¿©ºÎ
+    public float moveSpeed = 5f; // ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public bool allowVerticalMovement = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+
+    public GameObject arrowPrefab; // È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Transform firePoint; // È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+    public float arrowSpeed = 10f; // È­ï¿½ï¿½ ï¿½Óµï¿½
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0; // Áß·Â Á¦°Å (YÃà ÀÌµ¿ °¡´ÉÇÏµµ·Ï ¼³Á¤)
+        rb.gravityScale = 0; // ï¿½ß·ï¿½ ï¿½ï¿½ï¿½ï¿½ (Yï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     }
 
     void Update()
@@ -23,9 +27,9 @@ public class ArcherAnim : MonoBehaviour
     void HandleMovement()
     {
         float moveX = Input.GetAxis("Horizontal");
-        float moveY = allowVerticalMovement ? Input.GetAxis("Vertical") : 0f; // À§/¾Æ·¡ ÀÔ·Â ¹Ş±â
+        float moveY = allowVerticalMovement ? Input.GetAxis("Vertical") : 0f; // ï¿½ï¿½/ï¿½Æ·ï¿½ ï¿½Ô·ï¿½ ï¿½Ş±ï¿½
 
-        rb.linearVelocity = new Vector2(moveX * moveSpeed, moveY * moveSpeed); // X, Y ÀÌµ¿
+        rb.linearVelocity = new Vector2(moveX * moveSpeed, moveY * moveSpeed); // X, Y ï¿½Ìµï¿½
 
         animator.SetBool("isMoving", moveX != 0 || moveY != 0);
 
@@ -37,13 +41,30 @@ public class ArcherAnim : MonoBehaviour
 
     void HandleAttackInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1)) // ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         {
             animator.SetTrigger("1Attack");
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetMouseButtonDown(0)) // ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Å¸ï¿½ È­ï¿½ï¿½)
         {
             animator.SetTrigger("2Attack");
+            Invoke("ShootArrow", 0.4f); // 0.3ì´ˆ ë’¤ì— í™”ì‚´ ë°œì‚¬
+        }
+    }
+
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+    public void ShootArrow()
+    {
+        Debug.Log("ShootArrow í•¨ìˆ˜ ì‹¤í–‰ë¨!"); // ì‹¤í–‰ í™•ì¸ìš© ë¡œê·¸
+        if (arrowPrefab != null && firePoint != null)
+        {
+            GameObject arrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
+            Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                float direction = transform.localScale.x; // Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½/ï¿½ï¿½)
+                rb.linearVelocity = new Vector2(direction * arrowSpeed, 0); // ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
+            }
         }
     }
 }

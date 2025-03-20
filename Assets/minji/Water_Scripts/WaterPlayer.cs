@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class WaterPlayer : MonoBehaviour
 {
     public float moveSpeed = 3f; //움직이는 속도
     public float speedUp = 5f; //증가된 속도
