@@ -49,3 +49,6 @@ MonoBehaviour:
   - {fileID: 5534838947949792760, guid: e895804e2bfb67640899240228f4b89f, type: 3}
   player: {fileID: 0}
   areaPrefab: {fileID: 6613276042633818117, guid: 62cf06e0204548d4485307471b8c9d36, type: 3}
+  mainCamera: {fileID: 0}
+  spawner: {fileID: 8002984723762045691, guid: d1dcde0849929c04fa04b3423de28714, type: 3}
+  pool: {fileID: 0}

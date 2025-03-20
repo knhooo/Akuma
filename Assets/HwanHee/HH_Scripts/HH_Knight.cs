@@ -7,7 +7,9 @@ using UnityEngine;
 public class HH_Knight : MonoBehaviour
 {
     [SerializeField]
-    private GameObject sword;
+    private GameObject sword_right;
+    [SerializeField]
+    private GameObject sword_left;
     [SerializeField]
     private int hp = 100;
     [SerializeField]
@@ -25,7 +27,6 @@ public class HH_Knight : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
-    private Rigidbody2D rigid;
     private Vector2 inputVec;
 
     [SerializeField]
@@ -35,7 +36,6 @@ public class HH_Knight : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -46,15 +46,6 @@ public class HH_Knight : MonoBehaviour
         }
 
         HandleKnightInput();
-
-        if (dir == Dir.left)
-        {
-            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
-        }
-        else
-        {
-            sword.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
     }
 
     private void FixedUpdate()
@@ -64,8 +55,11 @@ public class HH_Knight : MonoBehaviour
             return;
         }
 
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
+
+        Vector3 move = new Vector3(moveX, moveY, 0);
+        transform.Translate(move * speed * Time.fixedDeltaTime);
     }
 
     private void LateUpdate()
@@ -176,19 +170,21 @@ public class HH_Knight : MonoBehaviour
     // 애니메이션 이벤트용 함수
     private void ActivateSword()
     {
-        sword.SetActive(true);
-
         if (dir == Dir.left)
         {
-            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
+            sword_left.SetActive(true);
         }
         else
         {
-            sword.transform.rotation = Quaternion.Euler(0, 0, 0);
+            sword_right.SetActive(true);
         }
     }
 
-    private void InctivateSword() { sword.SetActive(false); }
+    private void InctivateSword()
+    {
+        sword_right.SetActive(false);
+        sword_left.SetActive(false);
+    }
 
 
     private void AnimationStop() { anim.speed = 0f; }
