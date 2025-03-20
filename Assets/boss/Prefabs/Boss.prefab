@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4845454238949394496}
   - component: {fileID: 2093749738700440773}
   - component: {fileID: 8669586389055727329}
-  - component: {fileID: 4839321398121588007}
   - component: {fileID: 333349168562255958}
   - component: {fileID: 8949839755441416106}
   m_Layer: 0
@@ -126,28 +125,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b251bbc58b6cb4f9a50072e226a53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   player: {fileID: 0}
   followRange: 10
   attackRange: 2
+  attackDamage: 10
+  attackCooldown: 2
   moveSpeed: 1
   stoppingDistance: 1
---- !u!114 &4839321398121588007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4681068461694256559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed3629382df6ef4582a39458a7813a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  damage: 10
-  defense: 5
-  isDead: 0
+  spellPrefab: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
+  spellSpawnPoint: {fileID: 0}
+  spellCount: 10
+  spellRangeX: 3
+  spellRangeY: 2
 --- !u!61 &333349168562255958
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -185,8 +175,8 @@ BoxCollider2D:
   m_Offset: {x: 0.32774723, y: -0.17819259}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.4, y: 0.93}
+    pivot: {x: 0.75, y: 0}
+    oldSize: {x: 4.375, y: 2.90625}
     newSize: {x: 1.4, y: 0.93}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
