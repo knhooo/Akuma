@@ -129,9 +129,9 @@ GameObject:
   - component: {fileID: 6049345234447324540}
   - component: {fileID: 7369231846388554133}
   - component: {fileID: 5222774917390139099}
-  - component: {fileID: 7851410528913099965}
   - component: {fileID: 1836105781463036072}
   - component: {fileID: 2887003364759439000}
+  - component: {fileID: 1538482089547025556}
   m_Layer: 0
   m_Name: WaterCharactor
   m_TagString: Player
@@ -234,26 +234,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7851410528913099965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931621950136777158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8ef907cfcd51f0459af9c49b05a237a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  speedUp: 5
-  keepSpeed: 3
-  power: 0
-  HP: 100
-  waterbullet: {fileID: 870406331993294887, guid: bf57f4f2e40b9fa4d87a420fc26bf32b, type: 3}
-  pos1: {fileID: 954349210629301343}
-  pos2: {fileID: 3354444403387167227}
 --- !u!61 &1836105781463036072
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -327,6 +307,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1538482089547025556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931621950136777158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ef907cfcd51f0459af9c49b05a237a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  speedUp: 5
+  keepSpeed: 3
+  power: 10
+  HP: 100
+  waterbullet: {fileID: 870406331993294887, guid: bf57f4f2e40b9fa4d87a420fc26bf32b, type: 3}
+  waterskill1: {fileID: 870406331993294887, guid: bf57f4f2e40b9fa4d87a420fc26bf32b, type: 3}
+  pos1: {fileID: 954349210629301343}
+  pos2: {fileID: 3354444403387167227}
 --- !u!1 &7977728110415486716
 GameObject:
   m_ObjectHideFlags: 0

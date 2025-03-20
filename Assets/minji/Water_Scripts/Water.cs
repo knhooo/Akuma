@@ -5,6 +5,8 @@ public class Water : MonoBehaviour
     public float Speed = 3f; //물미사일 스피드
     Vector2 dir; //미사일이 가야할 방향 구하기
     Vector2 dirNo; //미사일 방향만 추출
+    public GameObject p;
+    
 
     void Start()
     {
@@ -13,6 +15,7 @@ public class Water : MonoBehaviour
 
         dir = mousePos - transform.position;
         dirNo = dir.normalized; //미사일 방향 추출
+        
     }
 
 
@@ -20,6 +23,11 @@ public class Water : MonoBehaviour
     {
         //미사일 좌표
         transform.Translate(dirNo * Speed * Time.deltaTime);
+    }
+
+    public void Move(Vector2 vec)
+    {
+        dirNo = vec;
     }
 
     //미사일 충돌 시
@@ -30,6 +38,7 @@ public class Water : MonoBehaviour
         {
             Destroy(gameObject); //미사일 삭제
             Destroy(collision.gameObject); //적 삭제
+            p.gameObject.GetComponent<WaterPlayer>().ExUp(50);
         }
     }
 
