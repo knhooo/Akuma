@@ -6,44 +6,39 @@ public class WP : MonoBehaviour
     public float wmoveSpeed = 3f; //움직이는 속도
     public float wspeedUp = 5f; //증가된 속도
     public float wkeepSpeed = 3f; //속도 저장
+    public GameObject Skill1up;
 
     Animator ani; //애니메이션 객체 선언
     public int wPower = 10; //주문력 
     public int wHP = 100; //체력 (20씩 증가)
-    public int wLevel = 1; //레벨
-    public int wEx = 0; //경험치
+    public int wL; //레벨
+    //public int wEx = 0; //경험치
 
 
 
 
     public GameObject waterbullet; //물미사일 객체 선언
-    public GameObject waterskill1; //물미사일 객체 선언
 
     public Transform pos1 = null;
     public Transform pos2 = null;
 
 
+
     void Start()
     {
         ani = GetComponent<Animator>(); //애니메이션 가져오기
-        //StartCoroutine(CheckConditionCoroutine());
+        wL = gameObject.GetComponent<wLevelUp>().wLevel;
+        Skill1up.gameObject.SetActive(false);
     }
 
-    //IEnumerator CheckConditionCoroutine()
-    //{
-    //    while (true) // 계속 반복
-    //    {
-    //        if (wLevel >= 5)
-    //        {
-    //            StartCoroutine(skill1());
-    //            yield break;
-    //        }
-    //        yield return new WaitForSeconds(1f); // 1초마다 검사
-    //    }
-    //}
 
     void Update()
     {
+        if(wL>=4)
+        {
+            Skill1up.gameObject.SetActive(true);
+        }
+        
         //방향키에 따른 물마법사 x, y좌표
         float moveX = wmoveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
         float moveY = wmoveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
@@ -183,61 +178,4 @@ public class WP : MonoBehaviour
         }
     }
 
-    //public void ExUp(int ex)
-    //{
-    //    wEx += ex;
-
-    //    if (wEx >= 50)
-    //    {
-    //        wLevel = 2;
-    //    }
-    //    else if (wEx >= 100 && wEx < 200)
-    //    {
-    //        wLevel = 3;
-    //    }
-    //    else if (wEx >= 200 && wEx < 300)
-    //    {
-    //        wLevel = 4;
-    //    }
-    //    else if (wEx >= 300)
-    //    {
-    //        wLevel = 5;
-    //    }
-    //}
-
-    //IEnumerator skill1()
-    //{
-    //    //공격주기
-    //    float attackRate = 3;
-    //    //발사체 생성갯수
-    //    int count = 5;
-    //    //발사체 사이의 각도
-    //    float intervalAngle = 360 / count;
-    //    //가중되는 각도(항상 같은 위치로 발사하지 않도록 설정
-    //    float weightAngle = 0f;
-    //    while (true)
-    //    {
-    //        for (int i = 0; i < count; ++i)
-    //        {
-    //            //발사체 생성
-    //            GameObject clone = Instantiate(waterskill1, transform.position, Quaternion.identity);
-
-    //            //발사체 이동 방향(각도)
-    //            float angle = weightAngle + intervalAngle * i;
-    //            //발사체 이동 방향(벡터)
-    //            //Cos(각도)라디안 단위의 각도 표현을 위해 pi/180을 곱함
-    //            float x = Mathf.Cos(angle * Mathf.Deg2Rad);
-    //            //sin(각도)라디안 단위의 각도 표현을 위해 pi/180을 곱함
-    //            float y = Mathf.Sin(angle * Mathf.Deg2Rad);
-
-    //            //발사체 이동 방향 설정
-    //            clone.GetComponent<Water>().Move(new Vector2(x, y));
-    //        }
-    //        //발사체가 생성되는 시작 각도 설정을 위한변수
-    //        weightAngle += 1;
-    //        //3초마다 미사일 발사
-    //        yield return new WaitForSeconds(attackRate);
-    //    }
-
-    //}
 }
