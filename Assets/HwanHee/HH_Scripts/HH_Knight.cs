@@ -25,7 +25,6 @@ public class HH_Knight : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
-    private Rigidbody2D rigid;
     private Vector2 inputVec;
 
     [SerializeField]
@@ -35,7 +34,6 @@ public class HH_Knight : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -64,8 +62,11 @@ public class HH_Knight : MonoBehaviour
             return;
         }
 
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
+
+        Vector3 move = new Vector3(moveX, moveY, 0);
+        transform.Translate(move * speed * Time.fixedDeltaTime);
     }
 
     private void LateUpdate()
@@ -180,7 +181,7 @@ public class HH_Knight : MonoBehaviour
 
         if (dir == Dir.left)
         {
-            sword.transform.rotation = Quaternion.Euler(0, 180f, 0);
+            sword.transform.eulerAngles = new Vector3(0, 180, 0);
         }
         else
         {

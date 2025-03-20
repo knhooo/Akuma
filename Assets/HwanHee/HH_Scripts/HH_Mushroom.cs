@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HH_Mushroom : MonoBehaviour
 {
-    enum MSMState { Idle, Run, Attack, TakeHit, Death }
+    enum MSMState { Run, Attack, TakeHit, Death }
     enum Dir { left, right }
 
     private Rigidbody2D rigid;
@@ -12,7 +12,7 @@ public class HH_Mushroom : MonoBehaviour
     private Animator anim;
 
     private GameObject player;
-    MSMState state = MSMState.Idle;
+    MSMState state = MSMState.Run;
     private Dir dir = Dir.right;
     float distanceToPlayer;
     bool isLookAround = true;
@@ -40,7 +40,6 @@ public class HH_Mushroom : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        StartCoroutine(LookAround());
     }
 
     private void Update()
@@ -52,9 +51,6 @@ public class HH_Mushroom : MonoBehaviour
 
         switch (state)
         {
-            case MSMState.Idle:
-                Idle();
-                break;
             case MSMState.Run:
                 Run();
                 break;
@@ -82,28 +78,9 @@ public class HH_Mushroom : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (state == MSMState.Run || state == MSMState.Attack)
-            spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
+        spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
     }
 
-    private void Idle()
-    {
-        if (distanceToPlayer <= attackRange)
-        {
-            isAttackOver = false;
-            anim.SetBool("Idle", false);
-            anim.SetBool("Attack", true);
-            state = MSMState.Attack;
-        }
-
-        else if (distanceToPlayer <= chaseRange)
-        {
-            isLookAround = false;
-            anim.SetBool("Idle", false);
-            anim.SetBool("Run", true);
-            state = MSMState.Run;
-        }
-    }
 
     private void Run()
     {
@@ -121,13 +98,19 @@ public class HH_Mushroom : MonoBehaviour
         {
             anim.SetBool("Run", false);
             anim.SetBool("Idle", true);
-            state = MSMState.Idle;
             isLookAround = true;
         }
     }
 
     private void Attack()
     {
+        if (!player)
+        {
+            anim.SetBool("Run", true);
+            anim.SetBool("Attack", false);
+            return;
+        }
+
         // 멀어졌을 경우
         if (distanceToPlayer > attackRange && isAttackOver)
         {
@@ -139,6 +122,15 @@ public class HH_Mushroom : MonoBehaviour
 
     private void TakeHit()
     {
+        if (!player)
+        {
+            anim.SetBool("TakeHit", false);
+            anim.SetBool("Idle", true);
+            state = MSMState.Run;
+            isLookAround = true;
+            return;
+        }
+
         if (hp <= 0)
         {
             anim.SetBool("TakeHit", false);
@@ -148,10 +140,9 @@ public class HH_Mushroom : MonoBehaviour
 
         if (isTakeHitOver)
         {
-            state = MSMState.Idle;
+            state = MSMState.Run;
             anim.SetBool("TakeHit", false);
-            anim.SetBool("Idle", true);
-            isLookAround = true;
+            anim.SetBool("Run", true);
         }
     }
 
@@ -159,41 +150,19 @@ public class HH_Mushroom : MonoBehaviour
     {
         if (state == MSMState.Death)
             return;
-
         if (collision.CompareTag("PlayerAttack"))
         {
             isAttackOver = true;
             isTakeHitOver = false;
             hp -= player.GetComponent<HH_Knight>().Attack;
             state = MSMState.TakeHit;
+            anim.SetBool("Idle", false);
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
             anim.SetBool("TakeHit", true);
         }
     }
 
-    IEnumerator LookAround()
-    {
-        while (true)
-        {
-            while (!isLookAround)
-            {
-                yield return null;  // 한 프레임을 기다리고 다시 체크
-            }
-
-            yield return new WaitForSeconds(2f);
-            if (dir == Dir.right)
-            {
-                spriteRenderer.flipX = true;
-                dir = Dir.left;
-            }
-            else
-            {
-                spriteRenderer.flipX = false;
-                dir = Dir.right;
-            }
-        }
-    }
 
     private void AttackPlayer()
     {
