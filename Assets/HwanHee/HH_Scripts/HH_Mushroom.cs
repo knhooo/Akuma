@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class HH_Mushroom : MonoBehaviour
@@ -15,6 +16,8 @@ public class HH_Mushroom : MonoBehaviour
     private Dir dir = Dir.right;
     float distanceToPlayer;
     bool isLookAround = true;
+    bool isAttackOver = true;
+    bool isTakeHitOver = true;
 
     [SerializeField]
     int hp = 50;
@@ -85,12 +88,20 @@ public class HH_Mushroom : MonoBehaviour
 
     private void Idle()
     {
-        if (distanceToPlayer <= chaseRange)
+        if (distanceToPlayer <= attackRange)
         {
+            isAttackOver = false;
+            anim.SetBool("Idle", false);
+            anim.SetBool("Attack", true);
+            state = MSMState.Attack;
+        }
+
+        else if (distanceToPlayer <= chaseRange)
+        {
+            isLookAround = false;
             anim.SetBool("Idle", false);
             anim.SetBool("Run", true);
             state = MSMState.Run;
-            isLookAround = false;
         }
     }
 
@@ -99,6 +110,7 @@ public class HH_Mushroom : MonoBehaviour
         // 공격범위 들어올 경우
         if (distanceToPlayer <= attackRange)
         {
+            isAttackOver = false;
             anim.SetBool("Run", false);
             anim.SetBool("Attack", true);
             state = MSMState.Attack;
@@ -117,7 +129,7 @@ public class HH_Mushroom : MonoBehaviour
     private void Attack()
     {
         // 멀어졌을 경우
-        if (distanceToPlayer > attackRange)
+        if (distanceToPlayer > attackRange && isAttackOver)
         {
             anim.SetBool("Attack", false);
             anim.SetBool("Run", true);
@@ -133,6 +145,14 @@ public class HH_Mushroom : MonoBehaviour
             anim.SetBool("Death", true);
             state = MSMState.Death;
         }
+
+        if (isTakeHitOver)
+        {
+            state = MSMState.Idle;
+            anim.SetBool("TakeHit", false);
+            anim.SetBool("Idle", true);
+            isLookAround = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -142,8 +162,13 @@ public class HH_Mushroom : MonoBehaviour
 
         if (collision.CompareTag("PlayerAttack"))
         {
+            isAttackOver = true;
+            isTakeHitOver = false;
             hp -= player.GetComponent<HH_Knight>().Attack;
             state = MSMState.TakeHit;
+            anim.SetBool("Run", false);
+            anim.SetBool("Attack", false);
+            anim.SetBool("TakeHit", true);
         }
     }
 
@@ -172,12 +197,25 @@ public class HH_Mushroom : MonoBehaviour
 
     private void AttackPlayer()
     {
-        HH_Knight _player = player.GetComponent<HH_Knight>();
-        _player.TakeDamage(attack);
+        if (distanceToPlayer <= attackRange)
+        {
+            HH_Knight _player = player.GetComponent<HH_Knight>();
+            _player.TakeDamage(attack);
+        }
     }
 
     private void DestroyMushroom()
     {
         Destroy(gameObject);
+    }
+
+    private void SetAttcakOver()
+    {
+        isAttackOver = true;
+    }
+
+    private void SetTakeHitOver()
+    {
+        isTakeHitOver = true;
     }
 }
