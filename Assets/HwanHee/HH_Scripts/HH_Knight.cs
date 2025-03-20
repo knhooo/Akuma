@@ -27,15 +27,18 @@ public class HH_Knight : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator anim;
+    private Rigidbody2D rigid;
     private Vector2 inputVec;
 
     [SerializeField]
     private int speed = 3;
+    public int Speed { get { return speed; } }
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -55,11 +58,8 @@ public class HH_Knight : MonoBehaviour
             return;
         }
 
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
-
-        Vector3 move = new Vector3(moveX, moveY, 0);
-        transform.Translate(move * speed * Time.fixedDeltaTime);
+        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
     }
 
     private void LateUpdate()
