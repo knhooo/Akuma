@@ -38,7 +38,6 @@ public class Water : MonoBehaviour
         {
             Destroy(gameObject); //固荤老 昏力
             Destroy(collision.gameObject); //利 昏力
-            p.gameObject.GetComponent<wLevelUp>().GainExperience(50);
         }
     }
 
