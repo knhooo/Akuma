@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1597295332924817484}
   m_Layer: 0
   m_Name: wBulletR
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 4
+  wbr: {fileID: 5212366781419121436, guid: b3c83fadcb9685b4ea0aaee8d90b1f45, type: 3}
 --- !u!61 &4017582195656316396
 BoxCollider2D:
   m_ObjectHideFlags: 0
