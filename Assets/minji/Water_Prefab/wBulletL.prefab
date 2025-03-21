@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2151484930565961409}
   m_Layer: 0
   m_Name: wBulletL
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

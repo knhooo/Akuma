@@ -216,5 +216,26 @@ public class WP22 : Player //물마법사 스크립트
         Instantiate(wExposion, transform.position, Quaternion.identity);
     }
 
+    public override void GetExperience(int ex)
+    {
+        exp += ex;
+        if(exp>=maxExp)
+        {
+            level += 1;
+            exp = 0;
+            attack += 10; //임시
+            maxHp += 20;
+            speed += 1;
+            wspeedUp += 1;
+            wkeepSpeed += 1;
+
+            if (level >= 20)
+            {
+                level = 20;
+            }
+        }
+
+    }
+
 }
 
