@@ -10,6 +10,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image expBar;//경험치바 이미지
     [SerializeField] TextMeshProUGUI levelText;//레벨 텍스트
 
+    [SerializeField] GameObject gameOverUI;//게임오버 UI
+    [SerializeField] TextMeshProUGUI timeText;//생존시간
+    [SerializeField] TextMeshProUGUI finalLevel;//달성 레벨
+    [SerializeField] TextMeshProUGUI enemyCount;//처치한 적 수
+
+    [SerializeField] GameObject Timer;//시계
+
+
+
     void Start()
     {
         //씬에 player오브젝트가 생성되었는지 확인
@@ -29,6 +38,24 @@ public class UIManager : MonoBehaviour
             expBar.fillAmount = (float)player.Exp / (float)player.MaxExp;
             //레벨 업데이트
             levelText.text = "Lv." + player.Level.ToString();
+            //플레이어 사망
+            if (player.Hp <= 0)
+            {
+                Time.timeScale = 0f;//시간정지
+                gameOverUI.SetActive(true);//게임 오버 UI 활성화
+
+                //생존 시간
+                float ms = Timer.GetComponent<TimeDisplay>().GetTime();
+                int min = Mathf.FloorToInt(ms / 60);
+                int sec = Mathf.FloorToInt(ms % 60);
+                timeText.text = "생존 시간: " + string.Format("{0:D2}분 {1:D2}초", min, sec);
+
+                //달성 레벨
+                finalLevel.text = "달성 레벨: " + player.Level.ToString();
+
+                //처치한 적
+
+            }
         }
     }
 }
