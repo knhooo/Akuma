@@ -26,15 +26,12 @@ public class GameManager : MonoBehaviour
         return playerClass;
     }
 
-    private void Awake()
-    {
-        instance = this;//초기화   
-    }
 
     
 
-    private void Start()
+    private void Awake()
     {
+        instance = this;//초기화   
         areaObject = Instantiate(areaPrefab) as GameObject;
         playerClass = PlayerPrefs.GetInt("classNo");
 
