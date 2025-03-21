@@ -34,10 +34,9 @@ public class Water : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //적과 충돌 시
-        if(collision.CompareTag("Enemy"))
+        if(collision.CompareTag("Monster"))
         {
             Destroy(gameObject); //미사일 삭제
-            Destroy(collision.gameObject); //적 삭제
         }
     }
 
