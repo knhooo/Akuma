@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard
       objectReference: {fileID: 0}
+    - target: {fileID: 2768540187609537817, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 6041168700494044550, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.3
@@ -533,7 +537,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1584286716}
-  - {fileID: 1599283964}
   - {fileID: 1270075826}
   - {fileID: 5227819798459780130}
   - {fileID: 1188362629}
+  - {fileID: 1599283964}
