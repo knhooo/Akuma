@@ -72,14 +72,14 @@ public class HH_Monster : MonoBehaviour
         // 플레이어한테 뒤로 밀려남
         if (isCollisionStay && state != State.TakeHit)
         {
-            HH_Knight _player = player.GetComponent<HH_Knight>();
+            Player _player = player.GetComponent<Player>();
             transform.Translate(-dir * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
         }
 
         // 넉백
         if (isCollisionStay && state == State.TakeHit)
         {
-            HH_Knight _player = player.GetComponent<HH_Knight>();
+            Player _player = player.GetComponent<Player>();
             transform.Translate(-dir * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
         }
 
@@ -129,7 +129,7 @@ public class HH_Monster : MonoBehaviour
         {
             isAttackOver = true;
             isTakeHitOver = false;
-            hp -= player.GetComponent<HH_Knight>().Attack;
+            hp -= player.GetComponent<Player>().Attack;
             state = State.TakeHit;
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
@@ -197,7 +197,7 @@ public class HH_Monster : MonoBehaviour
     {
         if (distanceToPlayer <= attackRange)
         {
-            HH_Knight _player = player.GetComponent<HH_Knight>();
+            Player _player = player.GetComponent<Player>();
             _player.TakeDamage(attack);
         }
     }
