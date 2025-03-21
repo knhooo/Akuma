@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 8105094559253308728, guid: f08324774a61e91488f3d72aeaa0c207, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -410,7 +414,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!1001 &6761228039860976541
+--- !u!1001 &5227819798459780130
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -473,5 +477,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 1584286716}
   - {fileID: 1599283964}
-  - {fileID: 6761228039860976541}
   - {fileID: 1270075826}
+  - {fileID: 5227819798459780130}
