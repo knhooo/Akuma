@@ -97,7 +97,7 @@ public class BossSpell : MonoBehaviour
         while (elapsedTime < dotDuration)
         {
             // 도트 데미지 적용 (Player.cs에 적절한 데미지 처리 함수 추가 필요)
-            //player.GetComponent<Player>().TakeDamage(damageOverTime * dotInterval);
+            player.GetComponent<Player>().TakeDamage(Mathf.RoundToInt(damageOverTime * dotInterval));
             Debug.Log("🔥 도트 데미지 적용");
 
             elapsedTime += dotInterval;
