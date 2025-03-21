@@ -20,6 +20,7 @@ public class DotStackManager : MonoBehaviour
     {
         while (isPlayerInCollider(player))
         {
+            Debug.Log($"🔄 {player.name} 스택 증가 코루틴 실행 중... (현재 스택: {dotStacks[player]})");
             // 스택을 증가시킴
             if (dotStacks[player] < maxDotStacks) // 최대 스택을 넘지 않도록
             {
@@ -38,7 +39,13 @@ public class DotStackManager : MonoBehaviour
                 // 일정 시간마다 도트 스택 증가
                 yield return new WaitForSeconds(dotStackInterval);
             }
+            else
+            {
+                Debug.Log($"🔥 {player.name} 도트 스택이 최대치에 도달했습니다: {dotStacks[player]}");
+            }
+
         }
+        Debug.Log($"⛔ {player.name} 코루틴 종료됨");
         // 범위에서 벗어나면 코루틴 종료
         activeDots.Remove(player);
     }
@@ -157,8 +164,11 @@ public class DotStackManager : MonoBehaviour
     // 플레이어가 콜라이더 범위에 있는지 체크    
     private bool isPlayerInCollider(Player player)
     {
-        // 예시: 맵이나 효과의 콜라이더와 비교해야 하므로 필요한 로직을 구현하세요
-        return true;
+        bool inCollider = true; // 현재는 무조건 true 반환하는 상태
+
+        //Debug.Log($"📍 {player.name} isPlayerInCollider: {inCollider}");
+
+        return inCollider;
     }
 
     public void Update()
