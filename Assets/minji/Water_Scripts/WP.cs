@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WP : Player
+public class WP : Player //물마법사 스크립트
 {
     public float wspeedUp = 5f; //증가된 속도
     public float wkeepSpeed = 3f; //속도 저장
@@ -147,31 +147,14 @@ public class WP : Player
         //캐릭터 좌표
         transform.Translate(moveX, moveY, 0);
 
-        if (hp == 0)
+        if (hp <= 0)
         {
             ani.SetBool("death", true);
         }
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            ani.SetBool("takehit", true);
-            hp -= 10;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            ani.SetBool("takehit", false);
-        }
-    }
-
-    IEnumerator skill1()
+    IEnumerator skill1() //10초 뒤 <임시로 정해둠. 첫번째 자동 스킬 발동
     {
         yield return new WaitForSeconds(10);
         while (true)
@@ -183,6 +166,11 @@ public class WP : Player
             yield return new WaitForSeconds(2);
         }
         
+    }
+
+    public override void TakeDamage(int dmg) //데미지 입는 메서드 오버라이딩
+    {
+        hp -= dmg;
     }
 
 }

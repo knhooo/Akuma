@@ -10,6 +10,49 @@ public class ArcherAnim : Player
     public Transform firePoint; // The position where the arrow will spawn
     public float arrowSpeed = 10f; // Arrow speed
 
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    public override void TakeDamage(int dmg)
+    {
+        if (hp <= 0) return;
+
+        hp -= dmg;
+
+        if (hp <= 0)
+        {
+            Die(); // Archer 클래스 내부에 정의된 Die() 호출
+            return;
+        }
+
+        animator.SetTrigger("isDamaged");
+    }
+
+    void Die()
+    {
+        animator.SetTrigger("isDeath");
+        this.enabled = false; // 스크립트 비활성화 (입력, 이동 등 차단)
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Monster"))
+        {
+            TakeDamage(10); // 고정 데미지 10 (필요 시 조정 가능)
+        }
+    }
+
+    // 또는 몬스터가 트리거 콜라이더일 경우
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Monster"))
+        {
+            TakeDamage(10);
+        }
+    }
     void Start()
     {
         animator = GetComponent<Animator>();

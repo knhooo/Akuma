@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -4753702385071775785, guid: cea40cfe6035f8949801b63812cd7924, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0013468415, y: -0.0049580336}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -159,7 +159,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.3, y: 0.39}
+  m_Size: {x: 0.47349843, y: 1.0478668}
   m_EdgeRadius: 0
 --- !u!50 &5532331025948358953
 Rigidbody2D:
@@ -200,11 +200,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2df1827a06256348a510e522e95ca1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wmoveSpeed: 3
+  hp: 100
+  attack: 10
+  speed: 3
   wspeedUp: 5
   wkeepSpeed: 3
-  wPower: 10
-  wHP: 100
   waterbullet: {fileID: 870406331993294887, guid: bf57f4f2e40b9fa4d87a420fc26bf32b, type: 3}
   waterbulletU: {fileID: 1748014637760105597, guid: 481516feffbdbaf45aee0d982a074d6c, type: 3}
   waterbulletR: {fileID: 7629757603934024261, guid: f645c28838bf050439aa4c1ecdd8330b, type: 3}
