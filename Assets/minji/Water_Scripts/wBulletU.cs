@@ -16,7 +16,7 @@ public class wBulletU : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Monster"))
         {
 
             //미사일 삭제
