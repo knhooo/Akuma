@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8471014513598359186}
   m_Layer: 0
   m_Name: wBulletL
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,7 +168,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.304, y: 0.11066667}
+    oldSize: {x: 0.912, y: 0.332}
     newSize: {x: 0.304, y: 0.11066667}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
