@@ -2,6 +2,7 @@
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HH_Monster : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class HH_Monster : MonoBehaviour
     [SerializeField]
     protected float speed = 2f;
     [SerializeField]
-    protected float attackRange = 2f;
+    protected float attackRange = 3f;
     [SerializeField]
     protected int exp = 10;
     [SerializeField]
@@ -67,6 +68,8 @@ public class HH_Monster : MonoBehaviour
         if (state == State.Death)
             return;
 
+        dirToPlayer = Vector3.Normalize(player.transform.position - transform.position);
+
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         switch (state)
@@ -87,29 +90,28 @@ public class HH_Monster : MonoBehaviour
 
     protected void FixedUpdate()
     {
+        // 나한테 와서 충돌했어 -> 이러면 못움직이게 해야됨 /??
         if (state == State.Death)
             return;
 
-        if(state == State.TakeHit)
+        if (isCollisionStay)
         {
-            if(isCollisionStay)
-            {
-                Player _player = player.GetComponent<Player>();
-                transform.Translate(-dirToPlayer * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
-            }
-            else
-                transform.Translate(-dirToPlayer * knockBackSpeed * Time.fixedDeltaTime);
+            Player _player = player.GetComponent<Player>();
+            transform.Translate(-dirToPlayer * _player.Speed * Time.fixedDeltaTime);
+            Debug.Log("dirToPlayer: " + dirToPlayer);
         }
 
-        if (state != State.Run || state == State.TakeHit)
+        if (state == State.Attack)
             return;
 
-        else
+        if (state == State.TakeHit)
         {
-            dirToPlayer = Vector3.Normalize(player.transform.position - transform.position);
-            Vector2 nextPos = dirToPlayer * speed * Time.fixedDeltaTime;
-            rigid.MovePosition(rigid.position + nextPos);
-            rigid.linearVelocity = Vector2.zero;
+            transform.Translate(-dirToPlayer * knockBackSpeed * Time.fixedDeltaTime);
+        }
+
+        if (!isCollisionStay && state == State.Run)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
     }
 
@@ -120,26 +122,15 @@ public class HH_Monster : MonoBehaviour
         spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
     }
 
-    protected void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isCollisionStay = true;
-        }
-    }
-
-    protected void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isCollisionStay = false;
-        }
-    }
-
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (state == State.Death)
             return;
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isCollisionStay = true;
+        }
 
         if (collision.CompareTag("PlayerAttack"))
         {
@@ -155,6 +146,13 @@ public class HH_Monster : MonoBehaviour
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
             anim.SetBool("TakeHit", true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isCollisionStay = false;
         }
     }
 
