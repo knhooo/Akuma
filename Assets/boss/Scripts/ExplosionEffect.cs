@@ -4,63 +4,63 @@ using UnityEngine;
 
 public class ExplosionEffect : MonoBehaviour
 {
-    private float damageOverTime;
-    private float dotDuration;
-    private float dotInterval;
-
-    private HashSet<Player> playersInEffect = new HashSet<Player>(); // 도트 딜 적용할 플레이어 리스트
-
-    public void SetDamageParams(float dotDamage, float duration, float interval)
+    public Collider2D effectCollider;
+    public DotStackManager dotStackManager; // DotStackManager 참조
+    public GameObject DotStackManagerPrefabs;
+    void Start()
     {
-        damageOverTime = dotDamage;
-        dotDuration = duration;
-        dotInterval = interval;
-
-        StartCoroutine(DotDamageCoroutine()); // 지속적으로 도트 딜 적용
-        Destroy(gameObject, dotDuration + 0.5f); // 도트 끝난 후 효과 삭제
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        if (dotStackManager == null)
         {
-            Player player = collision.GetComponent<Player>();
-            if (player != null)
-            {
-                playersInEffect.Add(player);
-            }
+            GameObject dotStackManagerObject = Instantiate(DotStackManagerPrefabs);
+            dotStackManager = dotStackManagerObject.GetComponent<DotStackManager>();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+
+    void OnDrawGizmos()
     {
-        if (collision.CompareTag("Player"))
+        if (effectCollider != null)
         {
-            Player player = collision.GetComponent<Player>();
-            if (player != null)
-            {
-                playersInEffect.Remove(player);
-            }
+            Gizmos.color = Color.green; // 색상 설정 (원하는 색으로 변경 가능)
+            Gizmos.DrawWireCube(effectCollider.bounds.center, effectCollider.bounds.size); // Collider의 크기와 위치에 맞게 그리기
         }
     }
 
-    private IEnumerator DotDamageCoroutine()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < dotDuration)
+        if (other.CompareTag("Player"))
         {
-            foreach (var player in playersInEffect)
-            {
-                if (player != null)
-                {
-                    player.TakeDamage(Mathf.RoundToInt(damageOverTime * dotInterval));
-                    Debug.Log($"🔥 {player.name}에게 도트 데미지 적용");
-                }
-            }
+            Player player = other.GetComponent<Player>();
 
-            elapsedTime += dotInterval;
-            yield return new WaitForSeconds(dotInterval);
+            // 플레이어에게 도트 스택을 관리하는 DotStackManager에 요청
+            dotStackManager.OnPlayerEnter(other); // DotStackManager에 플레이어가 들어왔음을 알림
         }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponent<Player>();
+
+            // 플레이어에게 도트 스택을 관리하는 DotStackManager에 요청
+            dotStackManager.OnPlayerStay(other); // DotStackManager에 플레이어가 머무는 중임을 알림
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponent<Player>();
+
+            // 플레이어가 콜라이더를 벗어나면 DotStackManager에 알림
+            dotStackManager.OnPlayerExit(other); // DotStackManager에 플레이어가 나갔음을 알림
+        }
+    }
+
+    void Update()
+    {
+        dotStackManager.UpdateStackTimers(); // DotStackManager에서 스택 타이머 갱신
     }
 }
