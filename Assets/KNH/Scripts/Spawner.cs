@@ -32,13 +32,14 @@ public class Spawner : MonoBehaviour
             frequency = 0.6f;
         }
         else if(timer > 180 && timer < 240)
-        {
-            
-            //spawnIndex = 3;
-            
+        { 
+            spawnIndex = 3;
+            frequency = 0.4f;
+
         }
         else if(timer > 240 && timer < 300)
         {
+            spawnIndex = 4;
             frequency = 0.2f;
         }
         else if(timer > 300)//º¸½º
