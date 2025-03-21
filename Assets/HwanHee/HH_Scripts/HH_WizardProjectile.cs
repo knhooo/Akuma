@@ -36,8 +36,6 @@ public class HH_WizardProjectile : MonoBehaviour
             isDestroy = true;
             anim.SetTrigger("Destroy");
 
-            if (!player)
-                return;
             player.GetComponent<Player>().TakeDamage(attack);
         }
     }

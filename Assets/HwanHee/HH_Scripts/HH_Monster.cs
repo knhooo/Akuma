@@ -13,6 +13,8 @@ public class HH_Monster : MonoBehaviour
     protected float speed = 2f;
     [SerializeField]
     protected float attackRange = 2f;
+    [SerializeField]
+    protected int exp = 10;
 
     protected enum State { Run, Attack, TakeHit, Death }
     protected State state = State.Run;
@@ -68,15 +70,8 @@ public class HH_Monster : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        // 플레이어한테 뒤로 밀려남
+        // 플레이어한테 밀리면서 맞았을 때 -> player이속 + 넉백 이속
         if (isCollisionStay && state != State.TakeHit)
-        {
-            Player _player = player.GetComponent<Player>();
-            transform.Translate(-dirToPlayer * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
-        }
-
-        // 넉백
-        if (isCollisionStay && state == State.TakeHit)
         {
             Player _player = player.GetComponent<Player>();
             transform.Translate(-dirToPlayer * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
@@ -148,13 +143,6 @@ public class HH_Monster : MonoBehaviour
 
     protected virtual void Attack()
     {
-        if (!player)
-        {
-            anim.SetBool("Run", true);
-            anim.SetBool("Attack", false);
-            return;
-        }
-
         // 멀어졌을 경우
         if (distanceToPlayer > attackRange)
         {
@@ -166,19 +154,13 @@ public class HH_Monster : MonoBehaviour
 
     protected void TakeHit()
     {
-        if (!player)
-        {
-            anim.SetBool("TakeHit", false);
-            anim.SetBool("Run", true);
-            state = State.Run;
-            return;
-        }
-
         if (hp <= 0)
         {
             anim.SetBool("TakeHit", false);
             anim.SetBool("Death", true);
             state = State.Death;
+
+            player.GetComponent<Player>().Exp += exp;
         }
 
         if (isTakeHitOver)
