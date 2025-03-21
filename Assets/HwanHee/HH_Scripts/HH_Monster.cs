@@ -98,7 +98,6 @@ public class HH_Monster : MonoBehaviour
         {
             Player _player = player.GetComponent<Player>();
             transform.Translate(-dirToPlayer * _player.Speed * Time.fixedDeltaTime);
-            Debug.Log("dirToPlayer: " + dirToPlayer);
         }
 
         if (state == State.Attack)

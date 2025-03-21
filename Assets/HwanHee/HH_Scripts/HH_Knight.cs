@@ -136,7 +136,7 @@ public class HH_Knight : Player
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rollCoolTime = 0f;
+                rollCoolTimer = 0f;
                 speed += speedBoost;
 
                 state = KnightState.Roll;
@@ -162,7 +162,6 @@ public class HH_Knight : Player
             anim.SetBool("Attack", true);
         }
     }
-
 
     void HandleKnightInput()
     {
