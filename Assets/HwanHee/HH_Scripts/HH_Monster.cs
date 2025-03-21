@@ -5,21 +5,6 @@ using UnityEngine;
 
 public class HH_Monster : MonoBehaviour
 {
-    enum State { Run, Attack, TakeHit, Death }
-
-    private Rigidbody2D rigid;
-    private SpriteRenderer spriteRenderer;
-    private Animator anim;
-
-    private GameObject player;
-    State state = State.Run;
-    float distanceToPlayer;
-    bool isAttackOver = true;
-    bool isTakeHitOver = true;
-    Vector3 dir;
-    bool isCollisionStay = false;
-    float knockBack = 0.3f;
-
     [SerializeField]
     int hp = 50;
     [SerializeField]
@@ -28,6 +13,24 @@ public class HH_Monster : MonoBehaviour
     float speed = 2;
     [SerializeField]
     float attackRange = 2f;
+
+    enum State { Run, Attack, TakeHit, Death }
+    State state = State.Run;
+
+    private Rigidbody2D rigid;
+    private SpriteRenderer spriteRenderer;
+    private Animator anim;
+
+    private GameObject player;
+
+    float distanceToPlayer;
+    float knockBackSpeed = 1f;
+
+    bool isAttackOver = true;
+    bool isTakeHitOver = true;
+    bool isCollisionStay = false;
+
+    Vector3 dir;
 
     private void Awake()
     {
@@ -66,10 +69,24 @@ public class HH_Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isCollisionStay)
+        // 플레이어한테 뒤로 밀려남
+        if (isCollisionStay && state != State.TakeHit)
         {
-            HH_Knight _player = player.GetComponent<HH_Knight>();
-            transform.Translate(-dir * _player.Speed * Time.fixedDeltaTime);
+            Player _player = player.GetComponent<Player>();
+            transform.Translate(-dir * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
+        }
+
+        // 넉백
+        if (isCollisionStay && state == State.TakeHit)
+        {
+            Player _player = player.GetComponent<Player>();
+            transform.Translate(-dir * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
+        }
+
+        // 넉백
+        else if (!isCollisionStay && state == State.TakeHit)
+        {
+            transform.Translate(-dir * knockBackSpeed * Time.fixedDeltaTime);
         }
 
         if (state != State.Run || state == State.TakeHit)
@@ -112,7 +129,7 @@ public class HH_Monster : MonoBehaviour
         {
             isAttackOver = true;
             isTakeHitOver = false;
-            hp -= player.GetComponent<HH_Knight>().Attack;
+            hp -= player.GetComponent<Player>().Attack;
             state = State.TakeHit;
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
@@ -167,16 +184,6 @@ public class HH_Monster : MonoBehaviour
             state = State.Death;
         }
 
-        // 뒤로 밀려남
-        if (isCollisionStay)
-        {
-            HH_Knight _player = player.GetComponent<HH_Knight>();
-            transform.Translate(-dir * (knockBack + _player.Speed) * Time.fixedDeltaTime);
-        }
-
-        else
-            transform.Translate(-dir * knockBack * Time.fixedDeltaTime);
-
         if (isTakeHitOver)
         {
             state = State.Run;
@@ -185,11 +192,12 @@ public class HH_Monster : MonoBehaviour
         }
     }
 
+    // 애니메이션 이벤트용
     private void AttackPlayer()
     {
         if (distanceToPlayer <= attackRange)
         {
-            HH_Knight _player = player.GetComponent<HH_Knight>();
+            Player _player = player.GetComponent<Player>();
             _player.TakeDamage(attack);
         }
     }
@@ -203,7 +211,6 @@ public class HH_Monster : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
 
     private void SetTakeHitOver()
     {

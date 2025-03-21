@@ -24,7 +24,7 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
     {
-        GameObject enemy = GameManager.instance.pool.Get(Random.Range(0,1));//몬스터 추가 시 수정
+        GameObject enemy = GameManager.instance.pool.Get(Random.Range(0,3));//몬스터 추가 시 수정
         enemy.transform.position = spawnPoint[Random.Range(1,spawnPoint.Length)].position;
     }
 }

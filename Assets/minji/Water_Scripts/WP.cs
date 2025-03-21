@@ -1,15 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class WP : MonoBehaviour
+public class WP : Player
 {
-    public float wmoveSpeed = 3f; //움직이는 속도
     public float wspeedUp = 5f; //증가된 속도
     public float wkeepSpeed = 3f; //속도 저장
 
     Animator ani; //애니메이션 객체 선언
-    public int wPower = 10; //주문력 
-    public int wHP = 100; //체력 (20씩 증가)
 
 
 
@@ -36,8 +33,8 @@ public class WP : MonoBehaviour
     {
         
         //방향키에 따른 물마법사 x, y좌표
-        float moveX = wmoveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
-        float moveY = wmoveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
+        float moveX = speed * Time.deltaTime * Input.GetAxis("Horizontal");
+        float moveY = speed * Time.deltaTime * Input.GetAxis("Vertical");
 
 
         //좌우 이동
@@ -51,13 +48,13 @@ public class WP : MonoBehaviour
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 ani.SetBool("surf", true); //대쉬 모션 활성화
 
-                wmoveSpeed = wspeedUp; //스피드 증가
+                speed = wspeedUp; //스피드 증가
             }
             else //Shift를 땔 때
             {
                 ani.SetBool("walk", true); //걷는 모션 다시 활성화
                 ani.SetBool("surf", false);
-                wmoveSpeed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
+                speed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
             }
 
             if (Input.GetMouseButtonDown(0)) //왼쪽으로 이동하면서 마우스 왼쪽 버튼 누를 때
@@ -84,13 +81,13 @@ public class WP : MonoBehaviour
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 ani.SetBool("surf", true); //대쉬 모션 활성화
 
-                wmoveSpeed = wspeedUp; //스피드 증가
+                speed = wspeedUp; //스피드 증가
             }
             else
             {
                 ani.SetBool("walk", true); //걷는 모션 활성화
                 ani.SetBool("surf", false); //대쉬 모션 비활성화
-                wmoveSpeed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
+                speed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
             }
 
             if (Input.GetMouseButtonDown(0)) //오른쪽으로 이동하면서 마우스 좌클릭
@@ -115,12 +112,12 @@ public class WP : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             ani.SetBool("surf", true);
-            wmoveSpeed = wspeedUp; //스피드 증가
+            speed = wspeedUp; //스피드 증가
         }
         else
         {
             ani.SetBool("surf", false);
-            wmoveSpeed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
+            speed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
         }
 
         //마우스 좌클릭
@@ -150,7 +147,7 @@ public class WP : MonoBehaviour
         //캐릭터 좌표
         transform.Translate(moveX, moveY, 0);
 
-        if (wHP == 0)
+        if (hp == 0)
         {
             ani.SetBool("death", true);
         }
@@ -162,7 +159,7 @@ public class WP : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             ani.SetBool("takehit", true);
-            wHP -= 10;
+            hp -= 10;
         }
     }
 
