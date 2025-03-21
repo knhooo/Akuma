@@ -49,7 +49,7 @@ public class HH_Monster : MonoBehaviour
 
     protected void OnEnable()
     {
-        maxHp = hp;
+        hp = maxHp;
 
         state = State.Run;
         anim.SetBool("Run", true);
