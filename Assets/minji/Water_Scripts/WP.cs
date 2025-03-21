@@ -12,6 +12,7 @@ public class WP : Player //물마법사 스크립트
 
 
     public GameObject waterbullet; //물미사일 객체 선언
+    public GameObject waterPbullet; //물미사일 (보라색) 객체 선언
     public GameObject waterbulletU; //물미사일 객체 선언
     public GameObject waterbulletR; //물미사일 객체 선언
     public GameObject waterbulletL; //물미사일 객체 선언
@@ -70,6 +71,17 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("walk", true); //걷는 모션 활성화
                 ani.SetBool("sp_atk", false);
             }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                ani.SetBool("sp_atk", true);
+                GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                Destroy(go1, 5);
+            }
+            else
+            {
+                ani.SetBool("sp_atk", false);
+            }
         }
         else if (Input.GetAxis("Horizontal") >= 0.2) //오른쪽으로 이동할 때
         {
@@ -99,6 +111,17 @@ public class WP : Player //물마법사 스크립트
             else
             {
                 ani.SetBool("sp_atk", false); //공격모션 비활성화
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                ani.SetBool("sp_atk", true);
+                GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                Destroy(go1, 5);
+            }
+            else
+            {
+                ani.SetBool("sp_atk", false);
             }
 
 
@@ -136,6 +159,29 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("sp_atk", true);
                 GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity);
                 Destroy(go, 5);
+            }
+
+        }
+        else
+        {
+            ani.SetBool("sp_atk", false);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (transform.localScale.x == 1f)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+                ani.SetBool("sp_atk", true);
+                GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                Destroy(go1, 5);
+            }
+            else if (transform.localScale.x == -1f)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                ani.SetBool("sp_atk", true);
+                GameObject go1 = Instantiate(waterPbullet, pos2.position, Quaternion.identity);
+                Destroy(go1, 5);
             }
 
         }
