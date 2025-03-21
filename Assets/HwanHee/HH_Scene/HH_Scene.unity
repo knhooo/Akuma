@@ -176,7 +176,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f08324774a61e91488f3d72aeaa0c207, type: 3}
---- !u!1001 &1004857933
+--- !u!1001 &209169295
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -184,33 +184,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3111398204871159918, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.0226502
-      objectReference: {fileID: 0}
-    - target: {fileID: 3111398204871159918, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1613
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383290835557951840, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.0226502
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383290835557951840, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1613
-      objectReference: {fileID: 0}
     - target: {fileID: 5534838947949792760, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_Name
       value: Knight
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.88
+      value: -2.71
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.46
+      value: -1.4
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -632,9 +616,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 1380277214}
   - {fileID: 6739350918983550554}
-  - {fileID: 1004857933}
   - {fileID: 114802483}
   - {fileID: 1680441346}
   - {fileID: 1995610048}
   - {fileID: 1236323703}
   - {fileID: 1092908827}
+  - {fileID: 209169295}

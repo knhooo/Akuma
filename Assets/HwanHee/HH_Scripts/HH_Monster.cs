@@ -87,17 +87,18 @@ public class HH_Monster : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        // 플레이어한테 밀리면서 맞았을 때 -> player이속 + 넉백 이속
-        if (isCollisionStay && state == State.TakeHit)
-        {
-            Player _player = player.GetComponent<Player>();
-            transform.Translate(-dirToPlayer * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
-        }
+        if (state == State.Death)
+            return;
 
-        // 넉백
-        else if (!isCollisionStay && state == State.TakeHit)
+        if(state == State.TakeHit)
         {
-            transform.Translate(-dirToPlayer * knockBackSpeed * Time.fixedDeltaTime);
+            if(isCollisionStay)
+            {
+                Player _player = player.GetComponent<Player>();
+                transform.Translate(-dirToPlayer * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
+            }
+            else
+                transform.Translate(-dirToPlayer * knockBackSpeed * Time.fixedDeltaTime);
         }
 
         if (state != State.Run || state == State.TakeHit)
@@ -114,6 +115,8 @@ public class HH_Monster : MonoBehaviour
 
     protected void LateUpdate()
     {
+        if (state == State.Death)
+            return;
         spriteRenderer.flipX = player.transform.position.x < rigid.position.x;
     }
 
