@@ -260,10 +260,10 @@ public class BossAI : MonoBehaviour
         float castDuration = 0.5f / animator.speed;
         yield return new WaitForSeconds(castDuration);
 
-        // 2️. 애니메이션 재생 시간만큼 대기
+        // 2애니메이션 재생 시간만큼 대기
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        // 3️. 이동 재개
+        // 이동 재개
         isCasting = false; // Cast 상태 해제
         isMoving = true;
 
@@ -271,7 +271,7 @@ public class BossAI : MonoBehaviour
     }
 
 
-    // RedDot가 사라진 후 BossSpell을 생성하는 코루틴
+    // RedDot 사라진 후 BossSpell을 생성하는 코루틴
     IEnumerator HandleRedDotAndSpell(GameObject redDot, GameObject bossSpell)
     {
         // RedDot n초 후 삭제
