@@ -84,7 +84,7 @@ public class HH_Monster : MonoBehaviour
     protected void FixedUpdate()
     {
         // 플레이어한테 밀리면서 맞았을 때 -> player이속 + 넉백 이속
-        if (isCollisionStay && state != State.TakeHit)
+        if (isCollisionStay && state == State.TakeHit)
         {
             Player _player = player.GetComponent<Player>();
             transform.Translate(-dirToPlayer * (knockBackSpeed + _player.Speed) * Time.fixedDeltaTime);
