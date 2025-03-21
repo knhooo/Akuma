@@ -122,7 +122,13 @@ public class HH_Monster : MonoBehaviour
         if (collision.CompareTag("PlayerAttack"))
         {
             isTakeHitOver = false;
+
             hp -= player.GetComponent<Player>().Attack;
+            if (hp <= 0)
+            {
+                Death();
+                return;
+            }
             state = State.TakeHit;
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
@@ -154,21 +160,21 @@ public class HH_Monster : MonoBehaviour
 
     protected void TakeHit()
     {
-        if (hp <= 0)
-        {
-            anim.SetBool("TakeHit", false);
-            anim.SetBool("Death", true);
-            state = State.Death;
-
-            player.GetComponent<Player>().Exp += exp;
-        }
-
         if (isTakeHitOver)
         {
             state = State.Run;
             anim.SetBool("TakeHit", false);
             anim.SetBool("Run", true);
         }
+    }
+
+    private void Death()
+    {
+        anim.SetBool("TakeHit", false);
+        anim.SetBool("Death", true);
+        state = State.Death;
+
+        player.GetComponent<Player>().Exp += exp;
     }
 
     // 애니메이션 이벤트용
