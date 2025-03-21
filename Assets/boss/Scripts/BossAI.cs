@@ -166,8 +166,8 @@ public class BossAI : MonoBehaviour
     private void AttackPlayer()
     {
         //실제 공격 실행 (플레이어에게 데미지 주기)
-        //player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);  // 값을 몰라서 임의로 설정
-        //Debug.Log("보스가 플레이어를 공격했습니다! 데미지: " + attackDamage);
+        player.GetComponent<Player>().TakeDamage(Mathf.RoundToInt(attackDamage));
+        Debug.Log("보스가 플레이어를 공격했습니다! 데미지: " + attackDamage);
     }
 
 
@@ -200,17 +200,8 @@ public class BossAI : MonoBehaviour
             Vector3 randomPosition = GetRandomSpellPositionInCameraView();
             GameObject redDot = Instantiate(redDotPrefab, randomPosition, Quaternion.identity);
 
-            // RedDot 위에 BossSpell을 생성
-            GameObject bossSpell = Instantiate(bossSpellPrefab, redDot.transform.position, Quaternion.identity);
-
-            // BossSpell에 RedDot의 위치를 전달 (BossSpell의 explosionPoint로 설정)
-            BossSpell bossSpellScript = bossSpell.GetComponent<BossSpell>();
-            if (bossSpellScript != null)
-            {
-                bossSpellScript.explosionPoint = redDot.transform;  // explosionPoint를 RedDot 위치로 설정
-            }
             // RedDot가 일정 시간 후 삭제된 후 BossSpell이 생성되도록 함
-            StartCoroutine(HandleRedDotAndSpell(redDot, bossSpell));
+            StartCoroutine(HandleRedDotAndSpell(redDot));
         }
     }
 
@@ -260,7 +251,7 @@ public class BossAI : MonoBehaviour
         float castDuration = 0.5f / animator.speed;
         yield return new WaitForSeconds(castDuration);
 
-        // 2애니메이션 재생 시간만큼 대기
+        // 애니메이션 재생 시간만큼 대기
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
         // 이동 재개
@@ -272,7 +263,7 @@ public class BossAI : MonoBehaviour
 
 
     // RedDot 사라진 후 BossSpell을 생성하는 코루틴
-    IEnumerator HandleRedDotAndSpell(GameObject redDot, GameObject bossSpell)
+    IEnumerator HandleRedDotAndSpell(GameObject redDot)
     {
         // RedDot n초 후 삭제
         yield return new WaitForSeconds(2f);
@@ -280,7 +271,19 @@ public class BossAI : MonoBehaviour
         // RedDot 삭제
         Destroy(redDot);
 
-        // 이제 BossSpell을 생성하는 로직이 끝났으므로 추가적인 처리 필요 시 여기서 할 수 있음.
+        // RedDot 위치 저장 후 삭제
+        Vector3 spawnPosition = redDot.transform.position;
+        Destroy(redDot);
+
+        // RedDot이 삭제된 후 같은 위치에 BossSpell 생성
+        GameObject bossSpell = Instantiate(bossSpellPrefab, spawnPosition, Quaternion.identity);
+
+        // BossSpell에 explosionPoint 설정
+        BossSpell bossSpellScript = bossSpell.GetComponent<BossSpell>();
+        if (bossSpellScript != null)
+        {
+            bossSpellScript.explosionPoint = bossSpell.transform;  // explosionPoint를 BossSpell의 위치로 설정
+        }
     }
 
     // 순간이동 코루틴
