@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class HH_Monster : MonoBehaviour
+public class TESTHH_Monster : MonoBehaviour
 {
     [SerializeField]
     protected int hp = 50;
@@ -15,6 +15,8 @@ public class HH_Monster : MonoBehaviour
     protected float attackRange = 2f;
     [SerializeField]
     protected int exp = 10;
+    [SerializeField]
+    float _velocity;
 
     protected enum State { Run, Attack, TakeHit, Death }
     protected State state = State.Run;
@@ -47,6 +49,7 @@ public class HH_Monster : MonoBehaviour
 
     protected void Update()
     {
+        _velocity = rigid.linearVelocity.magnitude;
         if (state == State.Death)
             return;
 
@@ -85,6 +88,8 @@ public class HH_Monster : MonoBehaviour
 
         if (state != State.Run || state == State.TakeHit)
             return;
+        if (state != State.Run || state == State.TakeHit)
+            return;
 
         else
         {
@@ -116,6 +121,7 @@ public class HH_Monster : MonoBehaviour
         }
     }
 
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (state == State.Death)
@@ -135,6 +141,9 @@ public class HH_Monster : MonoBehaviour
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
             anim.SetBool("TakeHit", true);
+
+            Vector3 force = dirToPlayer * 2f ;
+            rigid.AddForce(-dirToPlayer, ForceMode2D.Impulse);
         }
     }
 
