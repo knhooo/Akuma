@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8011406776113301688}
   - component: {fileID: 7342565297650798987}
   - component: {fileID: 5532331025948358953}
-  - component: {fileID: 8715700363816877969}
   m_Layer: 0
   m_Name: WaterP
   m_TagString: Player
@@ -188,36 +187,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8715700363816877969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542937309634921995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2df1827a06256348a510e522e95ca1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 100
-  maxHp: 100
-  level: 1
-  exp: 0
-  maxExp: 100
-  attack: 10
-  speed: 3
-  wspeedUp: 5
-  wkeepSpeed: 3
-  wExposion: {fileID: 3089136351200604264, guid: ce0a9d2b1e3d21246bf4e899b86a1f60, type: 3}
-  waterbullet: {fileID: 870406331993294887, guid: bf57f4f2e40b9fa4d87a420fc26bf32b, type: 3}
-  waterPbullet: {fileID: 7172792088523307345, guid: 74ecfd5da1c8aac4faf343e4c95865f5, type: 3}
-  waterbulletU: {fileID: 1748014637760105597, guid: 481516feffbdbaf45aee0d982a074d6c, type: 3}
-  waterbulletR: {fileID: 7629757603934024261, guid: f645c28838bf050439aa4c1ecdd8330b, type: 3}
-  waterbulletL: {fileID: 8921102924600728054, guid: c1361e07dd965cb4986437d6e2ee8a48, type: 3}
-  waterbulletD: {fileID: 91055395023606885, guid: ea6e593e937e82e418312616e7120c24, type: 3}
-  pos1: {fileID: 2853220943928749697}
-  pos2: {fileID: 4307643872519116120}
 --- !u!1 &5715138462740854564
 GameObject:
   m_ObjectHideFlags: 0
