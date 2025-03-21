@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class ArcherAnim : MonoBehaviour
+public class ArcherAnim : Player
 {
     private Animator animator;
     private Rigidbody2D rb;
-    public float moveSpeed = 5f; // Movement speed
     public bool allowVerticalMovement = true; // Whether vertical movement is allowed
 
     public GameObject arrowPrefab; // Arrow prefab
@@ -29,7 +28,7 @@ public class ArcherAnim : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = allowVerticalMovement ? Input.GetAxis("Vertical") : 0f; // Get vertical input if allowed
 
-        rb.linearVelocity = new Vector2(moveX * moveSpeed, moveY * moveSpeed); // Handle X and Y movement
+        rb.linearVelocity = new Vector2(moveX * speed, moveY * speed); // Handle X and Y movement
 
         animator.SetBool("isMoving", moveX != 0 || moveY != 0);
 

@@ -6,14 +6,8 @@ using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HH_Knight : MonoBehaviour
+public class HH_Knight : Player
 {
-    [SerializeField]
-    int hp = 100;
-    [SerializeField]
-    int attack = 10;
-    [SerializeField]
-    int speed = 3;
     [SerializeField]
     GameObject sword_right;
     [SerializeField]
@@ -29,9 +23,6 @@ public class HH_Knight : MonoBehaviour
     [SerializeField]
     protected Material takeHitMaterial;
 
-    public int Attack { get { return attack; } set { attack = value; } }
-    public int Hp { get { return hp; } set { hp = value; } }
-    public int Speed { get { return speed; } }
 
     enum Dir { left, right }
     Dir dir = Dir.right;
@@ -164,7 +155,7 @@ public class HH_Knight : MonoBehaviour
             return;
     }
 
-    public void TakeDamage(int dmg)
+    public override void TakeDamage(int dmg)
     {
         if (state == KnightState.Defend || state == KnightState.Death)
             return;
