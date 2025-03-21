@@ -29,4 +29,9 @@ public class Player : MonoBehaviour
     {
 
     }
+
+    public virtual void GetExperience(int ex)
+    {
+
+    }
 }
