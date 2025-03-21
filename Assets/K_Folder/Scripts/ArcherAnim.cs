@@ -1,14 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class ArcherAnim : Player
 {
     private Animator animator;
     private Rigidbody2D rb;
-    public bool allowVerticalMovement = true; // Whether vertical movement is allowed
 
-    public GameObject arrowPrefab; // Arrow prefab
-    public Transform firePoint; // The position where the arrow will spawn
-    public float arrowSpeed = 10f; // Arrow speed
+    public GameObject arrowPrefab;
+    public Transform firePoint;
+    public float arrowSpeed = 10f;
+    public float shootInterval = 2f;
 
     void Awake()
     {
@@ -16,97 +17,80 @@ public class ArcherAnim : Player
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public override void TakeDamage(int dmg)
-    {
-        if (hp <= 0) return;
-
-        hp -= dmg;
-
-        if (hp <= 0)
-        {
-            Die(); // Archer Å¬·¡½º ³»ºÎ¿¡ Á¤ÀÇµÈ Die() È£Ãâ
-            return;
-        }
-
-        animator.SetTrigger("isDamaged");
-    }
-
-    void Die()
-    {
-        animator.SetTrigger("isDeath");
-        this.enabled = false; // ½ºÅ©¸³Æ® ºñÈ°¼ºÈ­ (ÀÔ·Â, ÀÌµ¿ µî Â÷´Ü)
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Monster"))
-        {
-            TakeDamage(10); // °íÁ¤ µ¥¹ÌÁö 10 (ÇÊ¿ä ½Ã Á¶Á¤ °¡´É)
-        }
-    }
-
-    // ¶Ç´Â ¸ó½ºÅÍ°¡ Æ®¸®°Å ÄÝ¶óÀÌ´õÀÏ °æ¿ì
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Monster"))
-        {
-            TakeDamage(10);
-        }
-    }
     void Start()
     {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0; // Remove gravity (allow vertical movement without gravity)
+        rb.gravityScale = 0;
+        StartCoroutine(AutoShoot()); // ï¿½Úµï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     void Update()
     {
         HandleMovement();
-        HandleAttackInput();
     }
 
     void HandleMovement()
     {
         float moveX = Input.GetAxis("Horizontal");
-        float moveY = allowVerticalMovement ? Input.GetAxis("Vertical") : 0f; // Get vertical input if allowed
-
-        rb.linearVelocity = new Vector2(moveX * speed, moveY * speed); // Handle X and Y movement
+        float moveY = Input.GetAxis("Vertical");
+        rb.linearVelocity = new Vector2(moveX * speed, moveY * speed);
 
         animator.SetBool("isMoving", moveX != 0 || moveY != 0);
 
         if (moveX > 0)
-            transform.localScale = new Vector3(1, 1, 1); // Flip character to face right
+            transform.localScale = new Vector3(1, 1, 1);
         else if (moveX < 0)
-            transform.localScale = new Vector3(-1, 1, 1); // Flip character to face left
+            transform.localScale = new Vector3(-1, 1, 1);
     }
 
-    void HandleAttackInput()
+    IEnumerator AutoShoot()
     {
-        if (Input.GetMouseButtonDown(1)) // Right-click to attack (for special attack)
+        while (true)
         {
-            animator.SetTrigger("1Attack");
-        }
-        else if (Input.GetMouseButtonDown(0)) // Left-click to attack (shoot arrow)
-        {
-            animator.SetTrigger("2Attack");
-            Invoke("ShootArrow", 0.4f); // Shoot arrow after 0.4 seconds delay
-        }
-    }
-
-    // Function to shoot the arrow
-    public void ShootArrow()
-    {
-        Debug.Log("ShootArrow function executed!"); // Log to check if function is called
-        if (arrowPrefab != null && firePoint != null)
-        {
-            GameObject arrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            Transform target = FindClosestMonster();
+            if (target != null)
             {
-                float direction = transform.localScale.x; // Get character's facing direction (left or right)
-                rb.linearVelocity = new Vector2(direction * arrowSpeed, 0); // Apply velocity to the arrow
+                ShootAtTarget(target.position);
+            }
+            yield return new WaitForSeconds(shootInterval);
+        }
+    }
+
+    Transform FindClosestMonster()
+    {
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+        Transform closest = null;
+        float minDist = Mathf.Infinity;
+
+        foreach (GameObject monster in monsters)
+        {
+            float dist = Vector2.Distance(transform.position, monster.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = monster.transform;
             }
         }
+
+        return closest;
+    }
+
+    void ShootAtTarget(Vector3 targetPos)
+    {
+        Vector2 direction = (targetPos - firePoint.position).normalized;
+
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        arrow.transform.localScale = Vector3.one;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(0, 0, angle); // Spriteï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * arrowSpeed;
+        }
+
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½
+        // animator.SetTrigger("2Attack");
     }
 }
