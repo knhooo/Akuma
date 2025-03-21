@@ -23,13 +23,11 @@ public class Spawner : MonoBehaviour
 
         if (timer > 60 && timer < 120)
         {
-            Debug.Log(timer);
             spawnIndex = 1;
             frequency = 0.8f;
         }
         else if (timer > 120 && timer <180)
         {
-            Debug.Log(timer);
             spawnIndex = 2;
             frequency = 0.6f;
         }

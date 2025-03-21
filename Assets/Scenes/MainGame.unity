@@ -53840,6 +53840,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88f6679a1d1e9040bad14f03e49770e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  hpBar: {fileID: 776665061}
+  expBar: {fileID: 2122726361}
+  levelText: {fileID: 1161471763}
 --- !u!1 &1132627872
 GameObject:
   m_ObjectHideFlags: 0
