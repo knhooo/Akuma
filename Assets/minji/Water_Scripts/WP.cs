@@ -8,7 +8,7 @@ public class WP : Player //물마법사 스크립트
 
     Animator ani; //애니메이션 객체 선언
 
-
+    public GameObject wExposion;
 
 
     public GameObject waterbullet; //물미사일 객체 선언
@@ -171,6 +171,7 @@ public class WP : Player //물마법사 스크립트
     public override void TakeDamage(int dmg) //데미지 입는 메서드 오버라이딩
     {
         hp -= dmg;
+        Instantiate(wExposion, transform.position, Quaternion.identity);
     }
 
 }
