@@ -37,4 +37,8 @@ public class SelectButton : MonoBehaviour
         PlayerPrefs.SetInt("classNo", 2);
         SceneManager.LoadScene("MainGame");//캐릭터 선택 씬 로드
     }
+    public void Finsh()//게임 오버
+    {
+        SceneManager.LoadScene("TitleMenu");//타이틀씬 로드
+    }
 }

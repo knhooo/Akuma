@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490c04ce0b061b04384f7f122d967024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1000
+  hp: 100
   attack: 10
   speed: 2
   sword_right: {fileID: 563614996355844578}
@@ -194,7 +194,6 @@ MonoBehaviour:
   shieldCoolTime: 5
   blood: {fileID: 3238201351179218945, guid: ac936892e8ea9a345bbde646b82b2bc0, type: 3}
   takeHitMaterial: {fileID: 2100000, guid: 2bd3d7a12e5e69b438f9c4a627e0491d, type: 2}
-  isBloodMove: 0
 --- !u!212 &1412118443219722552
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -238,7 +237,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: cc6432d2f7bb79143a5e18760d87b75d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -306,17 +305,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.06608671, y: -0.7728221}
+  m_Offset: {x: 0.06608671, y: -0.10371101}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.25}
     oldSize: {x: 8, y: 2.8333333}
     newSize: {x: 8, y: 3.5555556}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6681125, y: 1.2959024}
+  m_Size: {x: 0.6681125, y: 1.1811976}
   m_EdgeRadius: 0
 --- !u!50 &3331273439114671909
 Rigidbody2D:
@@ -326,7 +325,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5534838947949792760}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -421,7 +420,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2001751549, guid: f84c086da34309f48a21fa417e27568a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
