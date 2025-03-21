@@ -6,6 +6,8 @@ using UnityEngine;
 public class HH_Monster : MonoBehaviour
 {
     [SerializeField]
+    protected int maxHp = 50;
+    [SerializeField]
     protected int hp = 50;
     [SerializeField]
     protected int attack = 10;
@@ -38,6 +40,17 @@ public class HH_Monster : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+    }
+
+    protected void OnEnable()
+    {
+        maxHp = hp;
+
+        state = State.Run;
+        anim.SetBool("Run", true);
+        anim.SetBool("Attack", false);
+        anim.SetBool("TakeHit", false);
+        anim.ResetTrigger("Death");
     }
 
     protected void Start()
