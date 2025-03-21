@@ -23,7 +23,6 @@ public class HH_Knight : Player
     [SerializeField]
     protected Material takeHitMaterial;
 
-
     enum Dir { left, right }
     Dir dir = Dir.right;
 
@@ -169,10 +168,7 @@ public class HH_Knight : Player
         }
 
         StartCoroutine(FlashWhite());
-
-        Vector3 bloodPos = transform.position;
-        bloodPos.y = transform.position.y - 0.92f;
-        Instantiate(blood, bloodPos, Quaternion.Euler(0, 0, 0));
+        Instantiate(blood, transform.position, Quaternion.Euler(0, 0, 0));
     }
 
     protected IEnumerator FlashWhite()
