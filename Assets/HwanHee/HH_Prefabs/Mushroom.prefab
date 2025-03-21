@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4459250571466897968}
   - component: {fileID: 7803138656917733008}
+  - component: {fileID: -1772269824245854990}
   - component: {fileID: 4125482275705738819}
   - component: {fileID: 5103690914762991652}
-  - component: {fileID: -1772269824245854990}
   - component: {fileID: 6120504021894741028}
   m_Layer: 0
   m_Name: Mushroom
@@ -91,6 +91,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1772269824245854990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105094559253308728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a2cbf9eb9ae27419118c4b4e79485d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 50
+  hp: 50
+  attack: 10
+  speed: 1
+  attackRange: 1
+  exp: 10
+  item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
+  dropRate: 10
 --- !u!61 &4125482275705738819
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164,23 +184,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-1772269824245854990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8105094559253308728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a2cbf9eb9ae27419118c4b4e79485d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 50
-  attack: 10
-  speed: 1
-  attackRange: 1
-  exp: 10
 --- !u!95 &6120504021894741028
 Animator:
   serializedVersion: 7

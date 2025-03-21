@@ -17,6 +17,10 @@ public class HH_Monster : MonoBehaviour
     protected float attackRange = 2f;
     [SerializeField]
     protected int exp = 10;
+    [SerializeField]
+    GameObject item;
+    [SerializeField]
+    float dropRate = 10f;
 
     protected enum State { Run, Attack, TakeHit, Death }
     protected State state = State.Run;
@@ -205,6 +209,9 @@ public class HH_Monster : MonoBehaviour
     protected void DestroyMonster()
     {
         gameObject.SetActive(false);
+
+        if (Random.Range(0, 100) < dropRate)
+            Instantiate(item, transform.position, Quaternion.identity);
     }
 
     protected void SetTakeHitOver()

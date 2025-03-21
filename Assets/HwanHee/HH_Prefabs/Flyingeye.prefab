@@ -125,11 +125,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a2cbf9eb9ae27419118c4b4e79485d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 50
   hp: 50
   attack: 10
   speed: 1
   attackRange: 1
   exp: 10
+  item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
+  dropRate: 10
 --- !u!70 &4076135007567940913
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
