@@ -3,7 +3,7 @@ using UnityEngine;
 public class wBulletR2 : MonoBehaviour
 {
     public float Speed = 4.0f;
-
+    public GameObject wbr;
 
     void Update()
     {
@@ -14,7 +14,7 @@ public class wBulletR2 : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
-
+            Instantiate(wbr, transform.position, Quaternion.identity);
             Destroy(gameObject);
 
         }
