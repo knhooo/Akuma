@@ -129,6 +129,7 @@ MonoBehaviour:
   attack: 10
   speed: 2
   attackRange: 5
+  exp: 10
   projectile: {fileID: 5385184288878626579, guid: fe5b9cdc4a7f854458094632b782c9a7, type: 3}
   maxAttackRange: 8
 --- !u!70 &8110033087626827005

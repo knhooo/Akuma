@@ -390,29 +390,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1412118443219722552, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1757743312330755619, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_Size.y
-      value: 1.1811976
-      objectReference: {fileID: 0}
-    - target: {fileID: 1757743312330755619, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.10371101
-      objectReference: {fileID: 0}
-    - target: {fileID: 3331273439114671909, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5534838947949792760, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_Name
       value: Knight
-      objectReference: {fileID: 0}
-    - target: {fileID: 5954031385530437892, guid: e895804e2bfb67640899240228f4b89f, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7977564817008600800, guid: e895804e2bfb67640899240228f4b89f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -454,6 +434,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8227572573732964011, guid: e895804e2bfb67640899240228f4b89f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -467,10 +451,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 977792803047809313, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 2768540187609537817, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
       propertyPath: m_Name
       value: Wizard
