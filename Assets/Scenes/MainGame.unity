@@ -36790,10 +36790,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -6244701632924150133, guid: 39113b2a519ad2c44a991a5c991e05c2, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -53734,6 +53734,7 @@ GameObject:
   - component: {fileID: 1099175142}
   - component: {fileID: 1099175141}
   - component: {fileID: 1099175140}
+  - component: {fileID: 1099175144}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -53827,6 +53828,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1099175144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099175139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88f6679a1d1e9040bad14f03e49770e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1132627872
 GameObject:
   m_ObjectHideFlags: 0
@@ -74066,10 +74079,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -8712880223558408681, guid: 8713c1fdc44ad6f4784380c3ce423cb9, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
