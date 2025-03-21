@@ -19,6 +19,10 @@ public class HH_Knight : Player
     [SerializeField]
     float shieldCoolTime = 5.0f;
     [SerializeField]
+    float rollCoolTime = 5.0f;
+    [SerializeField]
+    float speedBoost = 2f;
+    [SerializeField]
     GameObject blood;
     [SerializeField]
     protected Material takeHitMaterial;
@@ -26,7 +30,7 @@ public class HH_Knight : Player
     enum Dir { left, right }
     Dir dir = Dir.right;
 
-    enum KnightState { Attack, Defend, Death }
+    enum KnightState { Attack, Defend, Roll, Death }
     KnightState state = KnightState.Attack;
 
     SpriteRenderer spriteRenderer;
@@ -39,10 +43,12 @@ public class HH_Knight : Player
 
     float shieldTimer = 0f;
     float shieldCoolTimer = 0f;
+    float rollCoolTimer = 0f;
 
     void Awake()
     {
         shieldCoolTimer = shieldCoolTime;
+        rollCoolTimer = rollCoolTime;
 
         originalMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -64,6 +70,9 @@ public class HH_Knight : Player
                 break;
             case KnightState.Defend:
                 Defend();
+                break;
+            case KnightState.Roll:
+               // Roll();
                 break;
         }
 
@@ -121,6 +130,20 @@ public class HH_Knight : Player
 
             }
         }
+
+        rollCoolTimer += Time.deltaTime;
+        if (rollCoolTimer >= rollCoolTime)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rollCoolTime = 0f;
+                speed += speedBoost;
+
+                state = KnightState.Roll;
+                anim.SetBool("Attack", false);
+                anim.SetBool("Roll", true);
+            }
+        }
     }
 
     void Defend()
@@ -139,6 +162,7 @@ public class HH_Knight : Player
             anim.SetBool("Attack", true);
         }
     }
+
 
     void HandleKnightInput()
     {
@@ -217,6 +241,15 @@ public class HH_Knight : Player
     {
         sword_right.SetActive(false);
         sword_left.SetActive(false);
+    }
+
+    void OnRollEnd()
+    {
+        speed -= speedBoost;
+
+        state = KnightState.Attack;
+        anim.SetBool("Roll", false);
+        anim.SetBool("Attack", true);
     }
 
     void AnimationStop() { anim.speed = 0f; }
