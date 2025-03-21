@@ -414,7 +414,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!1001 &6761228039860976541
+--- !u!1001 &5227819798459780130
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -477,5 +477,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 1584286716}
   - {fileID: 1599283964}
-  - {fileID: 6761228039860976541}
   - {fileID: 1270075826}
+  - {fileID: 5227819798459780130}
