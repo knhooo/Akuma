@@ -185,6 +185,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
+  maxHp: 100
+  level: 1
+  exp: 0
+  maxExp: 100
   attack: 10
   speed: 2
   sword_right: {fileID: 563614996355844578}
@@ -371,7 +375,7 @@ Transform:
   m_GameObject: {fileID: 6309858506282167140}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.23, y: 1.23, z: 1.23}
   m_ConstrainProportionsScale: 0
   m_Children: []
