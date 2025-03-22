@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
@@ -8,9 +9,17 @@ public class Item_Heal : MonoBehaviour
     int healAmount = 10;
     [SerializeField]
     GameObject logPrefab;
+    [SerializeField]
+    GameObject glowEffect1;
+    [SerializeField]
+    GameObject glowEffect2;
 
     private void Awake()
     {
+        glowEffect1.SetActive(false);
+        glowEffect2.SetActive(true);
+
+        StartCoroutine(SwitchObjects());
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
@@ -32,6 +41,16 @@ public class Item_Heal : MonoBehaviour
 
             //아이템 삭제
             Destroy(gameObject, 0.5f);
+        }
+    }
+
+    private IEnumerator SwitchObjects()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.2f);
+            glowEffect1.SetActive(!glowEffect1.activeSelf);
+            glowEffect2.SetActive(!glowEffect2.activeSelf);
         }
     }
 }

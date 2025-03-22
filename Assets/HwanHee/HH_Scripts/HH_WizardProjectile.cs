@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.AnimatedValues;
 using UnityEngine;
 
 public class HH_WizardProjectile : MonoBehaviour
@@ -8,8 +6,12 @@ public class HH_WizardProjectile : MonoBehaviour
     float speed = 3;
     [SerializeField]
     int attack = 0;
-    public int Attack {  get { return attack; } set { attack = value; } }
+    [SerializeField]
+    float lifeTime = 5f;
 
+    public int Attack { get { return attack; } set { attack = value; } }
+
+    float lifeTimer = 0f;
     bool isDestroy = false;
     protected GameObject player;
 
@@ -23,6 +25,14 @@ public class HH_WizardProjectile : MonoBehaviour
 
     void Update()
     {
+        lifeTimer += Time.deltaTime;
+        if (lifeTimer >= lifeTime)
+        {
+            lifeTimer = 0f;
+            isDestroy = true;
+            anim.SetTrigger("Destroy");
+        }
+
         if (isDestroy)
             return;
 

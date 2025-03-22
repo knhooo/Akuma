@@ -1,9 +1,4 @@
 using System.Collections;
-using System.ComponentModel.Design.Serialization;
-using NUnit.Framework.Constraints;
-using TMPro.SpriteAssetUtilities;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HH_Knight : Player
@@ -36,6 +31,7 @@ public class HH_Knight : Player
     SpriteRenderer spriteRenderer;
     Animator anim;
     Rigidbody2D rigid;
+    AudioSource audioSource;
 
     Material originalMaterial;
     Coroutine shieldCoroutine;
@@ -54,6 +50,7 @@ public class HH_Knight : Player
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -234,6 +231,7 @@ public class HH_Knight : Player
         {
             sword_right.SetActive(true);
         }
+        audioSource.Play();
     }
 
     void InctivateSword()
