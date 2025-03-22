@@ -30,6 +30,8 @@ public class HH_Monster : MonoBehaviour
 
     protected float distanceToPlayer;
     protected float knockBackSpeed = 1f;
+    protected float knockBackDuration = 0.4f;
+    protected float knockBackTimer = 0f;
 
     protected bool isTakeHitOver = true;
     protected bool isCollisionStay = false;
@@ -101,7 +103,18 @@ public class HH_Monster : MonoBehaviour
 
         if (state == State.TakeHit)
         {
-            transform.Translate(-dirToPlayer * knockBackSpeed * Time.fixedDeltaTime);
+            knockBackTimer += Time.fixedDeltaTime;
+
+            if (knockBackTimer <= knockBackDuration)
+            {
+                transform.Translate(-dirToPlayer * knockBackSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                state = State.Run;
+                anim.SetBool("TakeHit", false);
+                anim.SetBool("Run", true);
+            }
         }
 
         if (!isCollisionStay && state == State.Run)
@@ -180,6 +193,7 @@ public class HH_Monster : MonoBehaviour
             state = State.Run;
             anim.SetBool("TakeHit", false);
             anim.SetBool("Run", true);
+            knockBackTimer = 0f;
         }
     }
 

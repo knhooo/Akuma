@@ -187,7 +187,7 @@ public class HH_Knight : Player
             return;
         }
 
-        StartCoroutine(FlashWhite());
+        //StartCoroutine(FlashWhite());
         Instantiate(blood, transform.position, Quaternion.Euler(0, 0, 0));
     }
 
