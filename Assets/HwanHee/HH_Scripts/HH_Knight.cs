@@ -187,16 +187,23 @@ public class HH_Knight : Player
             return;
         }
 
-        //StartCoroutine(FlashWhite());
+        StartCoroutine(TakeHitFlash());
         Instantiate(blood, transform.position, Quaternion.Euler(0, 0, 0));
     }
 
-    protected IEnumerator FlashWhite()
+    protected IEnumerator TakeHitFlash()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.material = takeHitMaterial;
+        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+
+        spriteRenderer.GetPropertyBlock(mpb);
+        mpb.SetColor("_Color", Color.red);  // Hit 효과로 흰색 표시
+        spriteRenderer.SetPropertyBlock(mpb);
+
         yield return new WaitForSeconds(0.1f);
-        spriteRenderer.material = originalMaterial;
+
+        spriteRenderer.GetPropertyBlock(mpb);
+        mpb.SetColor("_Color", Color.white);  // 원래 색으로 되돌리기 (예시)
+        spriteRenderer.SetPropertyBlock(mpb);
     }
 
     IEnumerator SetShieldAlpha()
