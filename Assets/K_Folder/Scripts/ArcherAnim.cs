@@ -31,7 +31,26 @@ public class ArcherAnim : Player
     void Update()
     {
         HandleMovement();
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            animator.SetBool("isDash", true);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            animator.SetBool("isDash", false);
+        }
+
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            animator.SetBool("isLaser", true);
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            animator.SetBool("isLaser", false);
+        }
     }
+
 
     void HandleMovement()
     {
