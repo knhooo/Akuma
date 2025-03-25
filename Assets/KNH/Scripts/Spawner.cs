@@ -6,9 +6,12 @@ public class Spawner : MonoBehaviour
     public Transform[] spawnPoint;
 
     float cycle;//몬스터 스폰 주기
-    float timer;
+    public float timer;
     int spawnIndex = 0;
     float frequency = 1f;
+    int bossCount = 0;
+
+    public GameObject boss;
 
     private void Awake()
     {
@@ -39,12 +42,17 @@ public class Spawner : MonoBehaviour
         }
         else if(timer > 240 && timer < 300)
         {
-            spawnIndex = 4;
-            frequency = 0.2f;
+            spawnIndex = Random.Range(3, 5);
+            frequency = 1f;
         }
-        else if(timer > 300)//보스
+        else if(timer > 300  )//보스
         {
-            //spawnIndex = 5;
+            spawnIndex = Random.Range(0, 5);
+            if(bossCount < 1)
+            {
+                Instantiate(boss, GameManager.instance.GetPlayerPos(), Quaternion.identity);
+                bossCount++;
+            }  
         }
         
     }
