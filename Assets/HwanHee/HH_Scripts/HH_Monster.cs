@@ -185,6 +185,7 @@ public class HH_Monster : MonoBehaviour
         state = State.Death;
 
         player.GetComponent<Player>().Exp += exp;
+        player.GetComponent<Player>().EnemyCount += 1;
     }
 
     // 애니메이션 이벤트용

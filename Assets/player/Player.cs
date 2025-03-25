@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     public int Level { get { return level; } set { level = value; } }
     public float SkillCoolTime { get { return skillCoolTime; } }
     public float SkillCoolTimer { get { return skillCoolTimer; } }
-    public int EnemyCount { get { return enemyCount; } }
+    public int EnemyCount { get { return enemyCount; } set { enemyCount = value; } }
 
     public virtual void TakeDamage(int dmg)
     {
