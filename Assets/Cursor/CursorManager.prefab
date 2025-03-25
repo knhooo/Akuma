@@ -47,3 +47,4 @@ MonoBehaviour:
   basicCursor: {fileID: 1551617961, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
   monsterCursor: {fileID: 465965065, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
   itemCursor: {fileID: -1078541247, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
