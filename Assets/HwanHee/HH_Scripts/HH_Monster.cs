@@ -13,7 +13,7 @@ public class HH_Monster : MonoBehaviour
     [SerializeField]
     protected float attackRange = 3f;
     [SerializeField]
-    protected int exp = 10;
+    protected int exp = 1;
     [SerializeField]
     GameObject item;
     [SerializeField]
