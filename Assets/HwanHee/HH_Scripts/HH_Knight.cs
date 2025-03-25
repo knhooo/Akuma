@@ -22,7 +22,7 @@ public class HH_Knight : Player
     [SerializeField]
     GameObject blood;
     [SerializeField]
-    protected Material takeHitMaterial;
+    int skillDamage = 10;
     [SerializeField]
     int levelUpHp = 10;
     [SerializeField]
@@ -143,6 +143,7 @@ public class HH_Knight : Player
                 skillCoolTimer = 0f;
                 skill.SetActive(true);
                 skillSound.Play();
+                attack += skillDamage;
 
                 state = KnightState.Skill;
                 anim.SetBool("Attack", false);
@@ -222,12 +223,13 @@ public class HH_Knight : Player
             return;
     }
 
-    void LevelUp()
+    public void LevelUp()
     {
         maxHp += levelUpHp;
         attack += levelUpAttack;
-        exp = 0;
+        exp = MaxExp - exp;
         maxExp += levelUpExp;
+        skillDamage += levelUpAttack;
     }
 
     public override void TakeDamage(int dmg)
@@ -321,5 +323,6 @@ public class HH_Knight : Player
         anim.SetBool("Skill", false);
         anim.SetBool("Attack", true); 
         skill.SetActive(false);
+        attack -= skillDamage;
     }
 }
