@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4681068461694256559}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52,7 +52,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -128,16 +128,24 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   player: {fileID: 0}
   followRange: 10
-  attackRange: 2
+  attackRange: 0.5
   attackDamage: 10
   attackCooldown: 2
   moveSpeed: 1
-  stoppingDistance: 1
-  spellPrefab: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
+  stoppingDistance: 0.01
+  maxHP: 500
+  currentHP: 500
+  redDotPrefab: {fileID: 2157965776959129687, guid: ad678a7e7d47b8a4a8fd1bf9ec412ca0, type: 3}
+  bossSpellPrefab: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
   spellSpawnPoint: {fileID: 0}
   spellCount: 10
   spellRangeX: 3
   spellRangeY: 2
+  bulletPrefab: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+  firePoint: {fileID: 888828246329416660}
+  bulletCount: 8
+  fireInterval: 3
+  bulletSpeed: 5
 --- !u!61 &333349168562255958
 BoxCollider2D:
   m_ObjectHideFlags: 0
