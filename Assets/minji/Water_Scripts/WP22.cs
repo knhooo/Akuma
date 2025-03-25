@@ -44,14 +44,14 @@ public class WP22 : Player //물마법사 스크립트
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
 
-            if (Input.GetKey(KeyCode.LeftShift)) //왼쪽으로 이동하면서 Shift누를 때
+            if (Input.GetKey(KeyCode.LeftShift)) //왼쪽으로 이동하면서 쉬프트
             {
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 ani.SetBool("surf", true); //대쉬 모션 활성화
 
                 speed = wspeedUp; //스피드 증가
             }
-            else //Shift를 땔 때
+            else //쉬프트 땔 때
             {
                 ani.SetBool("walk", true); //걷는 모션 다시 활성화
                 ani.SetBool("surf", false);
@@ -60,6 +60,7 @@ public class WP22 : Player //물마법사 스크립트
 
             if (Input.GetMouseButtonDown(0)) //왼쪽으로 이동하면서 마우스 왼쪽 버튼 누를 때
             {
+                wSoundManager.instance.pWater();
                 ani.SetBool("sp_atk", true); //공격 모션 활성화
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity); //pos2에서 미사일 발사
@@ -72,12 +73,12 @@ public class WP22 : Player //물마법사 스크립트
                 ani.SetBool("sp_atk", false);
             }
 
-            if (Input.GetMouseButtonDown(1)) //왼쪽으로 걸으면서 마우스 우클릭
+            if (Input.GetMouseButtonDown(1)) //왼쪽으로 걸으면서 우클릭
             {
+                wSoundManager.instance.pWaterP();
                 ani.SetBool("walk", false);
                 ani.SetBool("atk2", true);
                 GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
-                Destroy(go1, 5);
             }
             else
             {
@@ -90,7 +91,7 @@ public class WP22 : Player //물마법사 스크립트
             ani.SetBool("walk", true); //걷는 모션 활성화
             transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 오른쪽 모습
 
-            if (Input.GetKey(KeyCode.LeftShift)) //오른쪽으로 이동하면서 Shift
+            if (Input.GetKey(KeyCode.LeftShift)) //오른쪽으로 이동하면서 쉬프트
             {
                 ani.SetBool("walk", false); //걷는 모션 비활성화
                 ani.SetBool("surf", true); //대쉬 모션 활성화
@@ -106,6 +107,7 @@ public class WP22 : Player //물마법사 스크립트
 
             if (Input.GetMouseButtonDown(0)) //오른쪽으로 이동하면서 마우스 좌클릭
             {
+                wSoundManager.instance.pWater();
                 ani.SetBool("walk", false);
                 ani.SetBool("sp_atk", true); //공격 모션 활성화
                 GameObject go = Instantiate(waterbullet, pos1.position, Quaternion.identity); //pos1에서 미사일 발사
@@ -117,12 +119,12 @@ public class WP22 : Player //물마법사 스크립트
                 ani.SetBool("sp_atk", false); //공격모션 비활성화
             }
 
-            if (Input.GetMouseButtonDown(1)) //오른쪽으로 걸으면서 마우스 우클릭
+            if (Input.GetMouseButtonDown(1)) //오른쪽으로 걸으면서 우클릭
             {
+                wSoundManager.instance.pWaterP();
                 ani.SetBool("walk", false);
                 ani.SetBool("atk2", true);
                 GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
-                Destroy(go1, 5);
             }
             else
             {
@@ -139,6 +141,7 @@ public class WP22 : Player //물마법사 스크립트
             //멈춰서 마우스 좌클릭 누를 때
             if (Input.GetMouseButtonDown(0))
             {
+                wSoundManager.instance.pWater();
                 if (transform.localScale.x == 1f)
                 {
                     transform.localScale = new Vector3(1f, 1f, 1f);
@@ -160,22 +163,21 @@ public class WP22 : Player //물마법사 스크립트
                 ani.SetBool("sp_atk", false);
             }
 
-            //마우스 우클릭
+            //멈춰서 우클릭
             if (Input.GetMouseButtonDown(1))
             {
+                wSoundManager.instance.pWaterP();
                 if (transform.localScale.x == 1f)
                 {
                     transform.localScale = new Vector3(1f, 1f, 1f);
                     ani.SetBool("atk2", true);
                     GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
-                    Destroy(go1, 5);
                 }
                 else if (transform.localScale.x == -1f)
                 {
                     transform.localScale = new Vector3(-1f, 1f, 1f);
                     ani.SetBool("atk2", true);
                     GameObject go1 = Instantiate(waterPbullet, pos2.position, Quaternion.identity);
-                    Destroy(go1, 5);
                 }
 
             }
@@ -201,6 +203,7 @@ public class WP22 : Player //물마법사 스크립트
         yield return new WaitForSeconds(10);
         while (true)
         {
+            wSoundManager.instance.pWater();
             Instantiate(waterbulletU, transform.position, Quaternion.identity);
             Instantiate(waterbulletR, transform.position, Quaternion.identity);
             Instantiate(waterbulletL, transform.position, Quaternion.identity);
@@ -216,7 +219,7 @@ public class WP22 : Player //물마법사 스크립트
         Instantiate(wExposion, transform.position, Quaternion.identity);
     }
 
-    public override void GetExperience(int ex)
+    public override void GetExperience(int ex) //경험치 올리는 메서드 오버라이딩
     {
         exp += ex;
         if(exp>=maxExp)

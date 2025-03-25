@@ -31,6 +31,9 @@ public class WaterPuple2 : MonoBehaviour
         {
             Speed -= Time.deltaTime;
         }
+        yield return new WaitForSeconds(1);
+        wSoundManager.instance.tWaterP();
+        Destroy(gameObject);
     }
 
 }

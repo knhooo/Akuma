@@ -35,6 +35,7 @@ public class Water2 : MonoBehaviour
         //적과 충돌 시
         if (collision.CompareTag("Monster"))
         {
+            wSoundManager.instance.tWater();
             Instantiate(watereffect1, transform.position, Quaternion.identity);
             Destroy(gameObject); //미사일 삭제
         }
