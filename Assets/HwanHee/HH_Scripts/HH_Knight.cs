@@ -76,6 +76,10 @@ public class HH_Knight : Player
             LevelUp();
         }
 
+        if (state != KnightState.Defend)
+            skillCoolTimer += Time.deltaTime;
+        if (state != KnightState.Roll)
+            dashCoolTimer += Time.deltaTime;
 
         switch (state)
         {
@@ -122,7 +126,6 @@ public class HH_Knight : Player
 
     void StateAttack()
     {
-        skillCoolTimer += Time.deltaTime;
         if (skillCoolTimer >= skillCoolTime)
         {
             if (Input.GetMouseButtonDown(1))
@@ -145,7 +148,6 @@ public class HH_Knight : Player
             canUseSkill = true;
 
 
-        dashCoolTimer += Time.deltaTime;
         if (dashCoolTimer >= dashCoolTime)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
