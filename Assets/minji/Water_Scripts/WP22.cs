@@ -33,6 +33,23 @@ public class WP22 : Player //물마법사 스크립트
     void Update()
     {
 
+        if (exp >= maxExp)
+        {
+            level += 1;
+            Debug.Log($"레벨업! 현재 레벨 : {level}"); //확인용
+            exp -= maxExp;
+            attack += 10; //능력치 상승은 임시로 정해둠.
+            maxHp += 20;
+            speed += 0.1f;
+            wspeedUp += 0.1f;
+            wkeepSpeed += 0.1f;
+
+            if (level >= 20)
+            {
+                level = 20;
+            }
+        }
+
         //방향키에 따른 물마법사 x, y좌표
         float moveX = speed * Time.deltaTime * Input.GetAxis("Horizontal");
         float moveY = speed * Time.deltaTime * Input.GetAxis("Vertical");
@@ -222,21 +239,6 @@ public class WP22 : Player //물마법사 스크립트
     public override void GetExperience(int ex) //경험치 올리는 메서드 오버라이딩
     {
         exp += ex;
-        if(exp>=maxExp)
-        {
-            level += 1;
-            exp = 0;
-            attack += 10; //임시
-            maxHp += 20;
-            speed += 1;
-            wspeedUp += 1;
-            wkeepSpeed += 1;
-
-            if (level >= 20)
-            {
-                level = 20;
-            }
-        }
 
     }
 
