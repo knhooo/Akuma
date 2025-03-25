@@ -207,7 +207,7 @@ MonoBehaviour:
   blood: {fileID: 3238201351179218945, guid: ac936892e8ea9a345bbde646b82b2bc0, type: 3}
   takeHitMaterial: {fileID: 2100000, guid: 2bd3d7a12e5e69b438f9c4a627e0491d, type: 2}
   levelUpHp: 10
-  levelUpAttack: 10
+  levelUpAttack: 5
   levelUpExp: 10
 --- !u!212 &1412118443219722552
 SpriteRenderer:

@@ -26,9 +26,13 @@ public class HH_Knight : Player
     [SerializeField]
     int levelUpHp = 10;
     [SerializeField]
-    int levelUpAttack = 10;
+    int levelUpAttack = 5;
     [SerializeField]
     int levelUpExp = 10;
+    [SerializeField]
+    AudioSource attackSound;
+    [SerializeField]
+    AudioSource skillSound;
 
     enum Dir { left, right }
     Dir dir = Dir.right;
@@ -45,9 +49,7 @@ public class HH_Knight : Player
     SpriteRenderer spriteRenderer;
     Animator anim;
     Rigidbody2D rigid;
-    AudioSource audioSource;
 
-    Material originalMaterial;
     Coroutine shieldCoroutine;
     Vector2 inputVec;
 
@@ -64,11 +66,9 @@ public class HH_Knight : Player
         skillCoolTimer = skillCoolTime;
         dashCoolTimer = dashCoolTime;
 
-        originalMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -142,6 +142,7 @@ public class HH_Knight : Player
                 canUseSkill = false;
                 skillCoolTimer = 0f;
                 skill.SetActive(true);
+                skillSound.Play();
 
                 state = KnightState.Skill;
                 anim.SetBool("Attack", false);
@@ -221,11 +222,6 @@ public class HH_Knight : Player
             return;
     }
 
-    void ActiveSkill()
-    {
-        skill.SetActive(true);
-    }
-
     void LevelUp()
     {
         maxHp += levelUpHp;
@@ -298,7 +294,7 @@ public class HH_Knight : Player
         {
             sword_right.SetActive(true);
         }
-        audioSource.Play();
+        attackSound.Play();
     }
 
     void InctivateSword()
@@ -306,6 +302,7 @@ public class HH_Knight : Player
         sword_right.SetActive(false);
         sword_left.SetActive(false);
     }
+
 
     void RollOver()
     {
