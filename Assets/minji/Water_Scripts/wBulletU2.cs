@@ -14,6 +14,7 @@ public class wBulletU2 : MonoBehaviour
     {
         if (collision.CompareTag("Monster"))
         {
+            wSoundManager.instance.tWater();
             Instantiate(wbu, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
