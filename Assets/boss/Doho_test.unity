@@ -119,6 +119,68 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &57176538
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998944580241432170, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+      propertyPath: m_Name
+      value: Boss_Bullet_2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+--- !u!4 &174470287 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 888828246329416660, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+  m_PrefabInstance: {fileID: 1085699573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &623298743
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +367,8 @@ MonoBehaviour:
   maxExp: 100
   attack: 10
   speed: 3
+  skillCoolTime: 5
+  enemyCount: 0
 --- !u!1001 &1085699573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -357,58 +421,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 4845454238949394496, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_AnimatePhysics
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 623298745}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: moveSpeed
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 174470287}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1237028363}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: spellCount
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: attackRange
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: spellPrefab
+      propertyPath: bulletPrefab
       value: 
-      objectReference: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: redDotPrefab
-      value: 
-      objectReference: {fileID: 2157965776959129687, guid: ad678a7e7d47b8a4a8fd1bf9ec412ca0, type: 3}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: bossSpellPrefab
-      value: 
-      objectReference: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
+      objectReference: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: spellSpawnPoint
       value: 
       objectReference: {fileID: 623298745}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: stoppingDistance
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: warningEffectPrefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: explosionEffectPrefab
-      value: 
-      objectReference: {fileID: 1337298340183597327, guid: 44bb5851a82e2b145bd9046cca26f3a1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -810,3 +842,4 @@ SceneRoots:
   - {fileID: 623298745}
   - {fileID: 1085699573}
   - {fileID: 1558629740}
+  - {fileID: 57176538}

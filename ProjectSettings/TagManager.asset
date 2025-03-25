@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Bullet
   - Arrow
+  - Button
   layers:
   - Default
   - TransparentFX
