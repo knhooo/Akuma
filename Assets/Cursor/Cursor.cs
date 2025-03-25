@@ -5,10 +5,12 @@ public class CursorManager : MonoBehaviour
     public Sprite basicCursor;    // 기본 커서 스프라이트
     public Sprite monsterCursor;  // 몬스터 위 커서 스프라이트
     public Sprite itemCursor;     // 아이템 위 커서 스프라이트
+    public Sprite buttonCursor;     // 버튼 커서 스프라이트
 
     private Texture2D basicTexture;
     private Texture2D monsterTexture;
     private Texture2D itemTexture;
+    private Texture2D buttonTexture;
 
     void Start()
     {
@@ -16,6 +18,7 @@ public class CursorManager : MonoBehaviour
         basicTexture = SpriteToTexture(basicCursor);
         monsterTexture = SpriteToTexture(monsterCursor);
         itemTexture = SpriteToTexture(itemCursor);
+        buttonTexture = SpriteToTexture(buttonCursor);
 
         // 기본 커서로 설정
         Cursor.SetCursor(basicTexture, Vector2.zero, CursorMode.Auto);
@@ -39,6 +42,12 @@ public class CursorManager : MonoBehaviour
             if (hit.collider.CompareTag("Item"))
             {
                 Cursor.SetCursor(itemTexture, Vector2.zero, CursorMode.Auto);
+                return;  // 커서 변경 후 빠져나감
+            }
+
+            if (hit.collider.CompareTag("Button"))
+            {
+                Cursor.SetCursor(buttonTexture, Vector2.zero, CursorMode.Auto);
                 return;  // 커서 변경 후 빠져나감
             }
         }
