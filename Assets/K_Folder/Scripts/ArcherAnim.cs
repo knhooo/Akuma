@@ -11,22 +11,46 @@ public class ArcherAnim : Player
     public float arrowSpeed = 10f;
     public float shootInterval = 2f;
 
+    // 🔊 추가: 사운드 관련
+    public AudioClip shootSound;
+    private AudioSource audioSource;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>(); // 🔊 오디오소스 가져오기
     }
 
     void Start()
     {
         rb.gravityScale = 0;
-        StartCoroutine(AutoShoot()); // �ڵ� �߻� ����
+        StartCoroutine(AutoShoot());
     }
 
     void Update()
     {
         HandleMovement();
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            animator.SetBool("isDash", true);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            animator.SetBool("isDash", false);
+        }
+
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            animator.SetBool("isLaser", true);
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            animator.SetBool("isLaser", false);
+        }
     }
+
 
     void HandleMovement()
     {
@@ -82,7 +106,7 @@ public class ArcherAnim : Player
         arrow.transform.localScale = Vector3.one;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        arrow.transform.rotation = Quaternion.Euler(0, 0, angle); // Sprite�� ���� ������ ���
+        arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -90,7 +114,12 @@ public class ArcherAnim : Player
             rb.linearVelocity = direction * arrowSpeed;
         }
 
-        // �ִϸ��̼� Ʈ���� �ʿ��ϸ� ���
-        // animator.SetTrigger("2Attack");
+        //  화살 발사 사운드 재생
+        if (shootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(shootSound);
+        }
+
+        // animator.SetTrigger("2Attack"); // 필요 시 사용
     }
 }

@@ -7,18 +7,12 @@ public class BossSpell : MonoBehaviour
     private Animator animator;  // 애니메이터
     private float animationLength;  // 애니메이션 길이
 
-    public GameObject explosionEffectPrefab; // 폭발 이펙트 프리팹
+    public GameObject explosionEffectPrefab; // 화염 이펙트 프리팹
     public Transform explosionPoint;         // 폭발이 발생할 위치
     public float damage = 20f; // 폭발 데미지
     public float explosionRadius = 1f; // 폭발 반경
     public float explosionDuration = 0.5f; // 폭발 지속 시간
     public Collider2D effectCollider; //Effect의 Collider를 할당
-
-    public float damageOverTime = 3f;       // 도트 데미지
-    public float dotDuration = 3f;           // 도트 지속 시간
-    public float dotInterval = 1f;           // 도트 타격 주기
-
-    private HashSet<Player> playersInEffect = new HashSet<Player>();
 
     private bool isExplosionTriggered = false;
 
@@ -42,7 +36,7 @@ public class BossSpell : MonoBehaviour
         if (!isExplosionTriggered)
         {
             isExplosionTriggered = true;
-            // 폭발 이펙트 소환
+            // 화염 이펙트 소환
             SpawnExplosionEffect();
         }
     }
@@ -55,114 +49,35 @@ public class BossSpell : MonoBehaviour
             return; // explosionPoint가 null이면 더 이상 진행하지 않음
         }
 
-        // 폭발 이펙트 생성 (폭발 지점에 소환)
+        // 화염 이펙트 생성 (폭발 지점에 소환)
         GameObject explosionEffect = Instantiate(explosionEffectPrefab, explosionPoint.position, Quaternion.identity);
 
-        // Effect_1의 Collider 크기를 explosionRadius에 반영
+        // Collider 크기 기반으로 폭발 반경 조정 (조금 더 크게 설정)
         if (effectCollider != null)
         {
-            // Collider의 크기만큼 explosionRadius 설정
-            explosionRadius = effectCollider.bounds.size.x / 1f;
+            explosionRadius = (effectCollider.bounds.size.x / 2f) * 1.2f;  // 기존 크기보다 20% 더 크게
         }
 
         // 폭발 즉시 플레이어가 범위 내에 있으면 데미지 입히기
-        ApplyExplosionDamage();
+        ApplyExplosionDamage(explosionRadius);
 
-        // 콜라이더 감지를 위한 스크립트 추가
-        ExplosionEffect effectScript = explosionEffect.AddComponent<ExplosionEffect>();
-        effectScript.SetDamageParams(damageOverTime, dotDuration, dotInterval);
-
-        // 생성된 폭발 이펙트를 n초 후 삭제
+        // 일정 시간 후 화염 이펙트 삭제
         Destroy(explosionEffect, 5f);
         isExplosionTriggered = false;
     }
 
-    // 폭발 범위 내의 플레이어에게 즉시 데미지를 적용
-    void ApplyExplosionDamage()
+    // 폭발 범위 내의 플레이어에게 즉시 데미지 적용
+    void ApplyExplosionDamage(float explosionRadius)
     {
-        Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(explosionPoint.position, explosionRadius);  // 폭발 범위 내의 모든 플레이어를 감지
+        Collider2D[] hitPlayers = Physics2D.OverlapBoxAll(explosionPoint.position, effectCollider.bounds.size * 1.5f, 0f);
 
         foreach (var player in hitPlayers)
         {
             if (player.CompareTag("Player"))
             {
-                // 플레이어에게 폭발 데미지 적용
                 player.GetComponent<Player>().TakeDamage(Mathf.RoundToInt(damage));
-                Debug.Log("💣 폭발 데미지 적용");
+                Debug.Log($"💣 {player.name} 폭발 데미지 적용! 데미지 : {damage}");
             }
-        }
-    }
-
-    // 도트 딜 데미지 선언
-    public void SetDamageParams(float dotDamage, float duration, float interval)
-    {
-        damageOverTime = dotDamage;
-        dotDuration = duration;
-        dotInterval = interval;
-
-        StartCoroutine(DotDamageCoroutine()); // 지속적으로 도트 딜 적용
-        Destroy(gameObject, dotDuration + 0.5f); // 도트 끝난 후 효과 삭제
-    }
-
-    // 도트 딜 트리거
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Player player = collision.GetComponent<Player>();
-            if (player != null)
-            {
-                playersInEffect.Add(player);
-            }
-        }
-    }
-    // 트리거 아웃
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Player player = collision.GetComponent<Player>();
-            if (player != null)
-            {
-                playersInEffect.Remove(player);
-            }
-        }
-    }
-
-    // 플레이어가 폭발 범위에 있을 때 도트 데미지 적용
-    IEnumerator ApplyDotToPlayer(Collider2D player)
-    {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < dotDuration)
-        {
-            // 도트 데미지 적용 (Player.cs에 적절한 데미지 처리 함수 추가 필요)
-            player.GetComponent<Player>().TakeDamage(Mathf.RoundToInt(damageOverTime * dotInterval));
-            Debug.Log("🔥 도트 데미지 적용");
-
-            elapsedTime += dotInterval;
-            yield return new WaitForSeconds(dotInterval);
-        }
-    }
-
-    // 도트 딜 코루틴
-    private IEnumerator DotDamageCoroutine()
-    {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < dotDuration)
-        {
-            foreach (var player in playersInEffect)
-            {
-                if (player != null)
-                {
-                    player.TakeDamage(Mathf.RoundToInt(damageOverTime * dotInterval));
-                    Debug.Log($"🔥 {player.name}에게 도트 데미지 적용");
-                }
-            }
-
-            elapsedTime += dotInterval;
-            yield return new WaitForSeconds(dotInterval);
         }
     }
 }

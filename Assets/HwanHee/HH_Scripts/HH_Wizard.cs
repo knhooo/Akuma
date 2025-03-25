@@ -1,4 +1,3 @@
-using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 
 public class HH_Wizard : HH_Monster

@@ -170,3 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79281f97f56701d49805e5c5d1cb1be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectCollider: {fileID: -5933098986992141958}
+  dotStackManager: {fileID: 0}
+  DotStackManagerPrefabs: {fileID: 8704760753483088878, guid: e79cf2d890ac3964d9897c41d1dcc56c, type: 3}

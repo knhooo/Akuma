@@ -200,7 +200,7 @@ public class BossAI : MonoBehaviour
             Vector3 randomPosition = GetRandomSpellPositionInCameraView();
             GameObject redDot = Instantiate(redDotPrefab, randomPosition, Quaternion.identity);
 
-            // RedDot가 일정 시간 후 삭제된 후 BossSpell이 생성되도록 함
+            // RedDot가 일정 시간 후 삭제된 후 BossSpell이 생성되도록 하는 코루틴
             StartCoroutine(HandleRedDotAndSpell(redDot));
         }
     }
@@ -267,9 +267,6 @@ public class BossAI : MonoBehaviour
     {
         // RedDot n초 후 삭제
         yield return new WaitForSeconds(2f);
-
-        // RedDot 삭제
-        Destroy(redDot);
 
         // RedDot 위치 저장 후 삭제
         Vector3 spawnPosition = redDot.transform.position;
