@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject spawner;
     public PoolManager pool;
 
+    public GameObject Player { get { return player; } }
+
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
     {
@@ -27,7 +29,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    
+
 
     private void Awake()
     {

@@ -165,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 5534838947949792760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: 4.58, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -193,12 +193,12 @@ MonoBehaviour:
   maxExp: 100
   attack: 10
   speed: 2
+  skillCoolTime: 5
   sword_right: {fileID: 563614996355844578}
   sword_left: {fileID: 6763246700006428421}
   shield: {fileID: 6309858506282167140}
-  shieldTime: 3
-  shieldCoolTime: 5
-  rollCoolTime: 5
+  skillTime: 3
+  dashCoolTime: 5
   speedBoost: 2
   blood: {fileID: 3238201351179218945, guid: ac936892e8ea9a345bbde646b82b2bc0, type: 3}
   takeHitMaterial: {fileID: 2100000, guid: 2bd3d7a12e5e69b438f9c4a627e0491d, type: 2}
@@ -287,11 +287,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5534838947949792760}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 100
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -340,8 +340,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03188491, y: 0}
-  m_Radius: 0.31462193
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.50801086
 --- !u!82 &2292337055758423629
 AudioSource:
   m_ObjectHideFlags: 0
