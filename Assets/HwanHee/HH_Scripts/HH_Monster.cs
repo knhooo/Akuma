@@ -13,7 +13,7 @@ public class HH_Monster : MonoBehaviour
     [SerializeField]
     protected float attackRange = 3f;
     [SerializeField]
-    protected int exp = 10;
+    protected int exp = 1;
     [SerializeField]
     GameObject item;
     [SerializeField]
@@ -34,7 +34,6 @@ public class HH_Monster : MonoBehaviour
     protected float knockBackTimer = 0f;
 
     protected bool isTakeHitOver = true;
-    protected bool isCollisionStay = false;
 
     protected Vector3 dirToPlayer;
 
@@ -88,17 +87,7 @@ public class HH_Monster : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        // 나한테 와서 충돌했어 -> 이러면 못움직이게 해야됨 /??
         if (state == State.Death)
-            return;
-
-        if (isCollisionStay)
-        {
-            Player _player = player.GetComponent<Player>();
-            transform.Translate(-dirToPlayer * _player.Speed * Time.fixedDeltaTime);
-        }
-
-        if (state == State.Attack)
             return;
 
         if (state == State.TakeHit)
@@ -111,15 +100,18 @@ public class HH_Monster : MonoBehaviour
             }
             else
             {
+                knockBackTimer = 0f;
                 state = State.Run;
                 anim.SetBool("TakeHit", false);
                 anim.SetBool("Run", true);
             }
         }
 
-        if (!isCollisionStay && state == State.Run)
+        else if (state == State.Run)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            Vector2 nextVec = dirToPlayer * speed * Time.fixedDeltaTime;
+            rigid.MovePosition(rigid.position + nextVec);
+            rigid.linearVelocity = Vector2.zero;
         }
     }
 
@@ -135,11 +127,6 @@ public class HH_Monster : MonoBehaviour
         if (state == State.Death)
             return;
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isCollisionStay = true;
-        }
-
         if (collision.CompareTag("PlayerAttack"))
         {
             isTakeHitOver = false;
@@ -150,17 +137,11 @@ public class HH_Monster : MonoBehaviour
                 Death();
                 return;
             }
+
             state = State.TakeHit;
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
             anim.SetBool("TakeHit", true);
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isCollisionStay = false;
         }
     }
 
@@ -204,6 +185,7 @@ public class HH_Monster : MonoBehaviour
         state = State.Death;
 
         player.GetComponent<Player>().Exp += exp;
+        player.GetComponent<Player>().EnemyCount += 1;
     }
 
     // 애니메이션 이벤트용

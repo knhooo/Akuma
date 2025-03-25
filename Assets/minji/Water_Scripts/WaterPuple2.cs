@@ -26,11 +26,14 @@ public class WaterPuple2 : MonoBehaviour
 
     IEnumerator waterPstay()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         while (Speed > 0)
         {
             Speed -= Time.deltaTime;
         }
+        yield return new WaitForSeconds(2);
+        wSoundManager.instance.tWaterP();
+        Destroy(gameObject);
     }
 
 }

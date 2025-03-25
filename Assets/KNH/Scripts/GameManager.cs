@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] GameObject spawner;
     public PoolManager pool;
+    public bool isClear;//보스 클리어 여부
+
+    public GameObject Player { get { return player; } }
 
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
@@ -25,9 +28,6 @@ public class GameManager : MonoBehaviour
     {
         return playerClass;
     }
-
-
-    
 
     private void Awake()
     {
@@ -49,4 +49,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Vector3 GetPlayerPos()
+    {
+        return player.transform.position;
+    }
 }

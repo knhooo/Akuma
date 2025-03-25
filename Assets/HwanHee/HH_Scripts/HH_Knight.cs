@@ -10,23 +10,32 @@ public class HH_Knight : Player
     [SerializeField]
     GameObject shield;
     [SerializeField]
-    float shieldTime = 3.0f;
+    float skillTime = 3.0f;
     [SerializeField]
-    float shieldCoolTime = 5.0f;
-    [SerializeField]
-    float rollCoolTime = 5.0f;
+    float dashCoolTime = 5.0f;
     [SerializeField]
     float speedBoost = 2f;
     [SerializeField]
     GameObject blood;
     [SerializeField]
     protected Material takeHitMaterial;
+    [SerializeField]
+    int levelUpHp = 10;
+    [SerializeField]
+    int levelUpAttack = 10;
+    [SerializeField]
+    int levelUpExp = 10;
 
     enum Dir { left, right }
     Dir dir = Dir.right;
 
     enum KnightState { Attack, Defend, Roll, Death }
     KnightState state = KnightState.Attack;
+
+    bool canUseDash = true;
+    bool canUseSkill = true;
+    public bool CanUseDash { get { return canUseDash; } }
+    public bool CanUseSkill { get { return canUseSkill; } }
 
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -37,14 +46,16 @@ public class HH_Knight : Player
     Coroutine shieldCoroutine;
     Vector2 inputVec;
 
-    float shieldTimer = 0f;
-    float shieldCoolTimer = 0f;
-    float rollCoolTimer = 0f;
+    float skillTimer = 0f;
+    float dashCoolTimer = 0f;
+
+    public float DashCoolTimer { get { return dashCoolTimer; } }
+    public float DashCoolTime { get { return dashCoolTime; } }
 
     void Awake()
     {
-        shieldCoolTimer = shieldCoolTime;
-        rollCoolTimer = rollCoolTime;
+        skillCoolTimer = skillCoolTime;
+        dashCoolTimer = dashCoolTime;
 
         originalMaterial = GetComponent<SpriteRenderer>().material;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,6 +71,16 @@ public class HH_Knight : Player
             return;
         }
 
+        if (exp >= maxExp)
+        {
+            LevelUp();
+        }
+
+        if (state != KnightState.Defend)
+            skillCoolTimer += Time.deltaTime;
+        if (state != KnightState.Roll)
+            dashCoolTimer += Time.deltaTime;
+
         switch (state)
         {
             case KnightState.Attack:
@@ -67,9 +88,6 @@ public class HH_Knight : Player
                 break;
             case KnightState.Defend:
                 Defend();
-                break;
-            case KnightState.Roll:
-               // Roll();
                 break;
         }
 
@@ -108,12 +126,12 @@ public class HH_Knight : Player
 
     void StateAttack()
     {
-        shieldCoolTimer += Time.deltaTime;
-        if (shieldCoolTimer >= shieldCoolTime)
+        if (skillCoolTimer >= skillCoolTime)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetMouseButtonDown(1))
             {
-                shieldCoolTimer = 0f;
+                canUseSkill = false;
+                skillCoolTimer = 0f;
 
                 if (shieldCoroutine != null)
                     StopCoroutine(shieldCoroutine);
@@ -124,16 +142,18 @@ public class HH_Knight : Player
                 state = KnightState.Defend;
                 anim.SetBool("Attack", false);
                 anim.SetBool("Defend", true);
-
             }
         }
+        else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+            canUseSkill = true;
 
-        rollCoolTimer += Time.deltaTime;
-        if (rollCoolTimer >= rollCoolTime)
+
+        if (dashCoolTimer >= dashCoolTime)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                rollCoolTimer = 0f;
+                canUseDash = false;
+                dashCoolTimer = 0f;
                 speed += speedBoost;
 
                 state = KnightState.Roll;
@@ -141,14 +161,16 @@ public class HH_Knight : Player
                 anim.SetBool("Roll", true);
             }
         }
+        else if (dashCoolTimer < dashCoolTime && !canUseDash)
+            canUseDash = true;
     }
 
     void Defend()
     {
-        shieldTimer += Time.deltaTime;
-        if (Input.GetKeyUp(KeyCode.LeftShift) || shieldTimer >= shieldTime)
+        skillTimer += Time.deltaTime;
+        if (Input.GetMouseButtonUp(1) || skillTimer >= skillTime)
         {
-            shieldTimer = 0f;
+            skillTimer = 0f;
             anim.speed = 1f;
 
             StopCoroutine(SetShieldAlpha());
@@ -172,6 +194,14 @@ public class HH_Knight : Player
 
         if (state == KnightState.Defend)
             return;
+    }
+
+    void LevelUp()
+    {
+        maxHp += levelUpHp;
+        attack += levelUpAttack;
+        exp = 0;
+        maxExp += levelUpExp;
     }
 
     public override void TakeDamage(int dmg)
@@ -214,7 +244,7 @@ public class HH_Knight : Player
         while (true)
         {
             timer += Time.deltaTime;
-            t = timer / shieldTime;
+            t = timer / skillTime;
             SetAlpha(Mathf.Lerp(1f, 0.2f, t));
             yield return null;
         }
