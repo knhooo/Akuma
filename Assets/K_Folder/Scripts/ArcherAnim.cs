@@ -11,15 +11,21 @@ public class ArcherAnim : Player
     public float arrowSpeed = 10f;
     public float shootInterval = 2f;
 
-    // 🔊 추가: 사운드 관련
     public AudioClip shootSound;
     private AudioSource audioSource;
+
+    public float dashCooldown = 2f;
+    public float laserCooldown = 3f;
+
+    private bool canDash = true;
+    private bool canLaser = true;
+    private bool isPerformingSkill = false; // 👉 스킬 사용 중 여부
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>(); // 🔊 오디오소스 가져오기
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -32,30 +38,26 @@ public class ArcherAnim : Player
     {
         HandleMovement();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        // Dash
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isPerformingSkill)
         {
-            animator.SetBool("isDash", true);
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            animator.SetBool("isDash", false);
+            animator.SetTrigger("isDash");
+            StartCoroutine(DashRoutine());
         }
 
-        if (Input.GetMouseButtonDown(1)) 
+        // Laser
+        if (Input.GetMouseButtonDown(1) && canLaser && !isPerformingSkill)
         {
-            animator.SetBool("isLaser", true);
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            animator.SetBool("isLaser", false);
+            animator.SetTrigger("isLaser");
+            StartCoroutine(LaserRoutine());
         }
     }
-
 
     void HandleMovement()
     {
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
+
         rb.linearVelocity = new Vector2(moveX * speed, moveY * speed);
 
         animator.SetBool("isMoving", moveX != 0 || moveY != 0);
@@ -70,13 +72,63 @@ public class ArcherAnim : Player
     {
         while (true)
         {
-            Transform target = FindClosestMonster();
-            if (target != null)
+            if (!isPerformingSkill) // 👉 스킬 중이 아닐 때만 공격
             {
-                ShootAtTarget(target.position);
+                Transform target = FindClosestMonster();
+                if (target != null)
+                {
+                    ShootAtTarget(target.position);
+                }
             }
+
             yield return new WaitForSeconds(shootInterval);
         }
+    }
+
+    void ShootAtTarget(Vector3 targetPos)
+    {
+        Vector2 direction = (targetPos - firePoint.position).normalized;
+
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        arrow.transform.localScale = Vector3.one;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * arrowSpeed;
+        }
+
+        if (shootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(shootSound);
+        }
+    }
+
+    IEnumerator DashRoutine()
+    {
+        canDash = false;
+        isPerformingSkill = true;
+
+        yield return new WaitForSeconds(0.5f); // 대시 애니메이션 길이
+        isPerformingSkill = false;
+
+        yield return new WaitForSeconds(dashCooldown - 0.5f);
+        canDash = true;
+    }
+
+    IEnumerator LaserRoutine()
+    {
+        canLaser = false;
+        isPerformingSkill = true;
+
+        yield return new WaitForSeconds(1f); // 레이저 애니메이션 길이
+        isPerformingSkill = false;
+
+        yield return new WaitForSeconds(laserCooldown - 1f);
+        canLaser = true;
     }
 
     Transform FindClosestMonster()
@@ -96,30 +148,5 @@ public class ArcherAnim : Player
         }
 
         return closest;
-    }
-
-    void ShootAtTarget(Vector3 targetPos)
-    {
-        Vector2 direction = (targetPos - firePoint.position).normalized;
-
-        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
-        arrow.transform.localScale = Vector3.one;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = direction * arrowSpeed;
-        }
-
-        //  화살 발사 사운드 재생
-        if (shootSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(shootSound);
-        }
-
-        // animator.SetTrigger("2Attack"); // 필요 시 사용
     }
 }
