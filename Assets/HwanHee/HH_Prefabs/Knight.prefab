@@ -190,7 +190,7 @@ MonoBehaviour:
   maxHp: 100
   level: 1
   exp: 0
-  maxExp: 100
+  maxExp: 10
   attack: 10
   speed: 2
   skillCoolTime: 5
@@ -202,6 +202,9 @@ MonoBehaviour:
   speedBoost: 2
   blood: {fileID: 3238201351179218945, guid: ac936892e8ea9a345bbde646b82b2bc0, type: 3}
   takeHitMaterial: {fileID: 2100000, guid: 2bd3d7a12e5e69b438f9c4a627e0491d, type: 2}
+  levelUpHp: 10
+  levelUpAttack: 10
+  levelUpExp: 10
 --- !u!212 &1412118443219722552
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -291,7 +294,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 1000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -336,7 +339,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

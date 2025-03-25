@@ -429,3 +429,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: []
+  boss: {fileID: 4681068461694256559, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
