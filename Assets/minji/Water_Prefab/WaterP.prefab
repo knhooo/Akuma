@@ -208,6 +208,7 @@ MonoBehaviour:
   maxExp: 100
   attack: 10
   speed: 3
+  skillCoolTime: 5
   wspeedUp: 5
   wkeepSpeed: 3
   wExposion: {fileID: 4906589081750784832, guid: f1ab4a001829642409185dd3bacf443b, type: 3}
@@ -329,6 +330,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8319257915079301420, guid: a9da4017a05c61049a2bfc2a12e7c9ff, type: 3}
+      propertyPath: twp
+      value: 
+      objectReference: {fileID: 8300000, guid: e5c75d896ee2a654d83c66a62c58049f, type: 3}
     - target: {fileID: 8811693318514434165, guid: a9da4017a05c61049a2bfc2a12e7c9ff, type: 3}
       propertyPath: m_Name
       value: wSoundManager
