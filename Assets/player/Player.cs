@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     protected float skillCoolTime = 5.0f;
     protected float skillCoolTimer = 0f;
+    [SerializeField]
+    protected int enemyCount = 0;
 
 
     public int Hp { get { return hp; } set { hp = value; } }
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
     public int Level { get { return level; } set { level = value; } }
     public float SkillCoolTime { get { return skillCoolTime; } }
     public float SkillCoolTimer { get { return skillCoolTimer; } }
+    public int EnemyCount { get { return enemyCount; } set { enemyCount = value; } }
 
     public virtual void TakeDamage(int dmg)
     {

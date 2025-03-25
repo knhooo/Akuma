@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] GameObject spawner;
     public PoolManager pool;
+    public bool isClear;//보스 클리어 여부
 
     public GameObject Player { get { return player; } }
 
@@ -52,5 +53,4 @@ public class GameManager : MonoBehaviour
     {
         return player.transform.position;
     }
-
 }

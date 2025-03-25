@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
     int bossCount = 0;
 
     public GameObject boss;
+    GameObject bossObject;
 
     private void Awake()
     {
@@ -22,39 +23,43 @@ public class Spawner : MonoBehaviour
     {
         cycle += Time.deltaTime;
         timer += Time.deltaTime;
-        
+
 
         if (timer > 60 && timer < 120)
         {
             spawnIndex = 1;
             frequency = 0.8f;
         }
-        else if (timer > 120 && timer <180)
+        else if (timer > 120 && timer < 180)
         {
             spawnIndex = 2;
             frequency = 0.6f;
         }
-        else if(timer > 180 && timer < 240)
-        { 
+        else if (timer > 180 && timer < 240)
+        {
             spawnIndex = 3;
             frequency = 0.4f;
 
         }
-        else if(timer > 240 && timer < 300)
+        else if (timer > 240 && timer < 300)
         {
             spawnIndex = Random.Range(3, 5);
             frequency = 1f;
         }
-        else if(timer > 300  )//보스
+        else if (timer > 300)//보스
         {
             spawnIndex = Random.Range(0, 5);
-            if(bossCount < 1)
+            if (bossCount < 1)
             {
-                Instantiate(boss, GameManager.instance.GetPlayerPos(), Quaternion.identity);
+                bossObject = Instantiate(boss, GameManager.instance.GetPlayerPos(), Quaternion.identity);
                 bossCount++;
-            }  
+            }
+            else if(bossCount == 1 && bossObject == null)//보스 사망시
+            {
+                GameManager.instance.isClear = true;
+            }
         }
-        
+
     }
     private void LateUpdate()
     {
@@ -68,6 +73,6 @@ public class Spawner : MonoBehaviour
     void Spawn(int index)
     {
         GameObject enemy = GameManager.instance.pool.Get(index);
-        enemy.transform.position = spawnPoint[Random.Range(1,spawnPoint.Length)].position;
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
     }
 }

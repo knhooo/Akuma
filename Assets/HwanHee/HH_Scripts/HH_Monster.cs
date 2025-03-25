@@ -13,7 +13,7 @@ public class HH_Monster : MonoBehaviour
     [SerializeField]
     protected float attackRange = 3f;
     [SerializeField]
-    protected int exp = 10;
+    protected int exp = 1;
     [SerializeField]
     GameObject item;
     [SerializeField]
@@ -185,6 +185,7 @@ public class HH_Monster : MonoBehaviour
         state = State.Death;
 
         player.GetComponent<Player>().Exp += exp;
+        player.GetComponent<Player>().EnemyCount += 1;
     }
 
     // 애니메이션 이벤트용
