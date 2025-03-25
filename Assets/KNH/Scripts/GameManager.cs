@@ -28,9 +28,6 @@ public class GameManager : MonoBehaviour
         return playerClass;
     }
 
-
-
-
     private void Awake()
     {
         instance = this;//√ ±‚»≠   
@@ -49,6 +46,11 @@ public class GameManager : MonoBehaviour
             GameObject spawnerInstance = Instantiate(spawner, player.transform);
             spawnerInstance.transform.SetParent(player.transform, true);
         }
+    }
+
+    public Vector3 GetPlayerPos()
+    {
+        return player.transform.position;
     }
 
 }
