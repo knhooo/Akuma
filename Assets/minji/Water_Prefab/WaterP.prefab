@@ -146,7 +146,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -174,7 +174,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 15
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -188,7 +188,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2739051673636392190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +209,8 @@ MonoBehaviour:
   attack: 10
   speed: 3
   skillCoolTime: 5
+  dashCoolTime: 5
+  enemyCount: 0
   wspeedUp: 5
   wkeepSpeed: 3
   wExposion: {fileID: 4906589081750784832, guid: f1ab4a001829642409185dd3bacf443b, type: 3}
@@ -218,6 +220,7 @@ MonoBehaviour:
   waterbulletR: {fileID: 1473884654626241913, guid: f645c28838bf050439aa4c1ecdd8330b, type: 3}
   waterbulletL: {fileID: 6450548722236368975, guid: c1361e07dd965cb4986437d6e2ee8a48, type: 3}
   waterbulletD: {fileID: 3496118545352040183, guid: ea6e593e937e82e418312616e7120c24, type: 3}
+  wdashTimer: 0
   pos1: {fileID: 2853220943928749697}
   pos2: {fileID: 4307643872519116120}
 --- !u!1 &5715138462740854564

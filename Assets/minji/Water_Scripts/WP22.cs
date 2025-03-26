@@ -10,7 +10,6 @@ public class WP22 : Player //물마법사 스크립트
 
     public GameObject wExposion; //피 이펙트
 
-
     public GameObject waterbullet; //물미사일 객체 선언
     public GameObject waterPbullet; //물미사일 (보라색) 객체 선언
     public GameObject waterbulletU; //물미사일 객체 선언
@@ -18,10 +17,10 @@ public class WP22 : Player //물마법사 스크립트
     public GameObject waterbulletL; //물미사일 객체 선언
     public GameObject waterbulletD; //물미사일 객체 선언
 
+    public float wdashTimer = 0f;
+
     public Transform pos1 = null;
     public Transform pos2 = null;
-
-
 
     void Start()
     {
@@ -32,6 +31,15 @@ public class WP22 : Player //물마법사 스크립트
 
     void Update()
     {
+        if(!ani.GetBool("surf"))
+        {
+            speed = wkeepSpeed;
+            if (dashCoolTimer < dashCoolTime) dashCoolTimer += Time.deltaTime;
+            if (dashCoolTimer >= dashCoolTime) canUseDash = false;
+
+        }
+
+
         //레벨업
         if (exp >= maxExp)
         {
@@ -39,7 +47,7 @@ public class WP22 : Player //물마법사 스크립트
             Debug.Log($"레벨업! 현재 레벨 : {level}"); //확인용
             exp -= maxExp; //남은 경험치 이월
             maxExp += 10; //max 경험치 상승
-            attack += 10; //능력치 상승은 임시로 정해둠.
+            attack += 20; //능력치 상승은 임시로 정해둠.
             maxHp += 20;
             hp += 20;
             speed += 0.1f;
@@ -63,19 +71,27 @@ public class WP22 : Player //물마법사 스크립트
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
 
-            if (Input.GetKey(KeyCode.LeftShift)) //왼쪽으로 이동하면서 쉬프트
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                ani.SetBool("walk", false); //걷는 모션 비활성화
-                ani.SetBool("surf", true); //대쉬 모션 활성화
+                if (dashCoolTimer >= dashCoolTime)
+                {
+                    canUseDash = false;
+                    dashCoolTimer = 0f;
+                    speed = wspeedUp;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("surf", true);
 
-                speed = wspeedUp; //스피드 증가
+  
+                }
+                else if (dashCoolTimer < dashCoolTime && !canUseDash)
+                    canUseDash = true;
             }
-            else //쉬프트 땔 때
+            else if(Input.GetKeyUp(KeyCode.LeftShift))
             {
-                ani.SetBool("walk", true); //걷는 모션 다시 활성화
+                ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
-                speed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
             }
+
 
             if (Input.GetMouseButtonDown(0)) //왼쪽으로 이동하면서 마우스 왼쪽 버튼 누를 때
             {
@@ -109,19 +125,26 @@ public class WP22 : Player //물마법사 스크립트
         {
             ani.SetBool("walk", true); //걷는 모션 활성화
             transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 오른쪽 모습
-
-            if (Input.GetKey(KeyCode.LeftShift)) //오른쪽으로 이동하면서 쉬프트
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                ani.SetBool("walk", false); //걷는 모션 비활성화
-                ani.SetBool("surf", true); //대쉬 모션 활성화
+                if (dashCoolTimer >= dashCoolTime)
+                {
+                    canUseDash = false;
+                    dashCoolTimer = 0f;
+                    speed = wspeedUp;
 
-                speed = wspeedUp; //스피드 증가
+                    ani.SetBool("walk", false);
+                    ani.SetBool("surf", true);
+
+                }
+                else if (dashCoolTimer < dashCoolTime && !canUseDash)
+                    canUseDash = true;
+
             }
-            else
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                ani.SetBool("walk", true); //걷는 모션 활성화
-                ani.SetBool("surf", false); //대쉬 모션 비활성화
-                speed = wkeepSpeed; //저장된 속도 원래속도에 집어넣기
+                ani.SetBool("walk", true);
+                ani.SetBool("surf", false);
             }
 
             if (Input.GetMouseButtonDown(0)) //오른쪽으로 이동하면서 마우스 좌클릭
