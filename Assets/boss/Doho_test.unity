@@ -306,6 +306,7 @@ MonoBehaviour:
   attack: 10
   speed: 3
   skillCoolTime: 5
+  dashCoolTime: 5
   enemyCount: 0
 --- !u!1001 &1085699573
 PrefabInstance:
@@ -367,6 +368,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1237028363}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: attackRange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: bulletSpeed
       value: 3

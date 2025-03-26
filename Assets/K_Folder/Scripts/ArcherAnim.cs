@@ -19,18 +19,8 @@ public class ArcherAnim : Player
     private bool canSkill = true;
     private bool isPerformingSkill = false;
 
-    [SerializeField] private float dashCoolTime = 2f;
-    [SerializeField] private float skillCoolTime = 3f;
     [SerializeField] private int skillAttackBoost = 20;
     [SerializeField] private float skillDuration = 1f;
-
-    private float dashCoolTimer = 0f;
-    private float skillCoolTimer = 0f;
-
-    public float DashCoolTime { get { return dashCoolTime; } }
-    public float DashCoolTimer { get { return dashCoolTimer; } }
-    public float SkillCoolTime { get { return skillCoolTime; } }
-    public float SkillCoolTimer { get { return skillCoolTimer; } }
 
     void Awake()
     {
