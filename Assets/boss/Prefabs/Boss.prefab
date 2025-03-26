@@ -141,11 +141,15 @@ MonoBehaviour:
   spellCount: 10
   spellRangeX: 3
   spellRangeY: 2
-  bulletPrefab: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+  radialBulletPrefab: {fileID: 4553376544367887962, guid: ae611973cc2eacf4e99af89537336fda, type: 3}
+  trackingBulletPrefab: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
   firePoint: {fileID: 888828246329416660}
   bulletCount: 8
-  fireInterval: 3
   bulletSpeed: 5
+  fireRate: 3
+  trackingBulletSpeed: 3
+  trackingInterval: 0.2
+  trackingBulletCount: 5
 --- !u!61 &333349168562255958
 BoxCollider2D:
   m_ObjectHideFlags: 0

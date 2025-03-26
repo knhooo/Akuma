@@ -14,11 +14,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // �Է� �� �޾ƿ��� (WASD �Ǵ� ����Ű)
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical"); 
 
-        // �밢�� �̵� �ӵ� ���� (����ȭ)
         moveInput = new Vector2(moveX, moveY).normalized;
     }
 
