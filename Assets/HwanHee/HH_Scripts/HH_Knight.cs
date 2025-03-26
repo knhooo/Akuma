@@ -270,11 +270,9 @@ public class HH_Knight : Player
 
     public void LevelUp()
     {
+        level++;
         exp = MaxExp - exp;
         maxExp += levelUpExp;
-        maxHp += levelUpHp;
-        attack += levelUpAttack;
-        skillDamage += levelUpAttack;
     }
 
     // 애니메이션 이벤트용 함수
