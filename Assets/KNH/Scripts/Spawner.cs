@@ -52,6 +52,8 @@ public class Spawner : MonoBehaviour
             if (bossCount < 1)
             {
                 bossObject = Instantiate(boss, GameManager.instance.GetPlayerPos(), Quaternion.identity);
+                GameManager.instance.boss = bossObject;
+                GameManager.instance.isBoss = true;
                 bossCount++;
             }
             else if(bossCount == 1 && bossObject == null)//º¸½º »ç¸Á½Ã

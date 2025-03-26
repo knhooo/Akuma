@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject[] playerPrefabs;//플레이어 프리팹 배열 
     public static GameManager instance;
     public GameObject player;
+    public GameObject boss;
     [SerializeField] GameObject areaPrefab;
     GameObject areaObject;
     //public CinemachineCamera virtualCamera; // 시네머신 가상 카메라
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public bool isClear;//보스 클리어 여부
     public bool isTimeStop = false;//시간 정지 여부
+    public bool isBoss = false;//보스 등장 여부
     [Header("배속 설정")]
     [Range(0, 10)] public float gameSpeed = 1f;
 
