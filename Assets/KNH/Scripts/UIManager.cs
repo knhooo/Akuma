@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public Player player;
     GameObject playerObject;
+    int curLevel;//레벨업 확인용
     [SerializeField] Image hpBar;//체력바 이미지
     [SerializeField] Image expBar;//경험치바 이미지
     [SerializeField] TextMeshProUGUI levelText;//레벨 텍스트
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.instance.player != null)
         {
             player = GameManager.instance.player.GetComponent<Player>();
+            curLevel = player.Level;
         }
 
     }
@@ -53,9 +55,10 @@ public class UIManager : MonoBehaviour
                 SetUIText();
             }
             //레벨업 증강
-            if(player.Exp == player.MaxExp)
+            if(player.Level> curLevel)
             {
                 Time.timeScale = 0f;//시간정지
+                curLevel = player.Level;
                 AugmentUI.SetActive(true);
             }
         }

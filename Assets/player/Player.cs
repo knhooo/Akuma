@@ -18,10 +18,16 @@ public class Player : MonoBehaviour
     protected float speed = 3f;
     [SerializeField]
     protected float skillCoolTime = 5.0f;
-    protected float skillCoolTimer = 0f;
+    [SerializeField]
+    protected float dashCoolTime = 5.0f;
     [SerializeField]
     protected int enemyCount = 0;
+    
+    protected float dashCoolTimer = 0f;
+    protected float skillCoolTimer = 0f;
 
+    protected bool canUseDash = true;
+    protected bool canUseSkill = true;
 
     public int Hp { get { return hp; } set { hp = value; } }
     public int Attack { get { return attack; } set { attack = value; } }
@@ -32,7 +38,12 @@ public class Player : MonoBehaviour
     public int Level { get { return level; } set { level = value; } }
     public float SkillCoolTime { get { return skillCoolTime; } }
     public float SkillCoolTimer { get { return skillCoolTimer; } }
+    public float DashCoolTime { get { return dashCoolTime; } }
+    public float DashCoolTimer { get { return dashCoolTimer; } }
     public int EnemyCount { get { return enemyCount; } set { enemyCount = value; } }
+
+    public bool CanUseSkill { get { return canUseSkill; } }
+    public bool CanUseDash { get { return canUseDash; } }
 
     public virtual void TakeDamage(int dmg)
     {
