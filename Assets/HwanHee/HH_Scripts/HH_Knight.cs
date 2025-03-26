@@ -20,11 +20,7 @@ public class HH_Knight : Player
     [SerializeField]
     GameObject blood;
     [SerializeField]
-    int skillDamage = 10;
-    [SerializeField]
-    int levelUpHp = 10;
-    [SerializeField]
-    int levelUpAttack = 5;
+    int skillDamage = 30;
     [SerializeField]
     int levelUpExp = 10;
     [SerializeField]
