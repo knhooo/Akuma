@@ -1549,6 +1549,7 @@ GameObject:
   - component: {fileID: 677262946}
   - component: {fileID: 677262945}
   - component: {fileID: 677262948}
+  - component: {fileID: 677262949}
   m_Layer: 5
   m_Name: WizardButton
   m_TagString: Button
@@ -1688,6 +1689,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5bdfbdf905def478d560cd074edaee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &677262949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677262943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5326cee849741b842a493d6353150fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicCursor: {fileID: -1745286488, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  gameCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1264195411, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
 --- !u!1 &691663029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2640,6 +2656,7 @@ GameObject:
   - component: {fileID: 912993538}
   - component: {fileID: 912993537}
   - component: {fileID: 912993540}
+  - component: {fileID: 912993541}
   m_Layer: 5
   m_Name: WarriorButton
   m_TagString: Button
@@ -2779,6 +2796,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5bdfbdf905def478d560cd074edaee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &912993541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912993535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5326cee849741b842a493d6353150fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicCursor: {fileID: -1745286488, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  gameCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1264195411, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
 --- !u!1 &1020443705
 GameObject:
   m_ObjectHideFlags: 0
@@ -3966,6 +3998,7 @@ GameObject:
   - component: {fileID: 1552745536}
   - component: {fileID: 1552745535}
   - component: {fileID: 1552745538}
+  - component: {fileID: 1552745539}
   m_Layer: 5
   m_Name: ArcherButton
   m_TagString: Button
@@ -4105,6 +4138,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5bdfbdf905def478d560cd074edaee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1552745539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552745533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5326cee849741b842a493d6353150fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicCursor: {fileID: -1745286488, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  gameCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1264195411, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
 --- !u!1 &1560874568
 GameObject:
   m_ObjectHideFlags: 0

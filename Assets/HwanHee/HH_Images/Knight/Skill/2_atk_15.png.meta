@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: ab3225fccc0ae294ba4064497c467e59
+guid: 15b0153130bf98f4ea8486264bf9182c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8204141385496025463
-    second: WaterSkillImg_0
+      213: -1856210317781141089
+    second: 2_atk_15_0
+  - first:
+      213: -6784280530465502878
+    second: 2_atk_15_1
+  - first:
+      213: -2510772440647145230
+    second: 2_atk_15_2
+  - first:
+      213: 8183871857795957116
+    second: 2_atk_15_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -49,9 +58,9 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.25}
+  spritePixelsToUnits: 36
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,23 +135,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WaterSkillImg_0
+      name: 2_atk_15_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 129
         y: 0
-        width: 192
-        height: 192
+        width: 69
+        height: 54
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 986ad6690e8052e80800000000000000
-      internalID: -8204141385496025463
+      spriteID: f997d34fc8a6d36e0800000000000000
+      internalID: -1856210317781141089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_atk_15_1
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 37
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 269410d5dc469d1a0800000000000000
+      internalID: -6784280530465502878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_atk_15_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 25
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f8e26394c1f72dd0800000000000000
+      internalID: -2510772440647145230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_atk_15_3
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 15
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c718e3b3814f29170800000000000000
+      internalID: 8183871857795957116
       vertices: []
       indices: 
       edges: []
@@ -151,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3672261128f65704ca79fdace1679420
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WaterSkillImg_0: -8204141385496025463
+      2_atk_15_0: -1856210317781141089
+      2_atk_15_1: -6784280530465502878
+      2_atk_15_2: -2510772440647145230
+      2_atk_15_3: 8183871857795957116
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

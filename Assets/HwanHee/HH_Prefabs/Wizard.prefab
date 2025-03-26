@@ -130,7 +130,7 @@ MonoBehaviour:
   attack: 10
   speed: 2
   attackRange: 5
-  exp: 10
+  exp: 1
   item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
   dropRate: 50
   projectile: {fileID: 5385184288878626579, guid: fe5b9cdc4a7f854458094632b782c9a7, type: 3}

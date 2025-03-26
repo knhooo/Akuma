@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5326cee849741b842a493d6353150fed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicCursor: {fileID: 1551617961, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
-  monsterCursor: {fileID: 465965065, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
-  itemCursor: {fileID: -1078541247, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
-  buttonCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  basicCursor: {fileID: -1745286488, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  gameCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1264195411, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}

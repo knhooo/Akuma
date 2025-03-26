@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 128644691}
   - component: {fileID: 128644694}
   - component: {fileID: 128644695}
+  - component: {fileID: 128644696}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Button
@@ -327,6 +328,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &128644696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128644689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5326cee849741b842a493d6353150fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicCursor: {fileID: -1745286488, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  gameCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1264195411, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
 --- !u!1 &151752940
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +494,7 @@ GameObject:
   - component: {fileID: 153566020}
   - component: {fileID: 153566023}
   - component: {fileID: 153566024}
+  - component: {fileID: 153566025}
   m_Layer: 5
   m_Name: EndButton
   m_TagString: Button
@@ -501,8 +518,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 290, y: -107.00001}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 336.36337, y: -107.00001}
+  m_SizeDelta: {x: 67.2733, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &153566020
 MonoBehaviour:
@@ -665,12 +682,27 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 6.2194443, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &153566025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153566018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5326cee849741b842a493d6353150fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicCursor: {fileID: -1745286488, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  gameCursor: {fileID: -1365104157, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
+  buttonCursor: {fileID: -1264195411, guid: 1cd4c0c5078af7743a11fc9d25242614, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

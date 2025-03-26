@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ab3225fccc0ae294ba4064497c467e59
+guid: 223d04dc21bbc8547bb38e9607c1148f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8204141385496025463
-    second: WaterSkillImg_0
+      213: 3163291122528397570
+    second: 2_atk_8_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -49,9 +49,9 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.25}
+  spritePixelsToUnits: 36
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WaterSkillImg_0
+      name: 2_atk_8_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 137
         y: 0
-        width: 192
-        height: 192
+        width: 65
+        height: 44
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 986ad6690e8052e80800000000000000
-      internalID: -8204141385496025463
+      spriteID: 209a37f148446eb20800000000000000
+      internalID: 3163291122528397570
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3672261128f65704ca79fdace1679420
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WaterSkillImg_0: -8204141385496025463
+      2_atk_8_0: 3163291122528397570
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

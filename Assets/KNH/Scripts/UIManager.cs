@@ -6,12 +6,14 @@ public class UIManager : MonoBehaviour
 {
     public Player player;
     GameObject playerObject;
+    int curLevel;//레벨업 확인용
     [SerializeField] Image hpBar;//체력바 이미지
     [SerializeField] Image expBar;//경험치바 이미지
     [SerializeField] TextMeshProUGUI levelText;//레벨 텍스트
 
     [SerializeField] GameObject gameOverUI;//게임오버 UI
     [SerializeField] GameObject gameClearUI;//게임클리어 UI
+    [SerializeField] GameObject AugmentUI;//증강 UI
     [SerializeField] TextMeshProUGUI timeText;//생존시간
     [SerializeField] TextMeshProUGUI finalLevel;//달성 레벨
     [SerializeField] TextMeshProUGUI enemyCount;//처치한 적 수
@@ -24,6 +26,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.instance.player != null)
         {
             player = GameManager.instance.player.GetComponent<Player>();
+            curLevel = player.Level;
         }
 
     }
@@ -44,11 +47,19 @@ public class UIManager : MonoBehaviour
                 gameOverUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
             }
+            //보스 클리어
             if (GameManager.instance.isClear == true)
             {
                 Time.timeScale = 0f;//시간정지
                 gameClearUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
+            }
+            //레벨업 증강
+            if(player.Level> curLevel)
+            {
+                Time.timeScale = 0f;//시간정지
+                curLevel = player.Level;
+                AugmentUI.SetActive(true);
             }
         }
     }

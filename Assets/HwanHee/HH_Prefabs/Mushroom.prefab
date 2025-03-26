@@ -108,7 +108,7 @@ MonoBehaviour:
   attack: 10
   speed: 1
   attackRange: 1
-  exp: 10
+  exp: 1
   item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
   dropRate: 10
 --- !u!50 &5103690914762991652
