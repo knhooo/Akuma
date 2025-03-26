@@ -31,7 +31,7 @@ public class Augment : MonoBehaviour
 
     void EndAugment()
     {
-        Time.timeScale = 2f;//시간정지해제
+        GameManager.instance.isTimeStop = false;//시간 정지 해제
         augmentListUI.gameObject.transform.GetComponent<AugmentList>().AddAugmentIcon();
         gameObject.SetActive(false);
     }
