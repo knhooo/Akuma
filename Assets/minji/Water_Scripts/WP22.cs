@@ -37,7 +37,7 @@ public class WP22 : Player //물마법사 스크립트
         {
             level += 1;
             Debug.Log($"레벨업! 현재 레벨 : {level}"); //확인용
-            exp -= maxExp; //남은 경험치 이월
+            exp = 0;
             attack += 10; //능력치 상승은 임시로 정해둠.
             maxHp += 20;
             hp += 20;
