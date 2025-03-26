@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BossAI : MonoBehaviour
 {
-    public Camera mainCamera; // 메인 카메라
+    private Camera mainCamera; // 메인 카메라
     private SpriteRenderer spriteRenderer;  // 스프라이트 렌더러
     private Animator animator;   // Animator
 
@@ -60,6 +60,9 @@ public class BossAI : MonoBehaviour
 
     void Start()
     {
+        // 현재 씬의 메인 카메라 자동 할당
+        mainCamera = Camera.main;
+
         // 스프라이트 렌더러와 Animator 초기화
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
