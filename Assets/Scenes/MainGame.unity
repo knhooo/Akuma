@@ -56060,7 +56060,8 @@ MonoBehaviour:
   expBar: {fileID: 2122726361}
   levelText: {fileID: 1161471763}
   gameOverUI: {fileID: 559671227}
-  gameClearUI: {fileID: 0}
+  gameClearUI: {fileID: 1889760844}
+  AugmentUI: {fileID: 2114443591}
   timeText: {fileID: 1829363583}
   finalLevel: {fileID: 1911663605}
   enemyCount: {fileID: 534929914}

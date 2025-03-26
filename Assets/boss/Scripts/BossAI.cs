@@ -23,8 +23,8 @@ public class BossAI : MonoBehaviour
     public float moveSpeed = 1f;  // 이동 속도
     public float stoppingDistance = 0.5f;  // 목표와의 최소 거리
 
-    private float maxHP = 500f; // 보스 최대 체력
-    private float currentHP = 500f;  // 보스 현재 체력
+    public float maxHP = 500f; // 보스 최대 체력
+    public float currentHP = 500f;  // 보스 현재 체력
 
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹
@@ -40,6 +40,14 @@ public class BossAI : MonoBehaviour
     private float teleportCooldown = 3f;  // 순간이동 쿨타임
     private float teleportTimer = 0f;     // 순간이동 타이머
 
+    //탄막
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public int bulletCount = 8; // 한 번에 발사할 탄 수
+    public float fireInterval = 3f; // 발사 주기
+    public float bulletSpeed = 5f;
+
+
     void Start()
     {
         // 스프라이트 렌더러와 Animator 초기화
@@ -49,8 +57,12 @@ public class BossAI : MonoBehaviour
         // 초기 애니메이션 설정
         animator.SetBool("isWalking", false);  // 초기 상태는 걷지 않음
         animator.SetBool("isAttacking", false);  // 초기 상태는 공격하지 않음
-    }
 
+        currentHP = maxHP;
+
+        InvokeRepeating(nameof(FireBulletPattern), 2f, fireInterval); // n초 후부터 주기적으로 발사
+    }
+    
     void Update()
     {       
         if (isDead) return;  // 보스가 죽었으면 더 이상 행동하지 않음
@@ -112,8 +124,13 @@ public class BossAI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             Die();
-        }
+        }                
 
+        // 체력이 30% 이하 & 강화 모드가 아니라면 강화 모드 진입
+        if (currentHP <= maxHP * 0.3f && !isEnraged)
+        {
+            EnterEnragedMode();
+        }
         // 보스가 체력 0이면 죽음
         if (currentHP <= 0 && !isDead)
         {
@@ -130,7 +147,7 @@ public class BossAI : MonoBehaviour
         {
             // 플레이어가 보스의 왼쪽에 있으면 스프라이트를 정상적으로 유지
             spriteRenderer.flipX = true;
-        }
+        }        
     }
 
     void MoveTowardsPlayer()
@@ -146,18 +163,14 @@ public class BossAI : MonoBehaviour
         if (isDead) return; // 이미 죽은 상태면 더 이상 피해를 받지 않음        
         Debug.Log($"Damage 실행됨. 데미지 값: {damage}");
         currentHP -= damage;
-
+        Debug.Log("보스 체력: " + currentHP);
         // 체력이 0 이하로 떨어지면 죽음 처리
         if (currentHP <= 0)
         {
             Die();
             return;
-        }
-        // 체력이 30% 이하 & 강화 모드가 아니라면 강화 모드 진입
-        if (currentHP <= maxHP * 0.3f && !isEnraged)
-        {
-            EnterEnragedMode();
-        }
+        }        
+        
         // 피해 애니메이션 실행
         StartCoroutine(PlayHurtAnimation());        
     }
@@ -169,7 +182,6 @@ public class BossAI : MonoBehaviour
         player.GetComponent<Player>().TakeDamage(Mathf.RoundToInt(attackDamage));
         Debug.Log("보스가 플레이어를 공격했습니다! 데미지: " + attackDamage);
     }
-
 
     //강화 모드
     private void EnterEnragedMode()
@@ -334,6 +346,24 @@ public class BossAI : MonoBehaviour
         return player.position + new Vector3(offsetX, offsetY, 0f);
     }
 
+    //보스 탄막패턴
+    void FireBulletPattern()
+    {
+        float angleStep = 360f / bulletCount; // 탄막을 균등한 간격으로 배치
+        float currentAngle = 0f;
+
+        for (int i = 0; i < bulletCount; i++)
+        {
+            float bulletDirX = Mathf.Cos(currentAngle * Mathf.Deg2Rad);
+            float bulletDirY = Mathf.Sin(currentAngle * Mathf.Deg2Rad);
+            Vector2 bulletDirection = new Vector2(bulletDirX, bulletDirY);
+
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            bullet.GetComponent<Bullet>().Initialize(bulletDirection * bulletSpeed);
+
+            currentAngle += angleStep;
+        }
+    }
 
     //보스 사망
     void Die()

@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject gameOverUI;//게임오버 UI
     [SerializeField] GameObject gameClearUI;//게임클리어 UI
+    [SerializeField] GameObject AugmentUI;//증강 UI
     [SerializeField] TextMeshProUGUI timeText;//생존시간
     [SerializeField] TextMeshProUGUI finalLevel;//달성 레벨
     [SerializeField] TextMeshProUGUI enemyCount;//처치한 적 수
@@ -44,11 +45,18 @@ public class UIManager : MonoBehaviour
                 gameOverUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
             }
+            //보스 클리어
             if (GameManager.instance.isClear == true)
             {
                 Time.timeScale = 0f;//시간정지
                 gameClearUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
+            }
+            //레벨업 증강
+            if(player.Exp == player.MaxExp)
+            {
+                Time.timeScale = 0f;//시간정지
+                AugmentUI.SetActive(true);
             }
         }
     }
