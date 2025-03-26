@@ -41,11 +41,21 @@ public class BossAI : MonoBehaviour
     private float teleportTimer = 0f;     // 순간이동 타이머
 
     //탄막
-    public GameObject bulletPrefab;
-    public Transform firePoint;
+    public GameObject radialBulletPrefab;  // 방사형 탄막 프리팹
+    public GameObject trackingBulletPrefab;  // 추적 탄막 프리팹
+    public Transform firePoint;             // 발사 지점
+
     public int bulletCount = 8; // 한 번에 발사할 탄 수
-    public float fireInterval = 3f; // 발사 주기
-    public float bulletSpeed = 5f;
+    public float bulletSpeed = 3f; // 방사형 탄막 속도
+    public float bulletFireRate = 3f; // 방사형 탄막 발사 주기
+
+    public int trackingBulletCount = 5; // 한 번에 발사할 탄 수
+    public float trackingBulletSpeed = 3f; // 추적 탄막 속도
+    public float trackingInterval = 0.5f; // 추적 탄막 간격    
+
+    private float nextTrTime = 6f; // 추적 탄막 생성 주기
+    private float TrCooldown = 6f; // 추적 탄막 쿨타임
+    private bool isTrFiring = false;
 
 
     void Start()
@@ -60,7 +70,9 @@ public class BossAI : MonoBehaviour
 
         currentHP = maxHP;
 
-        InvokeRepeating(nameof(FireBulletPattern), 2f, fireInterval); // n초 후부터 주기적으로 발사
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        StartCoroutine(FireRadialBullets());  // 방사형 탄막 루틴
+
     }
     
     void Update()
@@ -82,6 +94,13 @@ public class BossAI : MonoBehaviour
         {
             CastSpell();
             nextCastTime = Time.time + castCooldown; // 다음 Cast 타이밍 설정
+        }
+
+        // 추적 탄막 패턴
+        if (Time.time >= nextTrTime && !isTrFiring)
+        {
+            FireTrackingBullets();
+            nextTrTime = Time.time + TrCooldown;
         }
 
         // 피해 상태 아닐 때
@@ -108,19 +127,19 @@ public class BossAI : MonoBehaviour
             }
         }
 
-        // C키 누르면 캐스팅
+        // 캐스팅 테스트(C버튼)
         if (Input.GetKeyDown(KeyCode.C))
         {
             CastSpell();
         }
 
-        // 보스가 피해를 입었을 때
-        if (Input.GetKeyDown(KeyCode.Space)) // 예시로 Space키를 누르면 피해 입음
+        // 보스 데미지 테스트(Space 버튼)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!isDead) TakeDamage(10);
         }
         
-        // 보스 죽음 테스트
+        // 보스 죽음 테스트(X 버튼)
         if (Input.GetKeyDown(KeyCode.X))
         {
             Die();
@@ -150,6 +169,8 @@ public class BossAI : MonoBehaviour
         }        
     }
 
+
+    // 보스 이동
     void MoveTowardsPlayer()
     {
         if (!isMoving) return;
@@ -158,6 +179,8 @@ public class BossAI : MonoBehaviour
         // transform을 직접 수정하여 이동
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
+
+    // 보스 데미지 받는 기능
     public void TakeDamage(int damage)
     {
         if (isDead) return; // 이미 죽은 상태면 더 이상 피해를 받지 않음        
@@ -183,7 +206,7 @@ public class BossAI : MonoBehaviour
         Debug.Log("보스가 플레이어를 공격했습니다! 데미지: " + attackDamage);
     }
 
-    //강화 모드
+    // 강화 모드
     private void EnterEnragedMode()
     {
         isEnraged = true;
@@ -195,14 +218,14 @@ public class BossAI : MonoBehaviour
         StartCoroutine(TeleportCoroutine());
     }
 
-    //캐스팅
+    // 캐스팅
     void CastSpell()
     {
         Debug.Log("Cast 실행됨");
         StartCoroutine(PlayCastAnimation());        
     }
 
-    //스펠 소환
+    // 스펠 소환
     void SpawnSpell()
     {
         Debug.Log("Spell 실행됨");
@@ -217,7 +240,7 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    //스펠 범위 카메라 시야 내로 설정
+    // 스펠 범위 카메라 시야 내로 설정
     private Vector3 GetRandomSpellPositionInCameraView()
     {
         // 카메라의 화면 크기와 범위 계산
@@ -235,7 +258,7 @@ public class BossAI : MonoBehaviour
     }
 
    
-    //피해 상태 애니메이션
+    // 피해 상태 애니메이션
     private IEnumerator PlayHurtAnimation()
     {
         isHurt = true;  // 보스를 피해 상태로 설정
@@ -252,7 +275,7 @@ public class BossAI : MonoBehaviour
     }
 
 
-    //캐스팅 애니메이션
+    // 캐스팅 애니메이션
     private IEnumerator PlayCastAnimation()
     {
         isMoving = false;
@@ -346,26 +369,65 @@ public class BossAI : MonoBehaviour
         return player.position + new Vector3(offsetX, offsetY, 0f);
     }
 
-    //보스 탄막패턴
-    void FireBulletPattern()
+    // 방사형 탄막 코루틴
+    private IEnumerator FireRadialBullets()
     {
-        float angleStep = 360f / bulletCount; // 탄막을 균등한 간격으로 배치
-        float currentAngle = 0f;
-
-        for (int i = 0; i < bulletCount; i++)
+        while (true)
         {
-            float bulletDirX = Mathf.Cos(currentAngle * Mathf.Deg2Rad);
-            float bulletDirY = Mathf.Sin(currentAngle * Mathf.Deg2Rad);
-            Vector2 bulletDirection = new Vector2(bulletDirX, bulletDirY);
-
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-            bullet.GetComponent<Bullet>().Initialize(bulletDirection * bulletSpeed);
-
-            currentAngle += angleStep;
+            FireRadialPattern(); // 방사형 탄막 발사
+            yield return new WaitForSeconds(bulletFireRate);
         }
     }
 
-    //보스 사망
+    // 방사형 탄막 패턴
+    void FireRadialPattern()
+    {
+        int bulletCount = 12; // 한 번에 발사할 탄 수
+        float angleStep = 360f / bulletCount;
+        float angle = 0f;
+
+        for (int i = 0; i < bulletCount; i++)
+        {
+            float radian = angle * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+            GameObject bullet = Instantiate(radialBulletPrefab, firePoint.position, Quaternion.identity);
+            bullet.GetComponent<Bullet>().Initialize(direction);
+            angle += angleStep;
+        }
+    }
+
+    // 추적 탄막
+    public void FireTrackingBullets()
+    {
+        StartCoroutine(FireTrackingBurst());
+    }
+
+    // 추적 탄막 코루틴
+    private IEnumerator FireTrackingBurst()
+    {
+        for (int i = 0; i < trackingBulletCount; i++)
+        {
+            SpawnTrackingBullet();
+            yield return new WaitForSeconds(trackingInterval); // 0.1초 간격으로 발사
+        }
+    }
+
+    // 추적 탄막 생성하는 메서드
+    private void SpawnTrackingBullet()
+    {
+        if (player == null) return; // 플레이어가 없으면 실행 X
+
+        GameObject bullet = Instantiate(trackingBulletPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+        if (rb != null)
+        {
+            Vector2 direction = (player.position - firePoint.position).normalized;
+            rb.linearVelocity = direction * trackingBulletSpeed;
+        }
+    }
+
+    // 보스 사망
     void Die()
     {
         if (isDead) return; // 이미 죽은 상태라면 리턴
