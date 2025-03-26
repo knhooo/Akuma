@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
             Player player = collision.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                player.TakeDamage(10);  // 플레이어에게 데미지 (여기서 10은 데미지 양)
+                player.TakeDamage(10);
             }
             Destroy(gameObject);  // 총알 제거
         }
