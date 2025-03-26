@@ -16,17 +16,11 @@ public class HH_Knight : Player
     [SerializeField]
     float defendCoolTime = 5.0f;
     [SerializeField]
-    float dashCoolTime = 5.0f;
-    [SerializeField]
     float speedBoost = 2f;
     [SerializeField]
     GameObject blood;
     [SerializeField]
-    int skillDamage = 10;
-    [SerializeField]
-    int levelUpHp = 10;
-    [SerializeField]
-    int levelUpAttack = 5;
+    int skillDamage = 30;
     [SerializeField]
     int levelUpExp = 10;
     [SerializeField]
@@ -40,11 +34,7 @@ public class HH_Knight : Player
     enum KnightState { Attack, Skill, Defend, Roll, Death }
     KnightState state = KnightState.Attack;
 
-    bool canUseSkill = true;
-    bool canUseDash = true;
     bool canUseDefend = true;
-    public bool CanUseDash { get { return canUseDash; } }
-    public bool CanUseSkill { get { return canUseDefend; } }
 
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -54,11 +44,7 @@ public class HH_Knight : Player
     Vector2 inputVec;
 
     float defendCoolTimer = 0f;
-    float dashCoolTimer = 0f;
     float defendTimer = 0f;
-
-    public float DashCoolTimer { get { return dashCoolTimer; } }
-    public float DashCoolTime { get { return dashCoolTime; } }
 
     void Awake()
     {
@@ -76,11 +62,6 @@ public class HH_Knight : Player
         if (state == KnightState.Death)
         {
             return;
-        }
-
-        if (exp >= maxExp)
-        {
-            LevelUp();
         }
 
         if (state != KnightState.Skill)
@@ -223,15 +204,6 @@ public class HH_Knight : Player
             return;
     }
 
-    public void LevelUp()
-    {
-        maxHp += levelUpHp;
-        attack += levelUpAttack;
-        exp = MaxExp - exp;
-        maxExp += levelUpExp;
-        skillDamage += levelUpAttack;
-    }
-
     public override void TakeDamage(int dmg)
     {
         if (state == KnightState.Defend || state == KnightState.Death)
@@ -285,6 +257,20 @@ public class HH_Knight : Player
         shield.GetComponent<SpriteRenderer>().color = _color;
     }
 
+    public override void GetExperience(int ex)
+    {
+        exp += ex;
+        if (exp >= MaxExp)
+            LevelUp();
+    }
+
+    public void LevelUp()
+    {
+        level++;
+        exp = MaxExp - exp;
+        maxExp += levelUpExp;
+    }
+
     // 애니메이션 이벤트용 함수
     void ActivateSword()
     {
@@ -304,7 +290,6 @@ public class HH_Knight : Player
         sword_right.SetActive(false);
         sword_left.SetActive(false);
     }
-
 
     void RollOver()
     {

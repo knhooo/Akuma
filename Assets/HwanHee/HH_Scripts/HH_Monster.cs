@@ -184,7 +184,7 @@ public class HH_Monster : MonoBehaviour
         anim.SetBool("Death", true);
         state = State.Death;
 
-        player.GetComponent<Player>().Exp += exp;
+        player.GetComponent<Player>().GetExperience(exp);
         player.GetComponent<Player>().EnemyCount += 1;
     }
 
