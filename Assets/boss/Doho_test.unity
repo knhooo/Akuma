@@ -389,10 +389,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 623298745}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 1237028363}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -412,10 +408,6 @@ PrefabInstance:
       propertyPath: trackingBulletSpeed
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: trackingBulletPrefab
-      value: 
-      objectReference: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8669586389055727329}
   - component: {fileID: 333349168562255958}
   - component: {fileID: 8949839755441416106}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   followRange: 10
-  attackRange: 0.5
+  attackRange: 5
   attackDamage: 10
   attackCooldown: 2
   moveSpeed: 1
@@ -144,11 +144,11 @@ MonoBehaviour:
   trackingBulletPrefab: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
   firePoint: {fileID: 888828246329416660}
   bulletCount: 8
-  bulletSpeed: 5
+  bulletSpeed: 3
   bulletFireRate: 3
   trackingBulletCount: 5
-  trackingBulletSpeed: 3
-  trackingInterval: 0.2
+  trackingBulletSpeed: 5
+  trackingInterval: 0.5
 --- !u!61 &333349168562255958
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.32774723, y: -0.17819259}
+  m_Offset: {x: 0.019113302, y: 1.3922095}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.75, y: 0}
@@ -193,7 +193,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.65540946, y: 0.57361484}
+  m_Size: {x: 1.4179168, y: 2.8066726}
   m_EdgeRadius: 0
 --- !u!50 &8949839755441416106
 Rigidbody2D:
