@@ -12,7 +12,7 @@ public class wBulletU2 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster"))
+        if (collision.CompareTag("Monster") || collision.CompareTag("Boss"))
         {
             wSoundManager.instance.tWater();
             Instantiate(wbu, transform.position, Quaternion.identity);
