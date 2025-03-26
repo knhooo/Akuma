@@ -15,10 +15,7 @@ public class HH_SkillCoolTime : MonoBehaviour
 
     void Update()
     {
-        if (player.CanUseSkill)
-        {
-            val = Mathf.InverseLerp(player.SkillCoolTime, 0f, player.SkillCoolTimer);
-            Gage.fillAmount = val;
-        }
+        val = Mathf.InverseLerp(player.SkillCoolTime, 0f, player.SkillCoolTimer);
+        Gage.fillAmount = val;
     }
 }

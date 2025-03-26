@@ -5,12 +5,19 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public Player player;
-    GameObject playerObject;
+    public BossAI boss;
+
     int curLevel;//레벨업 확인용
+    [Header("플레이어")]
     [SerializeField] Image hpBar;//체력바 이미지
     [SerializeField] Image expBar;//경험치바 이미지
     [SerializeField] TextMeshProUGUI levelText;//레벨 텍스트
 
+    [Header("보스")]
+    [SerializeField] GameObject bossUI;//보스 체력 UI
+    [SerializeField] Image bossHpBar;//체력바 이미지
+
+    [Header("UI")]
     [SerializeField] GameObject gameOverUI;//게임오버 UI
     [SerializeField] GameObject gameClearUI;//게임클리어 UI
     [SerializeField] GameObject AugmentUI;//증강 UI
@@ -28,10 +35,17 @@ public class UIManager : MonoBehaviour
             player = GameManager.instance.player.GetComponent<Player>();
             curLevel = player.Level;
         }
-
     }
     void Update()
     {
+        //씬에 boss오브젝트가 생성되었는지 확인
+        if (GameManager.instance.isBoss == true)
+        {
+            boss = GameManager.instance.boss.GetComponent<BossAI>();
+            bossUI.SetActive(true);
+            //보스 체력바 업데이트
+            bossHpBar.fillAmount = (float)boss.currentHP / (float)boss.maxHP;
+        }
         if (player != null)
         {
             //체력바 업데이트
@@ -43,21 +57,19 @@ public class UIManager : MonoBehaviour
             //플레이어 사망
             if (player.Hp <= 0)
             {
-                Time.timeScale = 0f;//시간정지
+                GameManager.instance.isTimeStop = true;//시간 정지
                 gameOverUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
             }
             //보스 클리어
             if (GameManager.instance.isClear == true)
             {
-                Time.timeScale = 0f;//시간정지
-                gameClearUI.SetActive(true);//게임 오버 UI 활성화
-                SetUIText();
+                Invoke("SetClear", 1f);//1초 지연
             }
             //레벨업 증강
-            if(player.Level> curLevel)
+            if(player.Level > curLevel)
             {
-                Time.timeScale = 0f;//시간정지
+                GameManager.instance.isTimeStop = true;//시간 정지
                 curLevel = player.Level;
                 AugmentUI.SetActive(true);
             }
@@ -77,5 +89,13 @@ public class UIManager : MonoBehaviour
 
         //처치한 적
         enemyCount.text = "처치한 적: " + player.EnemyCount.ToString();
+    }
+
+    public void SetClear()
+    {
+        bossUI.SetActive(false);
+        GameManager.instance.isTimeStop = true;//시간 정지
+        gameClearUI.SetActive(true);//게임 오버 UI 활성화
+        SetUIText();
     }
 }

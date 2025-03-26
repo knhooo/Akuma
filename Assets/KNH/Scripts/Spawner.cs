@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     int spawnIndex = 0;
     float frequency = 1f;
     int bossCount = 0;
+    bool isSpawn = true;
 
     public GameObject boss;
     GameObject bossObject;
@@ -17,7 +18,6 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
-        Time.timeScale = 2f;//테스트용 배속 
     }
     void Update()
     {
@@ -48,10 +48,12 @@ public class Spawner : MonoBehaviour
         }
         else if (timer > 300)//보스
         {
-            spawnIndex = Random.Range(0, 5);
+            isSpawn = false;
             if (bossCount < 1)
             {
                 bossObject = Instantiate(boss, GameManager.instance.GetPlayerPos(), Quaternion.identity);
+                GameManager.instance.boss = bossObject;
+                GameManager.instance.isBoss = true;
                 bossCount++;
             }
             else if(bossCount == 1 && bossObject == null)//보스 사망시
@@ -59,14 +61,17 @@ public class Spawner : MonoBehaviour
                 GameManager.instance.isClear = true;
             }
         }
-
     }
+
     private void LateUpdate()
     {
-        if (cycle > frequency)
+        if(isSpawn == true)
         {
-            Spawn(spawnIndex);//첫번째 몬스터
-            cycle = 0;
+            if (cycle > frequency)
+            {
+                Spawn(spawnIndex);//첫번째 몬스터
+                cycle = 0;
+            }
         }
     }
 

@@ -306,6 +306,7 @@ MonoBehaviour:
   attack: 10
   speed: 3
   skillCoolTime: 5
+  dashCoolTime: 5
   enemyCount: 0
 --- !u!1001 &1085699573
 PrefabInstance:
@@ -315,6 +316,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_Size.x
+      value: 1.4179168
+      objectReference: {fileID: 0}
+    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_Size.y
+      value: 2.8066726
+      objectReference: {fileID: 0}
+    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.019113302
+      objectReference: {fileID: 0}
+    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.3922095
+      objectReference: {fileID: 0}
     - target: {fileID: 888828246329416660, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7
@@ -359,14 +376,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 4681068461694256559, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4681068461694256559, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_TagString
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 623298745}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 1237028363}
+      propertyPath: attackRange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: bulletSpeed
       value: 3
@@ -383,10 +408,10 @@ PrefabInstance:
       propertyPath: trackingBulletSpeed
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: trackingBulletPrefab
-      value: 
-      objectReference: {fileID: 8860513128936929744, guid: 707902a47bc65bd4388308ccfa2ad3ba, type: 3}
+    - target: {fileID: 8949839755441416106, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
