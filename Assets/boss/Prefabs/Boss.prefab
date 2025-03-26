@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b251bbc58b6cb4f9a50072e226a53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
   player: {fileID: 0}
   followRange: 10
   attackRange: 0.5
@@ -146,10 +145,10 @@ MonoBehaviour:
   firePoint: {fileID: 888828246329416660}
   bulletCount: 8
   bulletSpeed: 5
-  fireRate: 3
+  bulletFireRate: 3
+  trackingBulletCount: 5
   trackingBulletSpeed: 3
   trackingInterval: 0.2
-  trackingBulletCount: 5
 --- !u!61 &333349168562255958
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -180,7 +179,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -188,7 +187,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.75, y: 0}
-    oldSize: {x: 4.375, y: 2.90625}
+    oldSize: {x: 7, y: 4.65}
     newSize: {x: 1.4, y: 0.93}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
