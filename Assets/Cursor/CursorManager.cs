@@ -46,11 +46,11 @@ public class CursorManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (isOnButton) return;
 
         // 씬에 따라 커서 변경
-        if (SceneManager.GetActiveScene().name == "MainGame")
+        if (SceneManager.GetActiveScene().name == "MainGame"&& GameManager.instance.isTimeStop == false)
         {
             SetCursor(gameTexture);
         }
-        else
+        else if(GameManager.instance.isTimeStop == true|| SceneManager.GetActiveScene().name != "MainGame")
         {
             SetCursor(basicTexture);
         }
@@ -65,11 +65,11 @@ public class CursorManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void UpdateCursor()
     {
-        if (SceneManager.GetActiveScene().name == "MainGame")
+        if (SceneManager.GetActiveScene().name == "MainGame"&& GameManager.instance.isTimeStop == false)
         {
             SetCursor(gameTexture);
         }
-        else
+        else if (GameManager.instance.isTimeStop == true || SceneManager.GetActiveScene().name != "MainGame")
         {
             SetCursor(basicTexture);
         }

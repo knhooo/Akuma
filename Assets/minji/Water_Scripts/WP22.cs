@@ -26,6 +26,7 @@ public class WP22 : Player //물마법사 스크립트
     {
         ani = GetComponent<Animator>(); //애니메이션 가져오기
         StartCoroutine("skill1"); //자동공격 활성화
+        skillCoolTime = 1.0f;
     }
 
 
@@ -36,6 +37,12 @@ public class WP22 : Player //물마법사 스크립트
             speed = wkeepSpeed;
             if (dashCoolTimer < dashCoolTime) dashCoolTimer += Time.deltaTime;
             if (dashCoolTimer >= dashCoolTime) canUseDash = false;
+
+        }
+        if (!ani.GetBool("atk2"))
+        {
+            if (skillCoolTimer < skillCoolTime) skillCoolTimer += Time.deltaTime;
+            if (skillCoolTimer >= skillCoolTime) canUseSkill = false;
 
         }
 
@@ -109,10 +116,17 @@ public class WP22 : Player //물마법사 스크립트
 
             if (Input.GetMouseButtonDown(1)) //왼쪽으로 걸으면서 우클릭
             {
-                wSoundManager.instance.pWaterP();
-                ani.SetBool("walk", false);
-                ani.SetBool("atk2", true);
-                GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                if (skillCoolTimer >= skillCoolTime)
+                {
+                    wSoundManager.instance.pWaterP();
+                    canUseSkill = false;
+                    skillCoolTimer = 0f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("atk2", true);
+                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
             }
             else
             {
@@ -162,10 +176,17 @@ public class WP22 : Player //물마법사 스크립트
 
             if (Input.GetMouseButtonDown(1)) //오른쪽으로 걸으면서 우클릭
             {
-                wSoundManager.instance.pWaterP();
-                ani.SetBool("walk", false);
-                ani.SetBool("atk2", true);
-                GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                if (skillCoolTimer >= skillCoolTime)
+                {
+                    wSoundManager.instance.pWaterP();
+                    canUseSkill = false;
+                    skillCoolTimer = 0f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("atk2", true);
+                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
             }
             else
             {
@@ -207,19 +228,28 @@ public class WP22 : Player //물마법사 스크립트
             //멈춰서 우클릭
             if (Input.GetMouseButtonDown(1))
             {
-                wSoundManager.instance.pWaterP();
-                if (transform.localScale.x == 1f)
+                if (skillCoolTimer >= skillCoolTime)
                 {
-                    transform.localScale = new Vector3(1f, 1f, 1f);
-                    ani.SetBool("atk2", true);
-                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                    wSoundManager.instance.pWaterP();
+                    if (transform.localScale.x == 1f)
+                    {
+                        canUseSkill = false;
+                        skillCoolTimer = 0f;
+                        transform.localScale = new Vector3(1f, 1f, 1f);
+                        ani.SetBool("atk2", true);
+                        GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                    }
+                    else if (transform.localScale.x == -1f)
+                    {
+                        canUseSkill = false;
+                        skillCoolTimer = 0f;
+                        transform.localScale = new Vector3(-1f, 1f, 1f);
+                        ani.SetBool("atk2", true);
+                        GameObject go1 = Instantiate(waterPbullet, pos2.position, Quaternion.identity);
+                    }
                 }
-                else if (transform.localScale.x == -1f)
-                {
-                    transform.localScale = new Vector3(-1f, 1f, 1f);
-                    ani.SetBool("atk2", true);
-                    GameObject go1 = Instantiate(waterPbullet, pos2.position, Quaternion.identity);
-                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
 
             }
             else

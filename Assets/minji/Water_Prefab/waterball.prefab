@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845c6f665c2e1f34e921d7d188f18b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 7
   watereffect1: {fileID: 5212366781419121436, guid: b3c83fadcb9685b4ea0aaee8d90b1f45, type: 3}
 --- !u!58 &5853681722230351123
 CircleCollider2D:
