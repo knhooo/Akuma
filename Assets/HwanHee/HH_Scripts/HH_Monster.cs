@@ -66,7 +66,6 @@ public class HH_Monster : MonoBehaviour
             return;
 
         dirToPlayer = Vector3.Normalize(player.transform.position - transform.position);
-
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         switch (state)
@@ -113,6 +112,8 @@ public class HH_Monster : MonoBehaviour
             rigid.MovePosition(rigid.position + nextVec);
             rigid.linearVelocity = Vector2.zero;
         }
+        else
+            rigid.linearVelocity = Vector2.zero;
     }
 
     protected void LateUpdate()
@@ -178,7 +179,7 @@ public class HH_Monster : MonoBehaviour
         }
     }
 
-    private void Death()
+    protected void Death()
     {
         anim.SetBool("TakeHit", false);
         anim.SetBool("Death", true);
