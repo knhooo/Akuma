@@ -12,10 +12,10 @@ public class HH_SkillCoolTime : MonoBehaviour
         Gage = GetComponent<Image>();
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
-    
+
     void Update()
     {
-        if(player.CanUseSkill)
+        if (player.CanUseSkill)
         {
             val = Mathf.InverseLerp(player.SkillCoolTime, 0f, player.SkillCoolTimer);
             Gage.fillAmount = val;
