@@ -43,21 +43,21 @@ public class UIManager : MonoBehaviour
             //플레이어 사망
             if (player.Hp <= 0)
             {
-                Time.timeScale = 0f;//시간정지
+                GameManager.instance.isTimeStop = true;//시간 정지
                 gameOverUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
             }
             //보스 클리어
             if (GameManager.instance.isClear == true)
             {
-                Time.timeScale = 0f;//시간정지
+                GameManager.instance.isTimeStop = true;//시간 정지
                 gameClearUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText();
             }
             //레벨업 증강
-            if(player.Level> curLevel)
+            if(player.Level > curLevel)
             {
-                Time.timeScale = 0f;//시간정지
+                GameManager.instance.isTimeStop = true;//시간 정지
                 curLevel = player.Level;
                 AugmentUI.SetActive(true);
             }

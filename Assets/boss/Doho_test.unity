@@ -408,6 +408,10 @@ PrefabInstance:
       propertyPath: trackingBulletSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8949839755441416106, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

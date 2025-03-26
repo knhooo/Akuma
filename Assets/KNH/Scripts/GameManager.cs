@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject spawner;
     public PoolManager pool;
     public bool isClear;//보스 클리어 여부
+    public bool isTimeStop = false;//시간 정지 여부
     [Header("배속 설정")]
     [Range(0, 10)] public float gameSpeed = 1f;
 
@@ -53,7 +54,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Time.timeScale = gameSpeed;
+        if (!isTimeStop)
+        {
+            Time.timeScale = gameSpeed;//배속 설정
+        }
+        else
+        {
+            Time.timeScale = 0f;//시간정지
+        }
     }
     public Vector3 GetPlayerPos()
     {
