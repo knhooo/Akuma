@@ -17,7 +17,6 @@ public class Spawner : MonoBehaviour
     private void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
-        Time.timeScale = 2f;//테스트용 배속 
     }
     void Update()
     {
