@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ab3225fccc0ae294ba4064497c467e59
+guid: f5ffd8cf071a63246893366b3e56f5bc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8204141385496025463
-    second: WaterSkillImg_0
+      213: 7849388579901078341
+    second: ArcherSkillImg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WaterSkillImg_0
+      name: ArcherSkillImg_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 192
-        height: 192
+        x: 37
+        y: 87
+        width: 118
+        height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 986ad6690e8052e80800000000000000
-      internalID: -8204141385496025463
+      spriteID: 54bf2095351aeec60800000000000000
+      internalID: 7849388579901078341
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3672261128f65704ca79fdace1679420
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WaterSkillImg_0: -8204141385496025463
+      ArcherSkillImg_0: 7849388579901078341
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
