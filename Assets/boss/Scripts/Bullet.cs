@@ -18,17 +18,17 @@ public class Bullet : MonoBehaviour
     }
 
     //충돌 처리
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 플레이어와 충돌했을 때
-        if (collision.gameObject.CompareTag("Player"))
+        // 플레이어 태그와 충돌했을 때
+        if (collision.CompareTag("Player"))
         {
             Player player = collision.gameObject.GetComponent<Player>();
             if (player != null)
             {
                 player.TakeDamage(10);
             }
-            Destroy(gameObject);  // 총알 제거
+            Destroy(gameObject);
         }
     }
 }

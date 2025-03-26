@@ -20,6 +20,8 @@ public class BossAI : MonoBehaviour
     public float attackCooldown = 2f;  // 공격 쿨타임
     private float lastAttackTime = 0f;  // 마지막 공격 시간
 
+    public Transform playerAttack; // 플레이어 공격처리
+
     public float moveSpeed = 1f;  // 이동 속도
     public float stoppingDistance = 0.5f;  // 목표와의 최소 거리
 
@@ -81,7 +83,7 @@ public class BossAI : MonoBehaviour
     void Update()
     {       
         if (isDead) return;  // 보스가 죽었으면 더 이상 행동하지 않음
-        
+
         // 플레이어를 추적
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -182,9 +184,9 @@ public class BossAI : MonoBehaviour
         // transform을 직접 수정하여 이동
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
-
+    
     // 보스 데미지 받는 기능
-    public void TakeDamage(int damage)
+    private void TakeDamage(int damage)
     {
         if (isDead) return; // 이미 죽은 상태면 더 이상 피해를 받지 않음        
         Debug.Log($"Damage 실행됨. 데미지 값: {damage}");
@@ -199,6 +201,15 @@ public class BossAI : MonoBehaviour
         
         // 피해 애니메이션 실행
         StartCoroutine(PlayHurtAnimation());        
+    }
+
+    // 데미지 받기(온트리거)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerAttack"))
+        {
+            TakeDamage(player.GetComponent<Player>().Attack);
+        }
     }
 
     // 플레이어 공격 함수
@@ -216,6 +227,7 @@ public class BossAI : MonoBehaviour
         Debug.Log("⚡ 강화 패턴 발동!");
         moveSpeed *= 3f;
         animator.speed = 1.5f;
+        attackCooldown *= 0.5f;
         castCooldown *= 0.5f;
         spriteRenderer.color = Color.red;
         StartCoroutine(TeleportCoroutine());
