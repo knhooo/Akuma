@@ -1,3 +1,4 @@
+// ArcherAnim.cs
 using UnityEngine;
 using System.Collections;
 
@@ -14,18 +15,31 @@ public class ArcherAnim : Player
     public AudioClip shootSound;
     private AudioSource audioSource;
 
-    public float dashCooldown = 2f;
-    public float laserCooldown = 3f;
-
     private bool canDash = true;
-    private bool canLaser = true;
-    private bool isPerformingSkill = false; // 👉 스킬 사용 중 여부
+    private bool canSkill = true;
+    private bool isPerformingSkill = false;
+
+    [SerializeField] private float dashCoolTime = 2f;
+    [SerializeField] private float skillCoolTime = 3f;
+    [SerializeField] private int skillAttackBoost = 20;
+    [SerializeField] private float skillDuration = 1f;
+
+    private float dashCoolTimer = 0f;
+    private float skillCoolTimer = 0f;
+
+    public float DashCoolTime { get { return dashCoolTime; } }
+    public float DashCoolTimer { get { return dashCoolTimer; } }
+    public float SkillCoolTime { get { return skillCoolTime; } }
+    public float SkillCoolTimer { get { return skillCoolTimer; } }
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+
+        dashCoolTimer = dashCoolTime;
+        skillCoolTimer = skillCoolTime;
     }
 
     void Start()
@@ -42,15 +56,19 @@ public class ArcherAnim : Player
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isPerformingSkill)
         {
             animator.SetTrigger("isDash");
-            StartCoroutine(DashRoutine());
+            StartCoroutine(StartDashCooldown());
         }
 
-        // Laser
-        if (Input.GetMouseButtonDown(1) && canLaser && !isPerformingSkill)
+        // Skill
+        if (Input.GetMouseButtonDown(1) && canSkill && !isPerformingSkill)
         {
             animator.SetTrigger("isLaser");
-            StartCoroutine(LaserRoutine());
+            StartCoroutine(StartSkillCooldown());
         }
+
+        // 쿨타이머 갱신
+        if (!canDash) dashCoolTimer += Time.deltaTime;
+        if (!canSkill) skillCoolTimer += Time.deltaTime;
     }
 
     void HandleMovement()
@@ -59,7 +77,6 @@ public class ArcherAnim : Player
         float moveY = Input.GetAxis("Vertical");
 
         rb.linearVelocity = new Vector2(moveX * speed, moveY * speed);
-
         animator.SetBool("isMoving", moveX != 0 || moveY != 0);
 
         if (moveX > 0)
@@ -72,7 +89,7 @@ public class ArcherAnim : Player
     {
         while (true)
         {
-            if (!isPerformingSkill) // 👉 스킬 중이 아닐 때만 공격
+            if (!isPerformingSkill)
             {
                 Transform target = FindClosestMonster();
                 if (target != null)
@@ -80,9 +97,27 @@ public class ArcherAnim : Player
                     ShootAtTarget(target.position);
                 }
             }
-
             yield return new WaitForSeconds(shootInterval);
         }
+    }
+
+    Transform FindClosestMonster()
+    {
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+        Transform closest = null;
+        float minDist = Mathf.Infinity;
+
+        foreach (GameObject monster in monsters)
+        {
+            float dist = Vector2.Distance(transform.position, monster.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = monster.transform;
+            }
+        }
+
+        return closest;
     }
 
     void ShootAtTarget(Vector3 targetPos)
@@ -107,46 +142,49 @@ public class ArcherAnim : Player
         }
     }
 
-    IEnumerator DashRoutine()
+    IEnumerator StartDashCooldown()
     {
         canDash = false;
         isPerformingSkill = true;
+        dashCoolTimer = 0f;
 
-        yield return new WaitForSeconds(0.5f); // 대시 애니메이션 길이
+        yield return new WaitForSeconds(0.5f); // 대시 애니메이션 시간
         isPerformingSkill = false;
 
-        yield return new WaitForSeconds(dashCooldown - 0.5f);
+        while (dashCoolTimer < dashCoolTime)
+        {
+            yield return null;
+        }
+
         canDash = true;
     }
 
-    IEnumerator LaserRoutine()
+    IEnumerator StartSkillCooldown()
     {
-        canLaser = false;
+        canSkill = false;
         isPerformingSkill = true;
+        skillCoolTimer = 0f;
 
-        yield return new WaitForSeconds(1f); // 레이저 애니메이션 길이
+        int originalAttack = attack;
+        attack += skillAttackBoost;
+
+        yield return new WaitForSeconds(skillDuration); // 스킬 지속 시간
+
+        attack = originalAttack;
         isPerformingSkill = false;
 
-        yield return new WaitForSeconds(laserCooldown - 1f);
-        canLaser = true;
-    }
-
-    Transform FindClosestMonster()
-    {
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
-        Transform closest = null;
-        float minDist = Mathf.Infinity;
-
-        foreach (GameObject monster in monsters)
+        while (skillCoolTimer < skillCoolTime)
         {
-            float dist = Vector2.Distance(transform.position, monster.transform.position);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                closest = monster.transform;
-            }
+            yield return null;
         }
 
-        return closest;
+        canSkill = true;
+    }
+
+   
+
+    public override void GetExperience(int ex)
+    {
+        exp += ex;
     }
 }
