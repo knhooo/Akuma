@@ -7,7 +7,6 @@ public class WaterPuple2 : MonoBehaviour
     Vector2 dir;
     Vector2 dirNo;
 
-
     void Start()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -35,6 +34,16 @@ public class WaterPuple2 : MonoBehaviour
         wSoundManager.instance.tWaterP();
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Monster") || collision.CompareTag("Boss"))
+        {
+            Speed = 0;
+
+        }
+    }
+
 
 }
 
