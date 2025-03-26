@@ -1,23 +1,24 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CursorManager : MonoBehaviour
 {
     public Sprite basicCursor;    // 기본 커서 스프라이트
-    public Sprite monsterCursor;  // 몬스터 위 커서 스프라이트
-    public Sprite itemCursor;     // 아이템 위 커서 스프라이트
+    public Sprite gameCursor;  // 메인게임 커서 스프라이트
+    //public Sprite itemCursor;     // 아이템 위 커서 스프라이트
     public Sprite buttonCursor;     // 버튼 커서 스프라이트
 
     private Texture2D basicTexture;
-    private Texture2D monsterTexture;
-    private Texture2D itemTexture;
+    private Texture2D gameTexture;
+    //private Texture2D itemTexture;
     private Texture2D buttonTexture;
 
     void Start()
     {
         // 스프라이트를 Texture2D로 변환
         basicTexture = SpriteToTexture(basicCursor);
-        monsterTexture = SpriteToTexture(monsterCursor);
-        itemTexture = SpriteToTexture(itemCursor);
+        gameTexture = SpriteToTexture(gameCursor);
+        //itemTexture = SpriteToTexture(itemCursor);
         buttonTexture = SpriteToTexture(buttonCursor);
 
         // 기본 커서로 설정
@@ -33,17 +34,17 @@ public class CursorManager : MonoBehaviour
         if (hit.collider != null)
         {
             // 태그에 따라 커서 변경
-            if (hit.collider.CompareTag("Monster"))
-            {
-                Cursor.SetCursor(monsterTexture, Vector2.zero, CursorMode.Auto);
-                return;  // 커서 변경 후 빠져나감
-            }
+            //if (hit.collider.CompareTag("Monster"))
+            //{
+            //    Cursor.SetCursor(monsterTexture, Vector2.zero, CursorMode.Auto);
+            //    return;  // 커서 변경 후 빠져나감
+            //}
 
-            if (hit.collider.CompareTag("Item"))
-            {
-                Cursor.SetCursor(itemTexture, Vector2.zero, CursorMode.Auto);
-                return;  // 커서 변경 후 빠져나감
-            }
+            //if (hit.collider.CompareTag("Item"))
+            //{
+            //    Cursor.SetCursor(itemTexture, Vector2.zero, CursorMode.Auto);
+            //    return;  // 커서 변경 후 빠져나감
+            //}
 
             if (hit.collider.CompareTag("Button"))
             {
@@ -51,9 +52,19 @@ public class CursorManager : MonoBehaviour
                 return;  // 커서 변경 후 빠져나감
             }
         }
-
-        // 아무것도 감지되지 않으면 기본 커서로 복귀
-        Cursor.SetCursor(basicTexture, Vector2.zero, CursorMode.Auto);
+        else
+        {
+            if (SceneManager.GetActiveScene().name == "MainGame") //메인 게임 커서
+            {
+                Cursor.SetCursor(gameTexture, Vector2.zero, CursorMode.Auto);
+            }
+            else
+            {
+                // 기본 커서
+                Cursor.SetCursor(basicTexture, Vector2.zero, CursorMode.Auto);
+            }
+        }
+       
     }
 
     // 스프라이트를 Texture2D로 변환하는 함수
