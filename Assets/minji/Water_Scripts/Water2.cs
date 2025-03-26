@@ -33,7 +33,7 @@ public class Water2 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //적과 충돌 시
-        if (collision.CompareTag("Monster"))
+        if (collision.CompareTag("Monster") || collision.CompareTag("Boss"))
         {
             wSoundManager.instance.tWater();
             Instantiate(watereffect1, transform.position, Quaternion.identity);

@@ -600,10 +600,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterP
       objectReference: {fileID: 0}
-    - target: {fileID: 4440710777217350192, guid: 48b54f4ee54443b4b8dc184bc756823f, type: 3}
-      propertyPath: twp
-      value: 
-      objectReference: {fileID: 8300000, guid: e5c75d896ee2a654d83c66a62c58049f, type: 3}
+    - target: {fileID: 8823207571302759812, guid: 48b54f4ee54443b4b8dc184bc756823f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5696368
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823207571302759812, guid: 48b54f4ee54443b4b8dc184bc756823f, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.026836336
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
