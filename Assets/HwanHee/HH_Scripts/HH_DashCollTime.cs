@@ -15,10 +15,7 @@ public class HH_DashCollTime : MonoBehaviour
 
     void Update()
     {
-        if (player.CanUseDash)
-        {
-            val = Mathf.InverseLerp(player.DashCoolTime, 0f, player.DashCoolTimer);
-            Gage.fillAmount = val;
-        }
+        val = Mathf.InverseLerp(player.DashCoolTime, 0f, player.DashCoolTimer);
+        Gage.fillAmount = val;
     }
 }
