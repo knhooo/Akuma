@@ -25,6 +25,7 @@ public class HH_Monster : MonoBehaviour
     protected Rigidbody2D rigid;
     protected SpriteRenderer spriteRenderer;
     protected Animator anim;
+    protected CircleCollider2D circleCol;
 
     protected GameObject player;
 
@@ -42,6 +43,7 @@ public class HH_Monster : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        circleCol = GetComponent<CircleCollider2D>();
     }
 
     protected void OnEnable()
@@ -87,7 +89,11 @@ public class HH_Monster : MonoBehaviour
     protected void FixedUpdate()
     {
         if (state == State.Death)
+        {
+            rigid.linearVelocity = Vector3.zero;
+            circleCol.isTrigger = false;
             return;
+        }
 
         if (state == State.TakeHit)
         {

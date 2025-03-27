@@ -325,6 +325,7 @@ MonoBehaviour:
   attack: 10
   speed: 2
   skillCoolTime: 5
+  dashCoolTime: 5
   enemyCount: 0
   skill: {fileID: 6437888885386387913}
   sword_right: {fileID: 563614996355844578}
@@ -332,12 +333,9 @@ MonoBehaviour:
   shield: {fileID: 6309858506282167140}
   defendTime: 3
   defendCoolTime: 5
-  dashCoolTime: 5
   speedBoost: 2
   blood: {fileID: 3238201351179218945, guid: ac936892e8ea9a345bbde646b82b2bc0, type: 3}
-  takeHitMaterial: {fileID: 2100000, guid: 2bd3d7a12e5e69b438f9c4a627e0491d, type: 2}
-  levelUpHp: 10
-  levelUpAttack: 5
+  skillDamage: 30
   levelUpExp: 10
   attackSound: {fileID: 3808418842329748320}
   skillSound: {fileID: 8468152733799348389}

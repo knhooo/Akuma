@@ -164,7 +164,7 @@ public class BossAI : MonoBehaviour
         {
             // 플레이어가 보스의 왼쪽에 있으면 스프라이트를 정상적으로 유지
             spriteRenderer.flipX = true;
-        }        
+        }
     }
 
 
@@ -450,13 +450,24 @@ public class BossAI : MonoBehaviour
 
     // 애니메이션이 끝난 후 보스 제거
     private IEnumerator DieAfterAnimation()
-    {        
+    {
         // 애니메이션이 끝날 때까지 대기
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;  // 매 프레임마다 애니메이션 진행 상태를 확인
         }
-        // 죽은 후 보스 제거
+        // 죽은 후 보스 및 잔여 스펠 제거
+        RemoveAllRedDots();
         Destroy(gameObject);
+    }
+
+    // 모든 RedDot 제거
+    private void RemoveAllRedDots()
+    {
+        GameObject[] redDots = GameObject.FindGameObjectsWithTag("RedDot");
+        foreach (GameObject redDot in redDots)
+        {
+            Destroy(redDot);
+        }
     }
 }
