@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4191726782020821801}
   m_Layer: 0
   m_Name: Flyingeye
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
