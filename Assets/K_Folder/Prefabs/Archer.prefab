@@ -109,11 +109,19 @@ MonoBehaviour:
   maxExp: 100
   attack: 10
   speed: 3
+  skillCoolTime: 5
+  dashCoolTime: 5
+  enemyCount: 0
   arrowPrefab: {fileID: 841010174968623350, guid: 7e1b54167e704f54eae0726687fb8cfc, type: 3}
   firePoint: {fileID: 5424596168541846726}
   arrowSpeed: 10
   shootInterval: 2
   shootSound: {fileID: 8300000, guid: 54f5209d08469dc42b947289dd900d86, type: 3}
+  skillSound: {fileID: 8300000, guid: 6a59474c2a49f0b42b588c94fed0fe92, type: 3}
+  skillAttackBoost: 20
+  skillDuration: 1
+  skillSoundDelay: 0.3
+  levelUpExp: 10
 --- !u!212 &7399826994074749195
 SpriteRenderer:
   m_ObjectHideFlags: 0
