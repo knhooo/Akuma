@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     protected bool canUseDash = true;
     protected bool canUseSkill = true;
 
+
     public int Hp { get { return hp; } set { hp = value; } }
     public int Attack { get { return attack; } set { attack = value; } }
     public float Speed { get { return speed; } set { speed = value; } }
