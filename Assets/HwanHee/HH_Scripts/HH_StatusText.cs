@@ -17,25 +17,18 @@ public class HH_StatusText : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         text = GetComponent<Text>();
-
-        if (statusStr == "Hp" || statusStr == "hp")
-        {
-            maxStatus = player.MaxHp;
-        }
-        else if (statusStr == "Exp" || statusStr == "exp")
-        {
-            maxStatus = player.MaxExp;
-        }
     }
 
     void Update()
     {
         if (statusStr == "Hp" || statusStr == "hp")
         {
+            maxStatus = player.MaxHp;
             status = player.Hp;
         }
         else if (statusStr == "Exp" || statusStr == "exp")
         {
+            maxStatus = player.MaxExp;
             status = player.Exp;
         }
 

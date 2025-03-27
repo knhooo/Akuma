@@ -5,9 +5,8 @@ public class HH_WizardProjectile : MonoBehaviour
     [SerializeField]
     float speed = 3;
     [SerializeField]
-    int attack = 0;
-    [SerializeField]
     float lifeTime = 5f;
+    int attack = 0;
 
     public int Attack { get { return attack; } set { attack = value; } }
 

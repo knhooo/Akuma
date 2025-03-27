@@ -24,8 +24,8 @@ public class BossAI : MonoBehaviour
     public float moveSpeed = 1.5f;  // 이동 속도
     private float stoppingDistance = 0.5f;  // 목표와의 최소 거리
     [Header("체력")]
-    public float maxHP = 2000f; // 보스 최대 체력
-    public float currentHP = 2000f;  // 보스 현재 체력
+    public float maxHP = 10000f; // 보스 최대 체력
+    public float currentHP = 10000f;  // 보스 현재 체력
     [Header("주문 공격")]
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹

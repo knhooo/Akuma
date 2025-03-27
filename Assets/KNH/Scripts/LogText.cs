@@ -6,6 +6,7 @@ public class LogText : MonoBehaviour
     TMP_Text text;
     float time = 0;
     float endTime = 1;
+    public TMP_FontAsset DmgFont;
 
     private void Awake()
     {
@@ -14,6 +15,13 @@ public class LogText : MonoBehaviour
     public void SetHpLog(int amount)//체력 회복 아이템 획득시
     {
         text.text = "<color=green>+"+amount+ "</color>";
+    }
+
+    public void SetDmgLog(int amount)//데미지
+    {
+        text.font = DmgFont;
+        text.fontSize = 7;
+        text.text = "<color=red>" + amount + "</color>";
     }
 
     public void SetPosition(int position)//로그 여러개 있을 때 위로 이동
