@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pwp: {fileID: 8300000, guid: af29614221808b5418ea515fd3e482fc, type: 3}
-  twp: {fileID: 8300000, guid: 83689b4bd9e1cd04f8e276716d482051, type: 3}
+  twp: {fileID: 8300000, guid: e5c75d896ee2a654d83c66a62c58049f, type: 3}
   pw: {fileID: 8300000, guid: 2a91ec8f6bf7c514fa8c2e84ff1aa813, type: 3}
   tw: {fileID: 8300000, guid: 2eb4bb455239e8d45a0f62f5757328e4, type: 3}
 --- !u!82 &2707030220519213741
@@ -62,7 +62,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

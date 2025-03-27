@@ -388,15 +388,13 @@ public class WP22 : Player //물마법사 스크립트
 
     IEnumerator skill1() //10초 뒤 <임시로 정해둠. 첫번째 자동 스킬 발동
     {
-        yield return new WaitForSeconds(10);
         while (true)
         {
-            wSoundManager.instance.pWater();
             Instantiate(waterbulletU, transform.position, Quaternion.identity);
             Instantiate(waterbulletR, transform.position, Quaternion.identity);
             Instantiate(waterbulletL, transform.position, Quaternion.identity);
             Instantiate(waterbulletD, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1.5f);
         }
 
     }
