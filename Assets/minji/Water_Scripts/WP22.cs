@@ -74,6 +74,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (dashCoolTimer >= dashCoolTime)
                 {
+                    if (!isDashClick)
+                        isDashClick = true;
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed +=2f;
@@ -136,6 +138,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (dashCoolTimer >= dashCoolTime)
                 {
+                    if (!isDashClick)
+                        isDashClick = true;
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed +=2f;
@@ -201,6 +205,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (dashCoolTimer >= dashCoolTime)
                 {
+                    if (!isDashClick)
+                        isDashClick = true;
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed +=2f;
@@ -265,6 +271,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (dashCoolTimer >= dashCoolTime)
                 {
+                    if (!isDashClick)
+                        isDashClick = true;
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed += 2f;
