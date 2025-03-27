@@ -3,8 +3,6 @@ using System.Collections;
 
 public class WP22 : Player //물마법사 스크립트
 {
-    public float wspeedUp = 5f; //증가된 속도
-    public float wkeepSpeed = 3f; //속도 저장
 
     Animator ani; //애니메이션 객체 선언
 
@@ -17,7 +15,7 @@ public class WP22 : Player //물마법사 스크립트
     public GameObject waterbulletL; //물미사일 객체 선언
     public GameObject waterbulletD; //물미사일 객체 선언
 
-    public float wdashTimer = 0f;
+    public float wspeed;
 
     public Transform pos1 = null;
     public Transform pos2 = null;
@@ -27,6 +25,9 @@ public class WP22 : Player //물마법사 스크립트
         ani = GetComponent<Animator>(); //애니메이션 가져오기
         StartCoroutine("skill1"); //자동공격 활성화
         skillCoolTime = 1.0f;
+        dashCoolTimer = dashCoolTime;
+        skillCoolTimer = skillCoolTime;
+        wspeed = speed;
     }
 
 
@@ -34,7 +35,7 @@ public class WP22 : Player //물마법사 스크립트
     {
         if(!ani.GetBool("surf"))
         {
-            speed = wkeepSpeed;
+            wspeed=speed;
             if (dashCoolTimer < dashCoolTime) dashCoolTimer += Time.deltaTime;
             if (dashCoolTimer >= dashCoolTime) canUseDash = false;
 
@@ -53,12 +54,6 @@ public class WP22 : Player //물마법사 스크립트
             level += 1;
             exp -= maxExp; //남은 경험치 이월
             maxExp += 10; //max 경험치 상승
-            attack += 20; //능력치 상승은 임시로 정해둠.
-            maxHp += 20;
-            hp += 20;
-            speed += 0.1f;
-            wspeedUp += 0.1f;
-            wkeepSpeed += 0.1f;
 
             if (level >= 20)
             {
@@ -81,7 +76,7 @@ public class WP22 : Player //물마법사 스크립트
                 {
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed = wspeedUp;
+                    speed +=2f;
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
@@ -92,6 +87,7 @@ public class WP22 : Player //물마법사 스크립트
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
+                speed = wspeed;
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
@@ -140,7 +136,7 @@ public class WP22 : Player //물마법사 스크립트
                 {
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed = wspeedUp;
+                    speed +=2f;
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
@@ -151,6 +147,7 @@ public class WP22 : Player //물마법사 스크립트
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
+                speed = wspeed;
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
@@ -202,17 +199,17 @@ public class WP22 : Player //물마법사 스크립트
                 {
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed = wspeedUp;
+                    speed +=2f;
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
-  
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
                     canUseDash = true;
             }
             else if(Input.GetKeyUp(KeyCode.LeftShift))
             {
+                speed = wspeed;
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
@@ -263,7 +260,7 @@ public class WP22 : Player //물마법사 스크립트
                 {
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed = wspeedUp;
+                    speed += 2f;
 
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
@@ -275,6 +272,7 @@ public class WP22 : Player //물마법사 스크립트
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
+                speed = wspeed;
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }

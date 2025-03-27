@@ -13,6 +13,7 @@ TagManager:
   - Arrow
   - Button
   - Boss
+  - RedDot
   layers:
   - Default
   - TransparentFX
