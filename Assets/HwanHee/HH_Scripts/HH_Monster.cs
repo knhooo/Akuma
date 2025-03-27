@@ -237,11 +237,4 @@ public class HH_Monster : MonoBehaviour
     {
         isTakeHitOver = true;
     }
-
-    private void AttackOver()
-    {
-        state = State.Idle;
-        anim.SetBool("Attack", false);
-        anim.SetBool("Idle", true);
-    }
 }

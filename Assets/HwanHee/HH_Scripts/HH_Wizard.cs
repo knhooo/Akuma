@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class HH_Wizard : HH_Monster
 {
+    [SerializeField]
     float fireDelayTime = 2f;
 
     [SerializeField]
@@ -100,5 +101,12 @@ public class HH_Wizard : HH_Monster
 
         GameObject _proj = Instantiate(projectile, transform.position + dirToPlayer, rotation);
         _proj.GetComponent<HH_WizardProjectile>().Attack = attack;
+    }
+
+    void AttackOver()
+    {
+        state = State.Idle;
+        anim.SetBool("Attack", false);
+        anim.SetBool("Idle", true);
     }
 }
