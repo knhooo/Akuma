@@ -54,7 +54,14 @@ public class Spawner : MonoBehaviour
             isSpawn = false;
             if (bossCount < 1)
             {
-                bossObject = Instantiate(boss, GameManager.instance.GetPlayerPos()+new Vector3(2f,2f,0), Quaternion.identity);
+                // 랜덤한 방향 (0~360도)
+                float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+
+                // 랜덤한 반경 내 위치 계산
+                float randomRadius = Random.Range(1f, 10f);
+                Vector3 spawnPosition = GameManager.instance.GetPlayerPos() + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * randomRadius;
+
+                bossObject = Instantiate(boss, spawnPosition, Quaternion.identity);
                 GameManager.instance.boss = bossObject;
                 GameManager.instance.isBoss = true;
                 SpawnWall(bossObject.transform.position);//보스 주변에 벽 생성

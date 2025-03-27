@@ -11,7 +11,7 @@ public class BossAI : MonoBehaviour
     private bool isDead = false; // 보스의 사망 상태 체크
     private bool isMoving = true;  // 이동 상태 체크
     private bool isEnraged = false; // 강화 모드 여부 확인
-    private bool isCasting = false;
+    private bool isCasting = false; // 캐스팅 여부 확인
     [Header("추적 및 근접공격")]
     public Transform player;  // 플레이어의 위치
     public Transform playerAttack; // 플레이어 공격처리
@@ -30,7 +30,7 @@ public class BossAI : MonoBehaviour
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹
     public Transform spellSpawnPoint; // Spell 생성 위치
-    public int spellCount = 10; // 한 번에 생성할 Spell 개수
+    public int spellCount = 12; // 한 번에 생성할 Spell 개수
     public float spellRangeX = 3f; // X축 랜덤 범위
     public float spellRangeY = 2f; // Y축 랜덤 범위
     private float castCooldown = 8f; // 기본 쿨타임 설정
