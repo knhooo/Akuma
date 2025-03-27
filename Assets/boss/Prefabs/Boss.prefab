@@ -126,12 +126,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerAttack: {fileID: 0}
   followRange: 10
   attackRange: 5
   attackDamage: 10
-  attackCooldown: 2
-  moveSpeed: 1
-  stoppingDistance: 0.01
+  moveSpeed: 1.5
   maxHP: 500
   currentHP: 500
   redDotPrefab: {fileID: 2157965776959129687, guid: ad678a7e7d47b8a4a8fd1bf9ec412ca0, type: 3}
@@ -179,7 +178,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

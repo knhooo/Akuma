@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &378197206 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6721950196942904464, guid: eca21b3a893fb1c408ecb8f3fd0bd8c6, type: 3}
+  m_PrefabInstance: {fileID: 2102086063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1085699573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,22 +132,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_Size.x
-      value: 1.4179168
-      objectReference: {fileID: 0}
-    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_Size.y
-      value: 2.8066726
-      objectReference: {fileID: 0}
-    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.019113302
-      objectReference: {fileID: 0}
-    - target: {fileID: 333349168562255958, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_Offset.y
-      value: 1.3922095
-      objectReference: {fileID: 0}
     - target: {fileID: 888828246329416660, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7
@@ -187,37 +176,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 4681068461694256559, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4681068461694256559, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: m_TagString
-      value: Boss
-      objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: attackRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: bulletSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: spellSpawnPoint
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: trackingInterval
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-      propertyPath: trackingBulletSpeed
-      value: 5
+      propertyPath: moveSpeed
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949839755441416106, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: m_BodyType
@@ -423,7 +384,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 378197206}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:

@@ -6,55 +6,49 @@ public class BossAI : MonoBehaviour
     private Camera mainCamera; // 메인 카메라
     private SpriteRenderer spriteRenderer;  // 스프라이트 렌더러
     private Animator animator;   // Animator
+    private Rigidbody2D rigidbody;
 
     private bool isHurt = false; // 피해 상태 체크
     private bool isDead = false; // 보스의 사망 상태 체크
     private bool isMoving = true;  // 이동 상태 체크
     private bool isEnraged = false; // 강화 모드 여부 확인
     private bool isCasting = false;
-
+    [Header("추적 및 근접공격")]
     public Transform player;  // 플레이어의 위치
-    public float followRange = 10f;  // 플레이어를 추적할 거리
-    public float attackRange = 1f;  // 공격 범위
-    public float attackDamage = 10f;  // 공격 데미지
-    public float attackCooldown = 2f;  // 공격 쿨타임
-    private float lastAttackTime = 0f;  // 마지막 공격 시간
-
     public Transform playerAttack; // 플레이어 공격처리
-
-    public float moveSpeed = 1f;  // 이동 속도
-    public float stoppingDistance = 0.5f;  // 목표와의 최소 거리
-
+    public float followRange = 10f;  // 플레이어를 추적할 거리
+    public float attackRange = 5f;  // 공격 범위
+    public float attackDamage = 10f;  // 공격 데미지
+    private float attackCooldown = 2f;  // 공격 쿨타임
+    private float lastAttackTime = 0f;  // 마지막 공격 시간
+    [Header("이동")]
+    public float moveSpeed = 1.5f;  // 이동 속도
+    private float stoppingDistance = 0.5f;  // 목표와의 최소 거리
+    [Header("체력")]
     public float maxHP = 500f; // 보스 최대 체력
     public float currentHP = 500f;  // 보스 현재 체력
-
+    [Header("주문 공격")]
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹
     public Transform spellSpawnPoint; // Spell 생성 위치
     public int spellCount = 10; // 한 번에 생성할 Spell 개수
     public float spellRangeX = 3f; // X축 랜덤 범위
     public float spellRangeY = 2f; // Y축 랜덤 범위
-
     private float castCooldown = 8f; // 기본 쿨타임 설정
     private float nextCastTime = 2f; // 다음 Cast 가능 시간
-
-    // 강화 모드에서 순간이동 관련 변수 추가
+    [Header("[강화 패턴]순간이동")]
     private float teleportCooldown = 3f;  // 순간이동 쿨타임
     private float teleportTimer = 0f;     // 순간이동 타이머
-
-    //탄막
+    [Header("탄막")]
     public GameObject radialBulletPrefab;  // 방사형 탄막 프리팹
     public GameObject trackingBulletPrefab;  // 추적 탄막 프리팹
     public Transform firePoint;             // 발사 지점
-
     public int bulletCount = 8; // 한 번에 발사할 탄 수
     public float bulletSpeed = 3f; // 방사형 탄막 속도
     public float bulletFireRate = 3f; // 방사형 탄막 발사 주기
-
     public int trackingBulletCount = 5; // 한 번에 발사할 탄 수
     public float trackingBulletSpeed = 3f; // 추적 탄막 속도
-    public float trackingInterval = 0.5f; // 추적 탄막 간격    
-
+    public float trackingInterval = 0.5f; // 추적 탄막 간격
     private float nextTrTime = 6f; // 추적 탄막 생성 주기
     private float TrCooldown = 6f; // 추적 탄막 쿨타임
     private bool isTrFiring = false;
@@ -68,6 +62,7 @@ public class BossAI : MonoBehaviour
         // 스프라이트 렌더러와 Animator 초기화
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
 
         // 초기 애니메이션 설정
         animator.SetBool("isWalking", false);  // 초기 상태는 걷지 않음
@@ -84,7 +79,7 @@ public class BossAI : MonoBehaviour
     {       
         if (isDead) return;  // 보스가 죽었으면 더 이상 행동하지 않음
 
-        // 플레이어를 추적
+        // 플레이어 추적
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // 공격 쿨타임 지나고, 범위 내에 플레이어가 있으면 공격 실행
@@ -171,7 +166,9 @@ public class BossAI : MonoBehaviour
         {
             // 플레이어가 보스의 왼쪽에 있으면 스프라이트를 정상적으로 유지
             spriteRenderer.flipX = true;
-        }        
+        }
+
+        rigidbody.linearVelocity = Vector3.zero;
     }
 
 
@@ -203,7 +200,7 @@ public class BossAI : MonoBehaviour
         StartCoroutine(PlayHurtAnimation());        
     }
 
-    // 데미지 받기(온트리거)
+    // 데미지 받기(온 트리거)
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerAttack"))
