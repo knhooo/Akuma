@@ -17,11 +17,18 @@ public class LogText : MonoBehaviour
         text.text = "<color=green>+"+amount+ "</color>";
     }
 
-    public void SetDmgLog(int amount)//데미지
+    public void SetDmgLog(int amount)//몬스터가 받는 데미지
     {
         text.font = DmgFont;
         text.fontSize = 7;
         text.text = "<color=red>" + amount + "</color>";
+    }
+
+    public void SetPlayerDmgLog(int amount)//플레이어가 받는 데미지
+    {
+        text.font = DmgFont;
+        text.fontSize = 7;
+        text.text = "<color=#FFA128>" + amount + "</color>";
     }
 
     public void SetPosition(int position)//로그 여러개 있을 때 위로 이동
