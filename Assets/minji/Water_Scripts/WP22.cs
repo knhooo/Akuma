@@ -110,6 +110,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (skillCoolTimer >= skillCoolTime)
                 {
+                    if (!isSkillClick)
+                        isSkillClick = true;
                     wSoundManager.instance.pWaterP();
                     canUseSkill = false;
                     skillCoolTimer = 0f;
@@ -170,6 +172,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (skillCoolTimer >= skillCoolTime)
                 {
+                    if (!isSkillClick)
+                        isSkillClick = true;
                     wSoundManager.instance.pWaterP();
                     canUseSkill = false;
                     skillCoolTimer = 0f;
@@ -234,6 +238,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (skillCoolTimer >= skillCoolTime)
                 {
+                    if (!isSkillClick)
+                        isSkillClick = true;
                     wSoundManager.instance.pWaterP();
                     canUseSkill = false;
                     skillCoolTimer = 0f;
@@ -254,6 +260,7 @@ public class WP22 : Player //물마법사 스크립트
         {
             ani.SetBool("walk", true); //걷는 모션 활성화
             transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 오른쪽 모습
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 if (dashCoolTimer >= dashCoolTime)
@@ -295,6 +302,8 @@ public class WP22 : Player //물마법사 스크립트
             {
                 if (skillCoolTimer >= skillCoolTime)
                 {
+                    if (!isSkillClick)
+                        isSkillClick = true;
                     wSoundManager.instance.pWaterP();
                     canUseSkill = false;
                     skillCoolTimer = 0f;
@@ -348,6 +357,8 @@ public class WP22 : Player //물마법사 스크립트
                 if (skillCoolTimer >= skillCoolTime)
                 {
                     wSoundManager.instance.pWaterP();
+                    if (!isSkillClick)
+                        isSkillClick = true;
                     if (transform.localScale.x == 1f)
                     {
                         canUseSkill = false;
