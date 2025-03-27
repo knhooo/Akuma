@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: trackingBulletSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8949839755441416106, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: m_BodyType
       value: 1
