@@ -15,7 +15,7 @@ public class BossAI : MonoBehaviour
     [Header("추적 및 근접공격")]
     public Transform player;  // 플레이어의 위치
     public Transform playerAttack; // 플레이어 공격처리
-    public float followRange = 10f;  // 플레이어를 추적할 거리
+    public float followRange = float.MaxValue;  // 플레이어를 추적할 거리 / 끝.까.지. 쫓아간다.
     public float attackRange = 5f;  // 공격 범위
     public float attackDamage = 10f;  // 공격 데미지
     private float attackCooldown = 2f;  // 공격 쿨타임
@@ -24,8 +24,8 @@ public class BossAI : MonoBehaviour
     public float moveSpeed = 1.5f;  // 이동 속도
     private float stoppingDistance = 0.5f;  // 목표와의 최소 거리
     [Header("체력")]
-    public float maxHP = 500f; // 보스 최대 체력
-    public float currentHP = 500f;  // 보스 현재 체력
+    public float maxHP = 2000f; // 보스 최대 체력
+    public float currentHP = 2000f;  // 보스 현재 체력
     [Header("주문 공격")]
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹
