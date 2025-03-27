@@ -118,8 +118,11 @@ public class HH_Knight : Player
     {
         if (skillCoolTimer >= skillCoolTime)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
+                if (!isSkillClick)
+                    isSkillClick = true;
+
                 canUseSkill = false;
                 skillCoolTimer = 0f;
                 skill.SetActive(true);
@@ -136,7 +139,7 @@ public class HH_Knight : Player
 
         if (defendCoolTimer >= defendCoolTime)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(0))
             {
                 canUseDefend = false;
                 defendCoolTimer = 0f;
@@ -160,6 +163,9 @@ public class HH_Knight : Player
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                if (!isDashClick)
+                    isDashClick = true;
+
                 canUseDash = false;
                 dashCoolTimer = 0f;
                 speed += speedBoost;
@@ -176,7 +182,7 @@ public class HH_Knight : Player
     void Defend()
     {
         defendTimer += Time.deltaTime;
-        if (Input.GetMouseButtonUp(1) || defendTimer >= defendTime)
+        if (Input.GetMouseButtonUp(0) || defendTimer >= defendTime)
         {
             defendTimer = 0f;
             anim.speed = 1f;
