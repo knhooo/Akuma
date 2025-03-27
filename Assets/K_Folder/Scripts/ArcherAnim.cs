@@ -22,8 +22,9 @@ public class ArcherAnim : Player
 
     [SerializeField] private int skillAttackBoost = 20;
     [SerializeField] private float skillDuration = 1f;
-    [SerializeField] private float skillSoundDelay = 0.2f; // 🎵 사운드 딜레이 추가
+    [SerializeField] private float skillSoundDelay = 0.2f;
     [SerializeField] private int levelUpExp = 10;
+    [SerializeField] private GameObject laserHitBox;
 
     void Awake()
     {
@@ -58,6 +59,7 @@ public class ArcherAnim : Player
 
         if (Input.GetMouseButtonDown(1) && canSkill && !isPerformingSkill)
         {
+
             animator.SetTrigger("isLaser");
             StartCoroutine(StartSkillCooldown());
         }
@@ -163,14 +165,19 @@ public class ArcherAnim : Player
         int originalAttack = attack;
         attack += skillAttackBoost;
 
-        // 🎵 일정 시간 후 사운드 재생
         yield return new WaitForSeconds(skillSoundDelay);
-        if (skillSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(skillSound);
-        }
 
-        yield return new WaitForSeconds(skillDuration - skillSoundDelay);
+        if (skillSound != null && audioSource != null)
+            audioSource.PlayOneShot(skillSound);
+
+        // 👉 레이저 판정 활성화
+        if (laserHitBox != null)
+            laserHitBox.SetActive(true);
+
+        yield return new WaitForSeconds(skillDuration);
+
+        if (laserHitBox != null)
+            laserHitBox.SetActive(false);
 
         attack = originalAttack;
         isPerformingSkill = false;
