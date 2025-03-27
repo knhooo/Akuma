@@ -56,6 +56,7 @@ MonoBehaviour:
   exp: 2
   item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
   dropRate: 10
+  logPrefab: {fileID: 8598306700551854173, guid: 31367cb4ca2b4c64aab5c9bedcab4202, type: 3}
 --- !u!212 &3600732735888659286
 SpriteRenderer:
   m_ObjectHideFlags: 0

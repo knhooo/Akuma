@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9726b8e486a25ef4093bd3c78fc1d898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DmgFont: {fileID: 11400000, guid: 44fd971f10ea789468868c24655d45c8, type: 2}
 --- !u!23 &-5266390156941620374
 MeshRenderer:
   m_ObjectHideFlags: 0
