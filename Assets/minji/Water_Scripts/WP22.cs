@@ -53,7 +53,7 @@ public class WP22 : Player //물마법사 스크립트
             level += 1;
             exp -= maxExp; //남은 경험치 이월
             maxExp += 10; //max 경험치 상승
-            attack += 20; //능력치 상승은 임시로 정해둠.
+            attack += 15; //능력치 상승은 임시로 정해둠.
             maxHp += 20;
             hp += 20;
             speed += 0.1f;
