@@ -105,12 +105,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 50
   hp: 50
-  attack: 10
+  attack: 15
   speed: 1
-  attackRange: 1
-  exp: 1
+  attackRange: 2
+  exp: 2
   item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
-  dropRate: 10
+  dropRate: 15
 --- !u!50 &5103690914762991652
 Rigidbody2D:
   serializedVersion: 5
