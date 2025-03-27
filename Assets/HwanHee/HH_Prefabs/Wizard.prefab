@@ -133,7 +133,7 @@ MonoBehaviour:
   exp: 25
   item: {fileID: 367005675500104290, guid: 3fae0dfc3a2b81a4b91759301f3c4c2a, type: 3}
   dropRate: 20
-  logPrefab: {fileID: 0}
+  logPrefab: {fileID: 8598306700551854173, guid: 31367cb4ca2b4c64aab5c9bedcab4202, type: 3}
   fireDelayTime: 2
   projectile: {fileID: 5385184288878626579, guid: fe5b9cdc4a7f854458094632b782c9a7, type: 3}
   maxAttackRange: 10

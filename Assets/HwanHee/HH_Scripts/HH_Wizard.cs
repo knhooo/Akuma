@@ -40,7 +40,7 @@ public class HH_Wizard : HH_Monster
 
     protected override void Idle()
     {
-        if (distanceToPlayer <= attackRange)
+        if (canAttack && distanceToPlayer <= attackRange)
         {
             state = State.Attack;
             anim.SetBool("Idle", false);
@@ -68,11 +68,18 @@ public class HH_Wizard : HH_Monster
 
     protected override void Attack()
     {
+        if (!canAttack)
+        {
+            state = State.Idle;
+            anim.SetBool("Attack", false);
+            anim.SetBool("Idle", true);
+        }
+
         if (distanceToPlayer > maxAttackRange)
         {
+            state = State.Run;
             anim.SetBool("Attack", false);
             anim.SetBool("Run", true);
-            state = State.Run;
         }
     }
 
