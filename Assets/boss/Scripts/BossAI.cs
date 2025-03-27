@@ -6,6 +6,7 @@ public class BossAI : MonoBehaviour
     private Camera mainCamera; // 메인 카메라
     private SpriteRenderer spriteRenderer;  // 스프라이트 렌더러
     private Animator animator;   // Animator
+    private Rigidbody2D rigidbody;
 
     private bool isHurt = false; // 피해 상태 체크
     private bool isDead = false; // 보스의 사망 상태 체크
@@ -61,6 +62,7 @@ public class BossAI : MonoBehaviour
         // 스프라이트 렌더러와 Animator 초기화
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
 
         // 초기 애니메이션 설정
         animator.SetBool("isWalking", false);  // 초기 상태는 걷지 않음
@@ -164,7 +166,9 @@ public class BossAI : MonoBehaviour
         {
             // 플레이어가 보스의 왼쪽에 있으면 스프라이트를 정상적으로 유지
             spriteRenderer.flipX = true;
-        }        
+        }
+
+        rigidbody.linearVelocity = Vector3.zero;
     }
 
 
