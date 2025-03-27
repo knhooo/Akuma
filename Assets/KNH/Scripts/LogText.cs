@@ -24,6 +24,7 @@ public class LogText : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
+        transform.localScale = transform.parent.localScale;
         if (time >= endTime)
         {
             Destroy(gameObject);
