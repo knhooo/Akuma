@@ -21,7 +21,7 @@ public class BossAI : MonoBehaviour
     private float attackCooldown = 2f;  // 공격 쿨타임
     private float lastAttackTime = 0f;  // 마지막 공격 시간
     [Header("이동")]
-    public float moveSpeed = 1f;  // 이동 속도
+    public float moveSpeed = 1.5f;  // 이동 속도
     private float stoppingDistance = 0.5f;  // 목표와의 최소 거리
     [Header("체력")]
     public float maxHP = 500f; // 보스 최대 체력
