@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WP22 : Player //물마법사 스크립트
+public class WP : Player //물마법사 스크립트
 {
 
     Animator ani; //애니메이션 객체 선언
@@ -24,7 +24,7 @@ public class WP22 : Player //물마법사 스크립트
     {
         ani = GetComponent<Animator>(); //애니메이션 가져오기
         StartCoroutine("skill1"); //자동공격 활성화
-        skillCoolTime = 2.0f;
+        skillCoolTime = 1.0f;
         dashCoolTimer = dashCoolTime;
         skillCoolTimer = skillCoolTime;
         wspeed = speed;
