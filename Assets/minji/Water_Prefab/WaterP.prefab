@@ -156,12 +156,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59006294720dc4c49a31b703e8c8b8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 80
-  maxHp: 80
+  hp: 70
+  maxHp: 70
   level: 1
   exp: 0
   maxExp: 10
-  attack: 20
+  attack: 15
   speed: 3
   skillCoolTime: 5
   dashCoolTime: 5
