@@ -19,7 +19,7 @@ public class HH_Monster : MonoBehaviour
     [SerializeField]
     float dropRate = 10f;
 
-    protected enum State { Run, Attack, TakeHit, Death }
+    protected enum State { Idle, Run, Attack, TakeHit, Death }
     protected State state = State.Run;
 
     protected Rigidbody2D rigid;
@@ -57,12 +57,12 @@ public class HH_Monster : MonoBehaviour
         anim.ResetTrigger("Death");
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (state == State.Death)
             return;
@@ -72,6 +72,9 @@ public class HH_Monster : MonoBehaviour
 
         switch (state)
         {
+            case State.Idle:
+                Idle();
+                break;
             case State.Run:
                 Run();
                 break;
@@ -146,11 +149,14 @@ public class HH_Monster : MonoBehaviour
             }
 
             state = State.TakeHit;
+            anim.SetBool("Idle", false);
             anim.SetBool("Run", false);
             anim.SetBool("Attack", false);
             anim.SetBool("TakeHit", true);
         }
     }
+
+    protected virtual void Idle() { }
 
     protected virtual void Run()
     {
@@ -174,7 +180,7 @@ public class HH_Monster : MonoBehaviour
         }
     }
 
-    protected void TakeHit()
+    protected virtual void TakeHit()
     {
         if (isTakeHitOver)
         {
@@ -216,5 +222,12 @@ public class HH_Monster : MonoBehaviour
     protected void SetTakeHitOver()
     {
         isTakeHitOver = true;
+    }
+
+    private void AttackOver()
+    {
+        state = State.Idle;
+        anim.SetBool("Attack", false);
+        anim.SetBool("Idle", true);
     }
 }

@@ -2713,7 +2713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6041168700494044550, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.41
       objectReference: {fileID: 0}
     - target: {fileID: 6041168700494044550, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2756,8 +2756,12 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8212691552090236405, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
+      propertyPath: attackRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212691552090236405, guid: f29ebb40db040f14ca54abe18990eb51, type: 3}
       propertyPath: maxAttackRange
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
