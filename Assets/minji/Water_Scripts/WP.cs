@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WP22 : Player //물마법사 스크립트
+public class WP : Player //물마법사 스크립트
 {
 
     Animator ani; //애니메이션 객체 선언

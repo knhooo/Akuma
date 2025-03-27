@@ -24,8 +24,8 @@ public class BossAI : MonoBehaviour
     public float moveSpeed = 1.5f;  // 이동 속도
     private float stoppingDistance = 0.5f;  // 목표와의 최소 거리
     [Header("체력")]
-    public float maxHP = 2000f; // 보스 최대 체력
-    public float currentHP = 2000f;  // 보스 현재 체력
+    public float maxHP = 10000f; // 보스 최대 체력
+    public float currentHP = 10000f;  // 보스 현재 체력
     [Header("주문 공격")]
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹
@@ -46,7 +46,7 @@ public class BossAI : MonoBehaviour
     public float bulletSpeed = 3f; // 방사형 탄막 속도
     public float bulletFireRate = 3f; // 방사형 탄막 발사 주기
     public int trackingBulletCount = 5; // 한 번에 발사할 탄 수
-    public float trackingBulletSpeed = 3f; // 추적 탄막 속도
+    public float trackingBulletSpeed = 7f; // 추적 탄막 속도
     public float trackingInterval = 0.5f; // 추적 탄막 간격
     private float nextTrTime = 6f; // 추적 탄막 생성 주기
     private float TrCooldown = 6f; // 추적 탄막 쿨타임
