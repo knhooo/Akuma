@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2826392298372305989}
   m_Layer: 0
   m_Name: RedDot
-  m_TagString: Untagged
+  m_TagString: RedDot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

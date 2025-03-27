@@ -6,7 +6,6 @@ public class BossAI : MonoBehaviour
     private Camera mainCamera; // 메인 카메라
     private SpriteRenderer spriteRenderer;  // 스프라이트 렌더러
     private Animator animator;   // Animator
-    private Rigidbody2D rigidbody;
 
     private bool isHurt = false; // 피해 상태 체크
     private bool isDead = false; // 보스의 사망 상태 체크
@@ -62,7 +61,6 @@ public class BossAI : MonoBehaviour
         // 스프라이트 렌더러와 Animator 초기화
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody2D>();
 
         // 초기 애니메이션 설정
         animator.SetBool("isWalking", false);  // 초기 상태는 걷지 않음
@@ -167,8 +165,6 @@ public class BossAI : MonoBehaviour
             // 플레이어가 보스의 왼쪽에 있으면 스프라이트를 정상적으로 유지
             spriteRenderer.flipX = true;
         }
-
-        rigidbody.linearVelocity = Vector3.zero;
     }
 
 
@@ -454,13 +450,24 @@ public class BossAI : MonoBehaviour
 
     // 애니메이션이 끝난 후 보스 제거
     private IEnumerator DieAfterAnimation()
-    {        
+    {
         // 애니메이션이 끝날 때까지 대기
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;  // 매 프레임마다 애니메이션 진행 상태를 확인
         }
-        // 죽은 후 보스 제거
+        // 죽은 후 보스 및 잔여 스펠 제거
+        RemoveAllRedDots();
         Destroy(gameObject);
+    }
+
+    // 모든 RedDot 제거
+    private void RemoveAllRedDots()
+    {
+        GameObject[] redDots = GameObject.FindGameObjectsWithTag("RedDot");
+        foreach (GameObject redDot in redDots)
+        {
+            Destroy(redDot);
+        }
     }
 }
