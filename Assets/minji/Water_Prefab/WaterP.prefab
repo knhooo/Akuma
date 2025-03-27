@@ -159,7 +159,7 @@ MonoBehaviour:
   maxHp: 100
   level: 1
   exp: 0
-  maxExp: 100
+  maxExp: 10
   attack: 10
   speed: 3
   skillCoolTime: 5
