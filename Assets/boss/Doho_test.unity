@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &378197206 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6721950196942904464, guid: eca21b3a893fb1c408ecb8f3fd0bd8c6, type: 3}
+  m_PrefabInstance: {fileID: 2102086063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1085699573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,6 +203,10 @@ PrefabInstance:
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
+      propertyPath: moveSpeed
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8669586389055727329, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
       propertyPath: attackRange
@@ -423,7 +432,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 378197206}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
