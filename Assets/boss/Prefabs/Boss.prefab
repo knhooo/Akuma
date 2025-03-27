@@ -131,12 +131,12 @@ MonoBehaviour:
   attackRange: 5
   attackDamage: 10
   moveSpeed: 1.5
-  maxHP: 500
-  currentHP: 500
+  maxHP: 2000
+  currentHP: 2000
   redDotPrefab: {fileID: 2157965776959129687, guid: ad678a7e7d47b8a4a8fd1bf9ec412ca0, type: 3}
   bossSpellPrefab: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
   spellSpawnPoint: {fileID: 0}
-  spellCount: 10
+  spellCount: 12
   spellRangeX: 3
   spellRangeY: 2
   radialBulletPrefab: {fileID: 4553376544367887962, guid: ae611973cc2eacf4e99af89537336fda, type: 3}

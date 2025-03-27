@@ -5,6 +5,10 @@ public class wBulletD2 : MonoBehaviour
     public float Speed = 4.0f;
     public GameObject wbd;
 
+    void Start()
+    {
+        wSoundManager.instance.pWater();
+    }
     void Update()
     {
         transform.Translate(Vector2.down * Speed * Time.deltaTime);

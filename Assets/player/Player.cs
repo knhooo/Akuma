@@ -1,4 +1,5 @@
- using UnityEngine;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class Player : MonoBehaviour
 
     protected bool canUseDash = true;
     protected bool canUseSkill = true;
+
+    public bool isSkillClick = false;
+    public bool isDashClick = false;
 
     public int Hp { get { return hp; } set { hp = value; } }
     public int Attack { get { return attack; } set { attack = value; } }

@@ -15,10 +15,12 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameObject boss;
     GameObject bossObject;
     [SerializeField] GameObject wall;
-
+    [SerializeField] int wallCount = 40;
+    GameObject[] wallArr;
     private void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
+        wallArr = new GameObject[wallCount];
     }
     void Update()
     {
@@ -52,13 +54,28 @@ public class Spawner : MonoBehaviour
             isSpawn = false;
             if (bossCount < 1)
             {
-                bossObject = Instantiate(boss, GameManager.instance.GetPlayerPos()+new Vector3(2f,2f,0), Quaternion.identity);
+                // 랜덤한 방향 (0~360도)
+                float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+
+                // 랜덤한 반경 내 위치 계산
+                float randomRadius = Random.Range(1f, 10f);
+                Vector3 spawnPosition = GameManager.instance.GetPlayerPos() + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * randomRadius;
+
+                bossObject = Instantiate(boss, spawnPosition, Quaternion.identity);
                 GameManager.instance.boss = bossObject;
                 GameManager.instance.isBoss = true;
                 SpawnWall(bossObject.transform.position);//보스 주변에 벽 생성
                 bossCount++;
             }
-            else if(bossCount == 1 && bossObject == null)//보스 사망시
+            else if(bossCount == 1)
+            {
+                //보스 체력 30%이하되면 벽 삭제
+                if (boss.GetComponent<BossAI>().currentHP <= boss.GetComponent<BossAI>().maxHP * 0.3f)
+                {
+                    DestroyWall();
+                }
+            }
+            else if (bossCount == 1 && bossObject == null)//보스 사망시
             {
                 GameManager.instance.isBoss = false;
                 GameManager.instance.isClear = true;
@@ -86,14 +103,22 @@ public class Spawner : MonoBehaviour
 
      void SpawnWall(Vector3 center)
     {
-        for(int i=0; i<40; i++)
+        for(int i=0; i< wallCount; i++)
         {
-            float angle =  i * 360f / 40; 
+            float angle =  i * 360f / wallCount; 
             float radian = angle * Mathf.Deg2Rad; // 각도를 라디안으로 변환
             float x = center.x + Mathf.Cos(radian) * 20;
             float y = center.y + Mathf.Sin(radian) * 20;
 
-            GameObject obj = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity);
+            wallArr[i] = Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity);
+        }
+    }
+
+    public void DestroyWall()
+    {
+        for(int i=0; i< wallCount; i++)
+        {
+            Destroy(wallArr[i], 0.5f);
         }
     }
 }

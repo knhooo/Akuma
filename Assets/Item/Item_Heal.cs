@@ -27,6 +27,7 @@ public class Item_Heal : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Player _player = collision.GetComponent<Player>();
+            healAmount = _player.MaxHp / 10;
 
             _player.Hp += healAmount;
             if (_player.Hp > _player.MaxHp)

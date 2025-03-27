@@ -11,11 +11,11 @@ public class BossAI : MonoBehaviour
     private bool isDead = false; // 보스의 사망 상태 체크
     private bool isMoving = true;  // 이동 상태 체크
     private bool isEnraged = false; // 강화 모드 여부 확인
-    private bool isCasting = false;
+    private bool isCasting = false; // 캐스팅 여부 확인
     [Header("추적 및 근접공격")]
     public Transform player;  // 플레이어의 위치
     public Transform playerAttack; // 플레이어 공격처리
-    public float followRange = 10f;  // 플레이어를 추적할 거리
+    public float followRange = float.MaxValue;  // 플레이어를 추적할 거리 / 끝.까.지. 쫓아간다.
     public float attackRange = 5f;  // 공격 범위
     public float attackDamage = 10f;  // 공격 데미지
     private float attackCooldown = 2f;  // 공격 쿨타임
@@ -24,13 +24,13 @@ public class BossAI : MonoBehaviour
     public float moveSpeed = 1.5f;  // 이동 속도
     private float stoppingDistance = 0.5f;  // 목표와의 최소 거리
     [Header("체력")]
-    public float maxHP = 500f; // 보스 최대 체력
-    public float currentHP = 500f;  // 보스 현재 체력
+    public float maxHP = 2000f; // 보스 최대 체력
+    public float currentHP = 2000f;  // 보스 현재 체력
     [Header("주문 공격")]
     public GameObject redDotPrefab;  // RedDot 프리팹
     public GameObject bossSpellPrefab; // Spell 프리팹
     public Transform spellSpawnPoint; // Spell 생성 위치
-    public int spellCount = 10; // 한 번에 생성할 Spell 개수
+    public int spellCount = 12; // 한 번에 생성할 Spell 개수
     public float spellRangeX = 3f; // X축 랜덤 범위
     public float spellRangeY = 2f; // Y축 랜덤 범위
     private float castCooldown = 8f; // 기본 쿨타임 설정
