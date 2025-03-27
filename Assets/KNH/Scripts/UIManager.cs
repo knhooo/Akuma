@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] enemyCount;//처치한 적 수
 
     [SerializeField] GameObject Timer;//시계
+    [SerializeField] GameObject spawner;//스포너
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class UIManager : MonoBehaviour
         {
             player = GameManager.instance.player.GetComponent<Player>();
             curLevel = player.Level;
+            spawner = GameObject.Find("Spawner(Clone)");
         }
     }
     void Update()
@@ -45,6 +47,18 @@ public class UIManager : MonoBehaviour
             bossUI.SetActive(true);
             //보스 체력바 업데이트
             bossHpBar.fillAmount = (float)boss.currentHP / (float)boss.maxHP;
+            //보스 체력 30% 이하
+            if (boss.currentHP <= boss.maxHP * 0.3f)
+            {
+                spawner.GetComponent<Spawner>().DestroyWall();
+            }
+            //보스 클리어
+            if (boss.currentHP <= 0)
+            {
+                GameManager.instance.isClear = true;
+                GameManager.instance.isBoss = false;
+                Invoke("SetClear", 1f);//1초 지연
+            }
         }
         if (player != null)
         {
@@ -61,13 +75,8 @@ public class UIManager : MonoBehaviour
                 gameOverUI.SetActive(true);//게임 오버 UI 활성화
                 SetUIText(0);
             }
-            //보스 클리어
-            if (GameManager.instance.isClear == true)
-            {
-                Invoke("SetClear", 1f);//1초 지연
-            }
             //레벨업 증강
-            if(player.Level > curLevel)
+            if (player.Level > curLevel)
             {
                 GameManager.instance.isTimeStop = true;//시간 정지
                 curLevel = player.Level;
