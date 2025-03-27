@@ -13,6 +13,7 @@ public class ArcherAnim : Player
     public float shootInterval = 2f;
 
     public AudioClip shootSound;
+    public AudioClip skillSound; // 스킬 사운드 추가
     private AudioSource audioSource;
 
     private bool canDash = true;
@@ -21,6 +22,8 @@ public class ArcherAnim : Player
 
     [SerializeField] private int skillAttackBoost = 20;
     [SerializeField] private float skillDuration = 1f;
+    [SerializeField] private float skillSoundDelay = 0.2f; // 🎵 사운드 딜레이 추가
+    [SerializeField] private int levelUpExp = 10;
 
     void Awake()
     {
@@ -42,21 +45,23 @@ public class ArcherAnim : Player
     {
         HandleMovement();
 
-        // Dash
+        if (exp >= maxExp)
+        {
+            LevelUp();
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isPerformingSkill)
         {
             animator.SetTrigger("isDash");
             StartCoroutine(StartDashCooldown());
         }
 
-        // Skill
         if (Input.GetMouseButtonDown(1) && canSkill && !isPerformingSkill)
         {
             animator.SetTrigger("isLaser");
             StartCoroutine(StartSkillCooldown());
         }
 
-        // 쿨타이머 갱신
         if (!canDash) dashCoolTimer += Time.deltaTime;
         if (!canSkill) skillCoolTimer += Time.deltaTime;
     }
@@ -138,7 +143,7 @@ public class ArcherAnim : Player
         isPerformingSkill = true;
         dashCoolTimer = 0f;
 
-        yield return new WaitForSeconds(0.5f); // 대시 애니메이션 시간
+        yield return new WaitForSeconds(0.5f);
         isPerformingSkill = false;
 
         while (dashCoolTimer < dashCoolTime)
@@ -158,7 +163,14 @@ public class ArcherAnim : Player
         int originalAttack = attack;
         attack += skillAttackBoost;
 
-        yield return new WaitForSeconds(skillDuration); // 스킬 지속 시간
+        // 🎵 일정 시간 후 사운드 재생
+        yield return new WaitForSeconds(skillSoundDelay);
+        if (skillSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(skillSound);
+        }
+
+        yield return new WaitForSeconds(skillDuration - skillSoundDelay);
 
         attack = originalAttack;
         isPerformingSkill = false;
@@ -171,10 +183,19 @@ public class ArcherAnim : Player
         canSkill = true;
     }
 
-   
-
     public override void GetExperience(int ex)
     {
         exp += ex;
+        if (exp >= maxExp)
+        {
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        level++;
+        exp = maxExp - exp;
+        maxExp += levelUpExp;
     }
 }

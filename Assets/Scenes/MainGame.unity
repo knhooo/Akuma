@@ -56591,9 +56591,15 @@ MonoBehaviour:
   gameOverUI: {fileID: 559671227}
   gameClearUI: {fileID: 1889760844}
   AugmentUI: {fileID: 2114443591}
-  timeText: {fileID: 1829363583}
-  finalLevel: {fileID: 1911663605}
-  enemyCount: {fileID: 534929914}
+  timeText:
+  - {fileID: 1829363583}
+  - {fileID: 2060298681}
+  finalLevel:
+  - {fileID: 1911663605}
+  - {fileID: 392586702}
+  enemyCount:
+  - {fileID: 534929914}
+  - {fileID: 384464278}
   Timer: {fileID: 2123372402}
 --- !u!1 &1132627872
 GameObject:

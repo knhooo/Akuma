@@ -17,13 +17,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject bossUI;//보스 체력 UI
     [SerializeField] Image bossHpBar;//체력바 이미지
 
-    [Header("UI")]
+    [Header("GameOver UI")]
     [SerializeField] GameObject gameOverUI;//게임오버 UI
     [SerializeField] GameObject gameClearUI;//게임클리어 UI
     [SerializeField] GameObject AugmentUI;//증강 UI
-    [SerializeField] TextMeshProUGUI timeText;//생존시간
-    [SerializeField] TextMeshProUGUI finalLevel;//달성 레벨
-    [SerializeField] TextMeshProUGUI enemyCount;//처치한 적 수
+    [SerializeField] TextMeshProUGUI[] timeText;//생존시간
+    [SerializeField] TextMeshProUGUI[] finalLevel;//달성 레벨
+    [SerializeField] TextMeshProUGUI[] enemyCount;//처치한 적 수
 
     [SerializeField] GameObject Timer;//시계
 
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
             {
                 GameManager.instance.isTimeStop = true;//시간 정지
                 gameOverUI.SetActive(true);//게임 오버 UI 활성화
-                SetUIText();
+                SetUIText(0);
             }
             //보스 클리어
             if (GameManager.instance.isClear == true)
@@ -76,19 +76,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void SetUIText()
+    void SetUIText(int n)
     {
         //생존 시간
         float ms = Timer.GetComponent<TimeDisplay>().GetTime();
         int min = Mathf.FloorToInt(ms / 60);
         int sec = Mathf.FloorToInt(ms % 60);
-        timeText.text = "생존 시간: " + string.Format("{0:D2}분 {1:D2}초", min, sec);
+        timeText[n].text = "생존 시간: " + string.Format("{0:D2}분 {1:D2}초", min, sec);
 
         //달성 레벨
-        finalLevel.text = "달성 레벨: " + player.Level.ToString();
+        finalLevel[n].text = "달성 레벨: " + player.Level.ToString();
 
         //처치한 적
-        enemyCount.text = "처치한 적: " + player.EnemyCount.ToString();
+        enemyCount[n].text = "처치한 적: " + player.EnemyCount.ToString();
     }
 
     public void SetClear()
@@ -96,6 +96,6 @@ public class UIManager : MonoBehaviour
         bossUI.SetActive(false);
         GameManager.instance.isTimeStop = true;//시간 정지
         gameClearUI.SetActive(true);//게임 오버 UI 활성화
-        SetUIText();
+        SetUIText(1);
     }
 }
