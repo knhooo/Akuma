@@ -170,6 +170,9 @@ public class HH_Knight : Player
                 dashCoolTimer = 0f;
                 speed += speedBoost;
 
+                sword_left.SetActive(false);
+                sword_right.SetActive(false);
+
                 state = KnightState.Roll;
                 anim.SetBool("Attack", false);
                 anim.SetBool("Roll", true);
