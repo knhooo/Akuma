@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Water2 : MonoBehaviour
+public class WaterBullet : MonoBehaviour
 {
     public float Speed = 3f; //물미사일 스피드
     Vector2 dir; //미사일이 가야할 방향 구하기
