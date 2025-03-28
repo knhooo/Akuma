@@ -1,8 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
-
 public class GameManager : MonoBehaviour
 {
     public int playerClass;//플레이어 직업 0:전사 1:마법사 2:궁수
@@ -30,6 +28,8 @@ public class GameManager : MonoBehaviour
     private AudioClip bossClip;
     float timer = 0f;
 
+    [SerializeField] CinemachineCamera cinemachineCamera; // 시네머신 카메라
+
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
     {
@@ -55,7 +55,10 @@ public class GameManager : MonoBehaviour
         if (player != null)
         {
             areaObject.transform.SetParent(player.transform, false);
-            mainCamera.transform.SetParent(player.transform, false);
+            cinemachineCamera.Follow = player.transform;
+            cinemachineCamera.LookAt = player.transform;
+
+            //mainCamera.transform.SetParent(player.transform, false);
             GameObject spawnerInstance = Instantiate(spawner, player.transform);
             spawnerInstance.transform.SetParent(player.transform, true);
         }
