@@ -3,14 +3,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class SelectButton : MonoBehaviour
+public class SelectButton : MonoBehaviour, IPointerEnterHandler
 {
     private GameObject gameManager;
 
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        EventSystem.current.SetSelectedGameObject(gameObject);
     }
     public void StartButton()
     {
