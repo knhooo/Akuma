@@ -329,6 +329,7 @@ MonoBehaviour:
   enemyCount: 0
   isSkillClick: 0
   isDashClick: 0
+  logPrefab: {fileID: 8598306700551854173, guid: 31367cb4ca2b4c64aab5c9bedcab4202, type: 3}
   dashForce: 50
   skill: {fileID: 6437888885386387913}
   sword_right: {fileID: 563614996355844578}

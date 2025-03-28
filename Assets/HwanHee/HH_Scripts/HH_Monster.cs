@@ -221,11 +221,6 @@ public class HH_Monster : MonoBehaviour
         {
             Player _player = player.GetComponent<Player>();
             _player.TakeDamage(attack);
-            //·Î±× ¶ç¿ì±â
-            Vector3 vec = new Vector3(_player.transform.position.x, _player.transform.position.y + 1, 0);
-            GameObject log = Instantiate(logPrefab, vec, Quaternion.identity);
-            log.transform.SetParent(_player.gameObject.transform);
-            log.GetComponent<LogText>().SetPlayerDmgLog(attack);
         }
     }
 

@@ -168,6 +168,7 @@ MonoBehaviour:
   enemyCount: 0
   isSkillClick: 0
   isDashClick: 0
+  logPrefab: {fileID: 8598306700551854173, guid: 31367cb4ca2b4c64aab5c9bedcab4202, type: 3}
   wExposion: {fileID: 4906589081750784832, guid: f1ab4a001829642409185dd3bacf443b, type: 3}
   waterbullet: {fileID: 1892740670529650922, guid: dd44af32a4bc509408265739db48507a, type: 3}
   waterPbullet: {fileID: 9147108702225680647, guid: a18b9c26a981ffd45ac2af69c9a0d55c, type: 3}

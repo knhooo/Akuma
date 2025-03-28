@@ -696,6 +696,8 @@ public class WP : Player //물마법사 스크립트
 
     public override void TakeDamage(int dmg) //데미지 입는 메서드 오버라이딩
     {
+        base.TakeDamage(dmg);
+
         hp -= dmg;
         Instantiate(wExposion, transform.position, Quaternion.identity);
     }
