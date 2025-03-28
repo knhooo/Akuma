@@ -40,7 +40,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556116374512450596}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -198,7 +198,7 @@ MonoBehaviour:
   maxHp: 100
   level: 1
   exp: 0
-  maxExp: 100
+  maxExp: 10
   attack: 10
   speed: 3
   skillCoolTime: 5
@@ -217,7 +217,7 @@ MonoBehaviour:
   skillDuration: 1
   skillSoundDelay: 0.3
   levelUpExp: 10
-  laserHitBox: {fileID: 0}
+  laserHitBox: {fileID: 1556116374512450596}
 --- !u!212 &7399826994074749195
 SpriteRenderer:
   m_ObjectHideFlags: 0

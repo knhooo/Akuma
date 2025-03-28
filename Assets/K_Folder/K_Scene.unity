@@ -506,6 +506,11 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.2222222, y: 1.25}
   m_Direction: 0
+--- !u!1 &1071004315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1556116374512450596, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
+  m_PrefabInstance: {fileID: 4294601088782267929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1169703054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -939,6 +944,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2524212261040621670, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
+      propertyPath: maxExp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2524212261040621670, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -946,6 +955,10 @@ PrefabInstance:
       propertyPath: shootSound
       value: 
       objectReference: {fileID: 8300000, guid: 54f5209d08469dc42b947289dd900d86, type: 3}
+    - target: {fileID: 2524212261040621670, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
+      propertyPath: laserHitBox
+      value: 
+      objectReference: {fileID: 1071004315}
     - target: {fileID: 5424596168541846726, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.04
@@ -997,6 +1010,10 @@ PrefabInstance:
     - target: {fileID: 8834606156009563749, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139249002099021352, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1037176588031000980, guid: b7ddc5b5b108b314a996c38aecf01674, type: 3}
