@@ -164,7 +164,7 @@ MonoBehaviour:
   attack: 20
   speed: 2
   skillCoolTime: 5
-  dashCoolTime: 5
+  dashCoolTime: 7
   enemyCount: 0
   isSkillClick: 0
   isDashClick: 0
