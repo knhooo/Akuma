@@ -76,6 +76,7 @@ public class WP : Player //물마법사 스크립트
                 {
                     if (!isDashClick)
                         isDashClick = true;
+                    wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed +=2f;
@@ -90,6 +91,7 @@ public class WP : Player //물마법사 스크립트
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 speed = wspeed;
+                wSoundManager.instance.surfEnd();
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
@@ -140,6 +142,7 @@ public class WP : Player //물마법사 스크립트
                 {
                     if (!isDashClick)
                         isDashClick = true;
+                    wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed +=2f;
@@ -154,6 +157,7 @@ public class WP : Player //물마법사 스크립트
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 speed = wspeed;
+                wSoundManager.instance.surfEnd();
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
@@ -207,6 +211,7 @@ public class WP : Player //물마법사 스크립트
                 {
                     if (!isDashClick)
                         isDashClick = true;
+                    wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed +=2f;
@@ -220,6 +225,7 @@ public class WP : Player //물마법사 스크립트
             else if(Input.GetKeyUp(KeyCode.LeftShift))
             {
                 speed = wspeed;
+                wSoundManager.instance.surfEnd();
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
@@ -273,6 +279,7 @@ public class WP : Player //물마법사 스크립트
                 {
                     if (!isDashClick)
                         isDashClick = true;
+                    wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
                     speed += 2f;
@@ -288,6 +295,7 @@ public class WP : Player //물마법사 스크립트
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 speed = wspeed;
+                wSoundManager.instance.surfEnd();
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }

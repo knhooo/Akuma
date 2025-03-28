@@ -9,6 +9,7 @@ public class wSoundManager : MonoBehaviour
     public AudioClip twp;
     public AudioClip pw;
     public AudioClip tw;
+    public AudioClip s;
 
 
     private void Awake()
@@ -26,23 +27,38 @@ public class wSoundManager : MonoBehaviour
 
     public void pWater()
     {
+        myAudio.loop = false;
         myAudio.PlayOneShot(pw);
     }
 
     public void tWater()
     {
+        myAudio.loop = false;
         myAudio.PlayOneShot(tw);
     }
 
 
     public void pWaterP()
     {
+        myAudio.loop = false;
         myAudio.PlayOneShot(pwp);
     }
 
     public void tWaterP()
     {
+        myAudio.loop = false;
         myAudio.PlayOneShot(twp);
+    }
+    public void surfS()
+    {
+        myAudio.loop = true;
+        myAudio.PlayOneShot(s);
+    }
+
+    public void surfEnd()
+    {
+        myAudio.loop = false;
+        myAudio.Stop();
     }
 
     void Update()
