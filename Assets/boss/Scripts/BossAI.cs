@@ -27,8 +27,8 @@ public class BossAI : MonoBehaviour
     private const float StoppingDistance = 0.01f;
 
     [Header("체력")]
-    public float maxHP = 10000f;
-    public float currentHP = 10000f;
+    public float maxHP = 5000f;
+    public float currentHP = 5000f;
 
     [Header("주문 공격")]
     public GameObject redDotPrefab;
