@@ -66,9 +66,10 @@ public class WP : Player //물마법사 스크립트
         float moveY = speed * Time.deltaTime * Input.GetAxis("Vertical");
 
         //상하이동
-         if (Input.GetAxis("Vertical") <= -0.2) //아래로 내려감
+         if (Input.GetAxis("Vertical") <= -0.2&& Input.GetAxis("Horizontal") <= -0.1) //아래, 왼쪽
          {
             ani.SetBool("walk", true); //walk 모션 활성
+            transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -132,9 +133,77 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("atk2", false);
             }
         }
-        else if (Input.GetAxis("Vertical") >=0.2) //위로 올라감
+        else if (Input.GetAxis("Vertical") <= -0.2 && Input.GetAxis("Horizontal") >= 0.1) //아래, 오른쪽
         {
             ani.SetBool("walk", true); //walk 모션 활성
+            transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 좌우반전
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (dashCoolTimer >= dashCoolTime)
+                {
+                    if (!isDashClick)
+                        isDashClick = true;
+                    wSoundManager.instance.surfS();
+                    canUseDash = false;
+                    dashCoolTimer = 0f;
+                    speed += 2f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("surf", true);
+
+
+                }
+                else if (dashCoolTimer < dashCoolTime && !canUseDash)
+                    canUseDash = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = wspeed;
+                wSoundManager.instance.surfEnd();
+                ani.SetBool("walk", true);
+                ani.SetBool("surf", false);
+            }
+            if (Input.GetMouseButtonDown(0)) //아래로 이동하면서 마우스 왼쪽 버튼 누를 때
+            {
+                wSoundManager.instance.pWater();
+                ani.SetBool("sp_atk", true); //공격 모션 활성화
+                ani.SetBool("walk", false); //걷는 모션 비활성화
+                GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity); //pos2에서 미사일 발사
+                Destroy(go, 5); //5초 뒤 삭제
+
+            }
+            else //마우스 왼쪽버튼을 안누르고 있을 때
+            {
+                ani.SetBool("walk", true); //걷는 모션 활성화
+                ani.SetBool("sp_atk", false);
+            }
+
+            if (Input.GetMouseButtonDown(1)) //아래로 걸으면서 우클릭
+            {
+                if (skillCoolTimer >= skillCoolTime)
+                {
+                    if (!isSkillClick)
+                        isSkillClick = true;
+                    wSoundManager.instance.pWaterP();
+                    canUseSkill = false;
+                    skillCoolTimer = 0f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("atk2", true);
+                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
+            }
+            else
+            {
+                ani.SetBool("walk", true);
+                ani.SetBool("atk2", false);
+            }
+        }
+        else if (Input.GetAxis("Vertical") >=0.2 && Input.GetAxis("Horizontal") <= -0.1) //위, 왼
+        {
+            ani.SetBool("walk", true); //walk 모션 활성
+            transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -198,9 +267,75 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("atk2", false);
             }
         }
+        else if (Input.GetAxis("Vertical") >= 0.2 && Input.GetAxis("Horizontal") >= 0.1) //위, 오
+        {
+            ani.SetBool("walk", true); //walk 모션 활성
+            transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 좌우반전
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (dashCoolTimer >= dashCoolTime)
+                {
+                    if (!isDashClick)
+                        isDashClick = true;
+                    wSoundManager.instance.surfS();
+                    canUseDash = false;
+                    dashCoolTimer = 0f;
+                    speed += 2f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("surf", true);
+
+
+                }
+                else if (dashCoolTimer < dashCoolTime && !canUseDash)
+                    canUseDash = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = wspeed;
+                wSoundManager.instance.surfEnd();
+                ani.SetBool("walk", true);
+                ani.SetBool("surf", false);
+            }
+            if (Input.GetMouseButtonDown(0)) //올라가면서 마우스 왼쪽 버튼 누를 때
+            {
+                wSoundManager.instance.pWater();
+                ani.SetBool("sp_atk", true); //공격 모션 활성화
+                ani.SetBool("walk", false); //걷는 모션 비활성화
+                GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity); //pos2에서 미사일 발사
+                Destroy(go, 5); //5초 뒤 삭제
+
+            }
+            else //마우스 왼쪽버튼을 안누르고 있을 때
+            {
+                ani.SetBool("walk", true); //걷는 모션 활성화
+                ani.SetBool("sp_atk", false);
+            }
+
+            if (Input.GetMouseButtonDown(1)) //위로 걸으면서 우클릭
+            {
+                if (skillCoolTimer >= skillCoolTime)
+                {
+                    if (!isSkillClick)
+                        isSkillClick = true;
+                    wSoundManager.instance.pWaterP();
+                    canUseSkill = false;
+                    skillCoolTimer = 0f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("atk2", true);
+                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
+            }
+            else
+            {
+                ani.SetBool("walk", true);
+                ani.SetBool("atk2", false);
+            }
+        }
 
         //좌우 이동
-        if (Input.GetAxis("Horizontal") <= -0.2) //왼쪽으로 이동할 때
+        if (Input.GetAxis("Horizontal") <= -0.2 && Input.GetAxis("Vertical") ==0) //왼쪽으로 이동할 때
         {
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
@@ -268,7 +403,7 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("atk2", false);
             }
         }
-        else if (Input.GetAxis("Horizontal") >= 0.2) //오른쪽으로 이동할 때
+        else if (Input.GetAxis("Horizontal") >= 0.2 && Input.GetAxis("Vertical") == 0) //오른쪽으로 이동할 때
         {
             ani.SetBool("walk", true); //걷는 모션 활성화
             transform.localScale = new Vector3(1f, 1f, 1f); //캐릭터 오른쪽 모습
@@ -338,7 +473,7 @@ public class WP : Player //물마법사 스크립트
 
 
         }
-        else if (Input.GetAxis("Horizontal") == 0.0f) //멈춰있을 때
+        else if (Input.GetAxis("Horizontal") == 0.0f&& Input.GetAxis("Vertical") == 0.0f) //멈춰있을 때
         {
             ani.SetBool("walk", false); //걷는 모션 비활성화
 
@@ -398,6 +533,139 @@ public class WP : Player //물마법사 스크립트
             }
             else
             {
+                ani.SetBool("atk2", false);
+            }
+        }
+
+        if (Input.GetAxis("Vertical") <= -0.1f && Input.GetAxis("Horizontal") ==0.0f) //아래로만
+        {
+            ani.SetBool("walk", true); //walk 모션 활성
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (dashCoolTimer >= dashCoolTime)
+                {
+                    if (!isDashClick)
+                        isDashClick = true;
+                    wSoundManager.instance.surfS();
+                    canUseDash = false;
+                    dashCoolTimer = 0f;
+                    speed += 2f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("surf", true);
+
+
+                }
+                else if (dashCoolTimer < dashCoolTime && !canUseDash)
+                    canUseDash = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = wspeed;
+                wSoundManager.instance.surfEnd();
+                ani.SetBool("walk", true);
+                ani.SetBool("surf", false);
+            }
+            if (Input.GetMouseButtonDown(0)) //아래로 이동하면서 마우스 왼쪽 버튼 누를 때
+            {
+                wSoundManager.instance.pWater();
+                ani.SetBool("sp_atk", true); //공격 모션 활성화
+                ani.SetBool("walk", false); //걷는 모션 비활성화
+                GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity); //pos2에서 미사일 발사
+                Destroy(go, 5); //5초 뒤 삭제
+
+            }
+            else //마우스 왼쪽버튼을 안누르고 있을 때
+            {
+                ani.SetBool("walk", true); //걷는 모션 활성화
+                ani.SetBool("sp_atk", false);
+            }
+
+            if (Input.GetMouseButtonDown(1)) //아래로 걸으면서 우클릭
+            {
+                if (skillCoolTimer >= skillCoolTime)
+                {
+                    if (!isSkillClick)
+                        isSkillClick = true;
+                    wSoundManager.instance.pWaterP();
+                    canUseSkill = false;
+                    skillCoolTimer = 0f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("atk2", true);
+                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
+            }
+            else
+            {
+                ani.SetBool("walk", true);
+                ani.SetBool("atk2", false);
+            }
+        }
+        if (Input.GetAxis("Vertical") >= 0.1f && Input.GetAxis("Horizontal") == 0.0f) //위로만
+        {
+            ani.SetBool("walk", true); //walk 모션 활성
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (dashCoolTimer >= dashCoolTime)
+                {
+                    if (!isDashClick)
+                        isDashClick = true;
+                    wSoundManager.instance.surfS();
+                    canUseDash = false;
+                    dashCoolTimer = 0f;
+                    speed += 2f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("surf", true);
+
+
+                }
+                else if (dashCoolTimer < dashCoolTime && !canUseDash)
+                    canUseDash = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = wspeed;
+                wSoundManager.instance.surfEnd();
+                ani.SetBool("walk", true);
+                ani.SetBool("surf", false);
+            }
+            if (Input.GetMouseButtonDown(0)) //아래로 이동하면서 마우스 왼쪽 버튼 누를 때
+            {
+                wSoundManager.instance.pWater();
+                ani.SetBool("sp_atk", true); //공격 모션 활성화
+                ani.SetBool("walk", false); //걷는 모션 비활성화
+                GameObject go = Instantiate(waterbullet, pos2.position, Quaternion.identity); //pos2에서 미사일 발사
+                Destroy(go, 5); //5초 뒤 삭제
+
+            }
+            else //마우스 왼쪽버튼을 안누르고 있을 때
+            {
+                ani.SetBool("walk", true); //걷는 모션 활성화
+                ani.SetBool("sp_atk", false);
+            }
+
+            if (Input.GetMouseButtonDown(1)) //아래로 걸으면서 우클릭
+            {
+                if (skillCoolTimer >= skillCoolTime)
+                {
+                    if (!isSkillClick)
+                        isSkillClick = true;
+                    wSoundManager.instance.pWaterP();
+                    canUseSkill = false;
+                    skillCoolTimer = 0f;
+                    ani.SetBool("walk", false);
+                    ani.SetBool("atk2", true);
+                    GameObject go1 = Instantiate(waterPbullet, pos1.position, Quaternion.identity);
+                }
+                else if (skillCoolTimer < skillCoolTime && !canUseSkill)
+                    canUseSkill = true;
+            }
+            else
+            {
+                ani.SetBool("walk", true);
                 ani.SetBool("atk2", false);
             }
         }
