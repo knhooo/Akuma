@@ -104,6 +104,7 @@ public class HH_Knight : Player
         Vector3 moveDir = new Vector3(inputVec.x, inputVec.y, 0).normalized;
         transform.Translate(moveDir * speed * Time.fixedDeltaTime);
 
+
         //Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         //rigid.MovePosition(rigid.position + nextVec);
     }
@@ -186,7 +187,6 @@ public class HH_Knight : Player
                 canUseDash = false;
                 dashCoolTimer = 0f;
 
-                circleCol.isTrigger = true;
                 sword_left.SetActive(false);
                 sword_right.SetActive(false);
 
@@ -235,6 +235,8 @@ public class HH_Knight : Player
 
     void Roll()
     {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Monster"), true);
+
         Vector3 rollDir = Vector3.zero;
         if (dir == Dir.left)
             rollDir = Vector3.left;
@@ -355,6 +357,7 @@ public class HH_Knight : Player
 
     void RollOver()
     {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Monster"), false);
         circleCol.isTrigger = false;
 
         state = KnightState.Attack;
