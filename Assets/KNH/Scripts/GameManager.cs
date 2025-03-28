@@ -25,11 +25,11 @@ public class GameManager : MonoBehaviour
     public GameObject Player { get { return player; } }
     
     [SerializeField]
-    AudioSource audio;
+    AudioSource audioSource;
     [SerializeField]
     private AudioClip bossClip;
-    Spawner _spawner;
     bool isBGMChange = false;
+    float timer = 0f;
 
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
             spawnerInstance.transform.SetParent(player.transform, true);
         }
 
-        _spawner = spawner.GetComponent<Spawner>();
     }
 
 
@@ -76,11 +75,13 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;//시간정지
         }
 
-        if (_spawner.timer > 300f && !isBGMChange)
+        timer += Time.deltaTime;
+        if (timer > 10f && !isBGMChange)
         {
             isBGMChange = true;
-            audio.clip = bossClip;
-            audio.Play();
+            audioSource.Stop();
+            audioSource.clip = bossClip;
+            audioSource.Play();
         }
     }
     public Vector3 GetPlayerPos()
