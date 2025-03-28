@@ -242,6 +242,7 @@ public class HH_Knight : Player
         hp -= dmg;
         if (hp <= 0)
         {
+            hp = 0;
             state = KnightState.Death;
             anim.SetTrigger("Death");
             return;
@@ -297,7 +298,7 @@ public class HH_Knight : Player
     public void LevelUp()
     {
         level++;
-        exp = MaxExp - exp;
+        exp -= MaxExp;
         maxExp += levelUpExp;
     }
 
