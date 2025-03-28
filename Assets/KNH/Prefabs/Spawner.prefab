@@ -431,5 +431,5 @@ MonoBehaviour:
   spawnPoint: []
   timer: 0
   boss: {fileID: 4681068461694256559, guid: ce20e6e9570f93043a3fda0bf249e384, type: 3}
-  wall: {fileID: 5757163131274305142, guid: d30459a1f7b855b468e06556f759666a, type: 3}
+  wall: {fileID: 991191520021442288, guid: 02407d0731d9b3a4381efea9fd17e5c7, type: 3}
   wallCount: 50
