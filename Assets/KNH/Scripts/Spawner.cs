@@ -49,7 +49,7 @@ public class Spawner : MonoBehaviour
             spawnIndex = Random.Range(3, 5);
             frequency = 1f;
         }
-        else if (timer > 1)//보스
+        else if (timer >= 300)//보스
         {
             isSpawn = false;
             if (bossCount < 1)
@@ -67,7 +67,7 @@ public class Spawner : MonoBehaviour
                 SpawnWall(bossObject.transform.position);//보스 주변에 벽 생성
                 bossCount++;
             }
-            else if(bossCount == 1)
+            else if (bossCount == 1)
             {
                 //보스 체력 30%이하되면 벽 삭제
                 if (boss.GetComponent<BossAI>().currentHP <= boss.GetComponent<BossAI>().maxHP * 0.3f)
@@ -85,7 +85,7 @@ public class Spawner : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(isSpawn == true)
+        if (isSpawn == true)
         {
             if (cycle > frequency)
             {
@@ -101,11 +101,11 @@ public class Spawner : MonoBehaviour
         enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
     }
 
-     void SpawnWall(Vector3 center)
+    void SpawnWall(Vector3 center)
     {
-        for(int i=0; i< wallCount; i++)
+        for (int i = 0; i < wallCount; i++)
         {
-            float angle =  i * 360f / wallCount; 
+            float angle = i * 360f / wallCount;
             float radian = angle * Mathf.Deg2Rad; // 각도를 라디안으로 변환
             float x = center.x + Mathf.Cos(radian) * 20;
             float y = center.y + Mathf.Sin(radian) * 20;
@@ -116,7 +116,7 @@ public class Spawner : MonoBehaviour
 
     public void DestroyWall()
     {
-        for(int i=0; i< wallCount; i++)
+        for (int i = 0; i < wallCount; i++)
         {
             Destroy(wallArr[i], 0.5f);
         }

@@ -111,6 +111,12 @@ public class HH_Knight : Player
         Vector3 moveDir = new Vector3(inputVec.x, inputVec.y, 0).normalized;
         transform.Translate(moveDir * speed * Time.fixedDeltaTime);
 
+        if(state == KnightState.Roll)
+            rigid.constraints = RigidbodyConstraints2D.None;
+        if (state != KnightState.Roll)
+            rigid.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+
+
         //Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         //rigid.MovePosition(rigid.position + nextVec);
     }
@@ -248,7 +254,7 @@ public class HH_Knight : Player
         else if (dir == Dir.right)
             rollDir = Vector3.right;
 
-        rigid.linearDamping= 0f;
+        rigid.linearDamping = 0f;
         rigid.linearVelocity = Vector2.zero;
         rigid.AddForce(rollDir * dashForce, ForceMode2D.Impulse);
     }
