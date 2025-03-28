@@ -1,5 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +23,12 @@ public class GameManager : MonoBehaviour
     [Range(0, 10)] public float gameSpeed = 1f;
 
     public GameObject Player { get { return player; } }
+
+    [SerializeField]
+    AudioSource audioSource;
+    [SerializeField]
+    private AudioClip bossClip;
+    float timer = 0f;
 
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
@@ -52,7 +59,9 @@ public class GameManager : MonoBehaviour
             GameObject spawnerInstance = Instantiate(spawner, player.transform);
             spawnerInstance.transform.SetParent(player.transform, true);
         }
+
     }
+
 
     private void Update()
     {
@@ -63,6 +72,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Time.timeScale = 0f;//시간정지
+        }
+
+        timer += Time.deltaTime;
+        if (timer > 300f && audioSource.clip != bossClip)
+        {
+            audioSource.Stop();
+            audioSource.clip = bossClip;
+            audioSource.Play();
         }
     }
     public Vector3 GetPlayerPos()

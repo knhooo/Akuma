@@ -46,4 +46,8 @@ public class SelectButton : MonoBehaviour, IPointerEnterHandler
     {
         SceneManager.LoadScene("TitleMenu");//타이틀씬 로드
     }
+    public void ContinueButton()
+    {
+        GameManager.instance.isTimeStop = false;//시간 정지 해제
+    }
 }

@@ -1,11 +1,18 @@
 fileFormatVersion: 2
 guid: ce749bddf8cbd7b499f1c9593680a805
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293857
+  packageName: 8-bit Platformer Music Pack
+  packageVersion: 1.0
+  assetPath: Assets/8-bit Platformer Music Pack/4_Let's_Fight.wav
+  uploadId: 690303
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 8
   defaultSettings:
     serializedVersion: 2
-    loadType: 0
+    loadType: 2
     sampleRateSetting: 0
     sampleRateOverride: 44100
     compressionFormat: 1
@@ -21,10 +28,3 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 293857
-  packageName: 8-bit Platformer Music Pack
-  packageVersion: 1.0
-  assetPath: Assets/8-bit Platformer Music Pack/4_Let's_Fight.wav
-  uploadId: 690303
