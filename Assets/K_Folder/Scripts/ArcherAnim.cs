@@ -20,6 +20,7 @@ public class ArcherAnim : Player
     private bool canDash = true;
     private bool canSkill = true;
     private bool isPerformingSkill = false;
+    private bool isDashing = false;
 
     [SerializeField] private int skillAttackBoost = 20;
     [SerializeField] private float skillDuration = 1f;
@@ -30,6 +31,10 @@ public class ArcherAnim : Player
     [SerializeField] private float dashDuration = 0.5f;
     [SerializeField] private float shootIntervalDecrease = 0.05f;
     [SerializeField] private float minShootInterval = 0.5f;
+    [SerializeField] private float dashForce = 20f;
+
+    private int skillBonus = 0;
+    public int CurrentAttack => attack + skillBonus;
 
     void Awake()
     {
@@ -94,10 +99,10 @@ public class ArcherAnim : Player
 
     public override void TakeDamage(int dmg)
     {
-        hp -= dmg;
+        Hp -= dmg;
         animator.SetTrigger("isDamaged");
 
-        if (hp <= 0)
+        if (Hp <= 0)
         {
             animator.SetTrigger("isDeath");
             StopAllCoroutines();
@@ -124,22 +129,31 @@ public class ArcherAnim : Player
 
     Transform FindClosestMonster()
     {
+        
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
+
+        
+        GameObject[] allEnemies = new GameObject[monsters.Length + bosses.Length];
+        monsters.CopyTo(allEnemies, 0);
+        bosses.CopyTo(allEnemies, monsters.Length);
+
         Transform closest = null;
         float minDist = Mathf.Infinity;
 
-        foreach (GameObject monster in monsters)
+        foreach (GameObject enemy in allEnemies)
         {
-            float dist = Vector2.Distance(transform.position, monster.transform.position);
+            float dist = Vector2.Distance(transform.position, enemy.transform.position);
             if (dist < minDist)
             {
                 minDist = dist;
-                closest = monster.transform;
+                closest = enemy.transform;
             }
         }
 
         return closest;
     }
+
 
     void ShootAtTarget(Vector3 targetPos)
     {
@@ -157,6 +171,12 @@ public class ArcherAnim : Player
             rb.linearVelocity = direction * arrowSpeed;
         }
 
+        Arrow arrowScript = arrow.GetComponent<Arrow>();
+        if (arrowScript != null)
+        {
+            arrowScript.damage = CurrentAttack;
+        }
+
         if (shootSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(shootSound);
@@ -169,28 +189,51 @@ public class ArcherAnim : Player
         isPerformingSkill = true;
         dashCoolTimer = 0f;
 
-        float originalSpeed = speed;
-        speed *= dashSpeedMultiplier;
+        // ⏱ 대시 시작 딜레이 (예: 애니메이션 준비 시간)
+        float dashStartDelay = 0.2f;
+        yield return new WaitForSeconds(dashStartDelay);
 
+        // 👉 바라보는 방향 기준으로 대시 방향 설정
+        Vector2 dashDirection = rb.linearVelocity.normalized;
+        if (dashDirection == Vector2.zero)
+        {
+            dashDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        }
+
+        float dashDistance = 2f;
+        float dashSpeed = 10f;
+        float moved = 0f;
+
+        // 👉 충돌 비활성화
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)
             col.isTrigger = true;
 
-        yield return new WaitForSeconds(dashDuration);
-
-        if (col != null)
-            col.isTrigger = false;
-
-        speed = originalSpeed;
-        isPerformingSkill = false;
-
-        while (dashCoolTimer < dashCoolTime)
+        while (moved < dashDistance)
         {
+            float moveStep = dashSpeed * Time.deltaTime;
+            transform.Translate(dashDirection * moveStep);
+            moved += moveStep;
             yield return null;
         }
 
+        // 👉 잠깐 멈추는 딜레이 (선택 사항)
+        float dashStopDelay = 0.3f;
+        yield return new WaitForSeconds(dashStopDelay);
+
+        // 👉 충돌 다시 활성화
+        if (col != null)
+            col.isTrigger = false;
+
+        isPerformingSkill = false;
+
+        while (dashCoolTimer < dashCoolTime)
+            yield return null;
+
         canDash = true;
     }
+
+
 
     IEnumerator StartSkillCooldown()
     {
@@ -198,8 +241,7 @@ public class ArcherAnim : Player
         isPerformingSkill = true;
         skillCoolTimer = 0f;
 
-        int originalAttack = attack;
-        attack += skillAttackBoost;
+        skillBonus = skillAttackBoost;
 
         yield return new WaitForSeconds(skillSoundDelay);
 
@@ -213,7 +255,7 @@ public class ArcherAnim : Player
 
             LaserHitBox laser = laserHitBox.GetComponent<LaserHitBox>();
             if (laser != null)
-                laser.SetDamage(attack + skillAttackBoost);
+                laser.SetDamage(CurrentAttack);
         }
 
         yield return new WaitForSeconds(skillDuration);
@@ -221,7 +263,7 @@ public class ArcherAnim : Player
         if (laserHitBox != null)
             laserHitBox.SetActive(false);
 
-        attack = originalAttack;
+        skillBonus = 0;
         isPerformingSkill = false;
 
         while (skillCoolTimer < skillCoolTime)
@@ -244,7 +286,7 @@ public class ArcherAnim : Player
     public void LevelUp()
     {
         level++;
-        exp = maxExp - exp;
+        exp = exp - maxExp;
         maxExp += levelUpExp;
 
         if (shootInterval > minShootInterval)

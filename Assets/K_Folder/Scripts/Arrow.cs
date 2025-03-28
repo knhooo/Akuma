@@ -12,12 +12,13 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // 플레이어 무시
+        // 플레이어는 무시
         if (other.CompareTag("Player")) return;
 
-        if (other.CompareTag("Monster"))
+        // 몬스터와 보스 모두 처리
+        if (other.CompareTag("Monster") || other.CompareTag("Boss"))
         {
-            Debug.Log("화살 몬스터에 명중!");
+            Debug.Log("화살 적중 대상: " + other.name);
 
             HH_Monster monster = other.GetComponent<HH_Monster>();
             if (monster != null)
