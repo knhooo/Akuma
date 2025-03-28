@@ -49,7 +49,7 @@ public class Spawner : MonoBehaviour
             spawnIndex = Random.Range(3, 5);
             frequency = 1f;
         }
-        else if (timer > 300)//보스
+        else if (timer > 1)//보스
         {
             isSpawn = false;
             if (bossCount < 1)
