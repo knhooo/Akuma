@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     protected GameObject logPrefab;
 
-    protected bool GodMode = false;
+    public bool GodMode = false;
 
     protected virtual void Update()
     {
