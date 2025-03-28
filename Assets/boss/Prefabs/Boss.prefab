@@ -146,7 +146,7 @@ MonoBehaviour:
   bulletSpeed: 3
   bulletFireRate: 3
   trackingBulletCount: 5
-  trackingBulletSpeed: 5
+  trackingBulletSpeed: 7
   trackingInterval: 0.5
 --- !u!61 &333349168562255958
 BoxCollider2D:
@@ -202,7 +202,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4681068461694256559}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

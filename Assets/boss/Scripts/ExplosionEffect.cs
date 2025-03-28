@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosionEffect : MonoBehaviour
 {
     public Collider2D effectCollider;
-    public DotStackManager dotStackManager; // DotStackManager 참조
+    private DotStackManager dotStackManager; // DotStackManager 참조
     public GameObject DotStackManagerPrefabs;
     void Start()
     {

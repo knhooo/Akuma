@@ -17,10 +17,8 @@ public class Bullet : MonoBehaviour
         transform.position += (Vector3)direction * speed * Time.deltaTime;
     }
 
-    //충돌 처리
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // 플레이어 태그와 충돌했을 때
+    {        
         if (collision.CompareTag("Player"))
         {
             Player player = collision.gameObject.GetComponent<Player>();

@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageOverTime: 2.5
   dotInterval: 1
-  dotStackInterval: 0.5
+  dotStackInterval: 0.2
   dotStackDuration: 3
   maxDotStacks: 2147483647

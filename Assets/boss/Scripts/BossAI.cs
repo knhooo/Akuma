@@ -24,7 +24,7 @@ public class BossAI : MonoBehaviour
 
     [Header("이동")]
     public float moveSpeed = 1.5f;
-    private const float StoppingDistance = 0.0f;
+    private const float StoppingDistance = 0.01f;
 
     [Header("체력")]
     public float maxHP = 10000f;
@@ -83,7 +83,7 @@ public class BossAI : MonoBehaviour
             return;
         }
 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         HandleAttack(distanceToPlayer);
         HandleCasting();
