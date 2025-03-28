@@ -164,7 +164,7 @@ public class BossAI : MonoBehaviour
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         if (isDead) return;
         Debug.Log($"Damage 실행됨. 데미지 값: {damage}");

@@ -11,15 +11,28 @@ public class LaserHitBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster") || collision.CompareTag("Boss"))
+        if (collision.CompareTag("Monster"))
         {
-            Debug.Log("레이저가 적에게 명중! → " + collision.name);
-
             HH_Monster monster = collision.GetComponent<HH_Monster>();
             if (monster != null)
             {
                 monster.SendMessage("TakeDamageFromArrow", skillDamage, SendMessageOptions.DontRequireReceiver);
             }
         }
+        else if (collision.CompareTag("Boss"))
+        {
+            BossAI boss = collision.GetComponent<BossAI>();
+            if (boss != null)
+            {
+                boss.TakeDamage(skillDamage); // public 으로 바꿨는지 확인!
+            }
+        }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, GetComponent<Collider2D>().bounds.size);
+    }
+
 }
