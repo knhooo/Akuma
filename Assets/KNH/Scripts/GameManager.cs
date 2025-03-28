@@ -55,10 +55,10 @@ public class GameManager : MonoBehaviour
         if (player != null)
         {
             areaObject.transform.SetParent(player.transform, false);
-            cinemachineCamera.Follow = player.transform;
-            cinemachineCamera.LookAt = player.transform;
+            //cinemachineCamera.Follow = player.transform;
+            //cinemachineCamera.LookAt = player.transform;
 
-            //mainCamera.transform.SetParent(player.transform, false);
+            mainCamera.transform.SetParent(player.transform, false);
             GameObject spawnerInstance = Instantiate(spawner, player.transform);
             spawnerInstance.transform.SetParent(player.transform, true);
         }
