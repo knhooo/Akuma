@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : MonoBehaviour
 {
@@ -49,9 +50,16 @@ public class Player : MonoBehaviour
     public bool CanUseSkill { get { return canUseSkill; } }
     public bool CanUseDash { get { return canUseDash; } }
 
+    [SerializeField]
+    protected GameObject logPrefab;
+
     public virtual void TakeDamage(int dmg)
     {
-
+        //·Î±× ¶ç¿ì±â
+        Vector3 vec = new Vector3(transform.position.x, transform.position.y + 1, 0);
+        GameObject log = Instantiate(logPrefab, vec, Quaternion.identity);
+        log.transform.SetParent(transform);
+        log.GetComponent<LogText>().SetPlayerDmgLog(dmg);
     }
 
     public virtual void GetExperience(int ex)

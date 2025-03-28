@@ -207,6 +207,7 @@ MonoBehaviour:
   enemyCount: 0
   isSkillClick: 0
   isDashClick: 0
+  logPrefab: {fileID: 8598306700551854173, guid: 31367cb4ca2b4c64aab5c9bedcab4202, type: 3}
   hitEffectPrefab: {fileID: 3238201351179218945, guid: ac936892e8ea9a345bbde646b82b2bc0, type: 3}
   arrowPrefab: {fileID: 841010174968623350, guid: 7e1b54167e704f54eae0726687fb8cfc, type: 3}
   firePoint: {fileID: 5424596168541846726}
@@ -223,6 +224,7 @@ MonoBehaviour:
   dashDuration: 0.5
   shootIntervalDecrease: 0.05
   minShootInterval: 0.5
+  dashForce: 20
 --- !u!212 &7399826994074749195
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -437,4 +439,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.69
+  m_Radius: 0.4791485

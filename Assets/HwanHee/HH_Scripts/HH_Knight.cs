@@ -275,6 +275,7 @@ public class HH_Knight : Player
 
     public override void TakeDamage(int dmg)
     {
+        base.TakeDamage(dmg);
         if (state == KnightState.Defend || state == KnightState.Death)
             return;
 

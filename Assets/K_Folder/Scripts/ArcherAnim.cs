@@ -99,6 +99,8 @@ public class ArcherAnim : Player
 
     public override void TakeDamage(int dmg)
     {
+        base.TakeDamage(dmg);
+
         Hp -= dmg;
         animator.SetTrigger("isDamaged");
 
