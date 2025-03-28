@@ -79,6 +79,7 @@ public class BossAI : MonoBehaviour
 
         if (currentHP <= 0 && !isDead)
         {
+            currentHP = 0;
             Die();
             return;
         }
