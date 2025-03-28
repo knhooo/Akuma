@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class HH_Knight : Player
@@ -76,6 +77,10 @@ public class HH_Knight : Player
             case KnightState.Attack:
                 StateAttack();
                 break;
+            case KnightState.Skill:
+            case KnightState.Roll:
+                stateFunction();
+                break;
             case KnightState.Defend:
                 Defend();
                 break;
@@ -127,11 +132,11 @@ public class HH_Knight : Player
                 skillCoolTimer = 0f;
                 skill.SetActive(true);
                 skillSound.Play();
-                attack += skillDamage;
 
                 state = KnightState.Skill;
                 anim.SetBool("Attack", false);
                 anim.SetBool("Skill", true);
+                return;
             }
         }
         else if (skillCoolTimer < skillCoolTime && !canUseSkill)
@@ -149,10 +154,11 @@ public class HH_Knight : Player
                 shieldCoroutine = StartCoroutine(SetShieldAlpha());
                 shield.SetActive(true);
                 SetAlpha(1f);
-                    
+
                 state = KnightState.Defend;
                 anim.SetBool("Attack", false);
                 anim.SetBool("Defend", true);
+                return;
             }
         }
         else if (defendCoolTimer < defendCoolTime && !canUseDefend)
@@ -176,6 +182,7 @@ public class HH_Knight : Player
                 state = KnightState.Roll;
                 anim.SetBool("Attack", false);
                 anim.SetBool("Roll", true);
+                return;
             }
         }
         else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -195,6 +202,20 @@ public class HH_Knight : Player
 
             state = KnightState.Attack;
             anim.SetBool("Defend", false);
+            anim.SetBool("Attack", true);
+        }
+    }
+
+    void stateFunction()
+    {
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.normalizedTime >= 1.0f && !anim.IsInTransition(0))
+        {
+            state = KnightState.Attack;
+
+            anim.SetBool("Defend", false);
+            anim.SetBool("Skill", false);
+            anim.SetBool("Roll", false);
             anim.SetBool("Attack", true);
         }
     }
@@ -241,7 +262,7 @@ public class HH_Knight : Player
         yield return new WaitForSeconds(0.1f);
 
         spriteRenderer.GetPropertyBlock(mpb);
-        mpb.SetColor("_Color", Color.white); 
+        mpb.SetColor("_Color", Color.white);
         spriteRenderer.SetPropertyBlock(mpb);
     }
 
@@ -311,11 +332,16 @@ public class HH_Knight : Player
 
     void AnimationStop() { anim.speed = 0f; }
 
+    void SkillStart()
+    {
+        attack += skillDamage;
+    }
+
     void SkillOver()
     {
         state = KnightState.Attack;
         anim.SetBool("Skill", false);
-        anim.SetBool("Attack", true); 
+        anim.SetBool("Attack", true);
         skill.SetActive(false);
         attack -= skillDamage;
     }
