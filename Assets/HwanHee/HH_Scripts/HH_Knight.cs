@@ -36,7 +36,6 @@ public class HH_Knight : Player
     KnightState state = KnightState.Attack;
 
     bool canUseDefend = true;
-    bool GodMode = false;
 
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -61,21 +60,15 @@ public class HH_Knight : Player
         circleCol = GetComponent<CircleCollider2D>();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (state == KnightState.Death)
         {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.H) && GodMode)
-            GodMode = false;
-
-        else if (Input.GetKeyDown(KeyCode.H) && !GodMode)
-        {
-            hp = maxHp;
-            GodMode = true;
-        }
 
         if (state != KnightState.Skill)
             skillCoolTimer += Time.deltaTime;
@@ -111,7 +104,7 @@ public class HH_Knight : Player
         Vector3 moveDir = new Vector3(inputVec.x, inputVec.y, 0).normalized;
         transform.Translate(moveDir * speed * Time.fixedDeltaTime);
 
-        if(state == KnightState.Roll)
+        if (state == KnightState.Roll)
             rigid.constraints = RigidbodyConstraints2D.None;
         if (state != KnightState.Roll)
             rigid.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
@@ -276,6 +269,7 @@ public class HH_Knight : Player
     public override void TakeDamage(int dmg)
     {
         base.TakeDamage(dmg);
+
         if (state == KnightState.Defend || state == KnightState.Death)
             return;
 

@@ -101,7 +101,9 @@ public class ArcherAnim : Player
     {
         base.TakeDamage(dmg);
 
-        Hp -= dmg;
+        if (!GodMode)
+            Hp -= dmg;
+
         animator.SetTrigger("isDamaged");
 
         if (Hp <= 0)
@@ -131,11 +133,11 @@ public class ArcherAnim : Player
 
     Transform FindClosestMonster()
     {
-        
+
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
         GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
 
-        
+
         GameObject[] allEnemies = new GameObject[monsters.Length + bosses.Length];
         monsters.CopyTo(allEnemies, 0);
         bosses.CopyTo(allEnemies, monsters.Length);
