@@ -338,8 +338,6 @@ public class HH_Knight : Player
     }
 
 
-    
-
     // 애니메이션 이벤트용 함수
     void ActivateSword()
     {
