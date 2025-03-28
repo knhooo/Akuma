@@ -53,6 +53,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     protected GameObject logPrefab;
 
+    protected bool GodMode = false;
+
+    protected virtual void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H) && GodMode)
+            GodMode = false;
+
+        else if (Input.GetKeyDown(KeyCode.H) && !GodMode)
+        {
+            hp = maxHp;
+            GodMode = true;
+        }
+    }
+
     public virtual void TakeDamage(int dmg)
     {
         //·Î±× ¶ç¿ì±â

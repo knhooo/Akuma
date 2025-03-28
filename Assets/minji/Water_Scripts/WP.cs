@@ -33,9 +33,9 @@ public class WP : Player //물마법사 스크립트
 
     void Update()
     {
-        if(!ani.GetBool("surf"))
+        if (!ani.GetBool("surf"))
         {
-            wspeed=speed;
+            wspeed = speed;
             if (dashCoolTimer < dashCoolTime) dashCoolTimer += Time.deltaTime;
             if (dashCoolTimer >= dashCoolTime) canUseDash = false;
 
@@ -66,8 +66,8 @@ public class WP : Player //물마법사 스크립트
         float moveY = speed * Time.deltaTime * Input.GetAxis("Vertical");
 
         //상하이동
-         if (Input.GetAxis("Vertical") <= -0.2&& Input.GetAxis("Horizontal") <= -0.1) //아래, 왼쪽
-         {
+        if (Input.GetAxis("Vertical") <= -0.2 && Input.GetAxis("Horizontal") <= -0.1) //아래, 왼쪽
+        {
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
 
@@ -80,7 +80,7 @@ public class WP : Player //물마법사 스크립트
                     wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed +=2f;
+                    speed += 2f;
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
@@ -200,7 +200,7 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("atk2", false);
             }
         }
-        else if (Input.GetAxis("Vertical") >=0.2 && Input.GetAxis("Horizontal") <= -0.1) //위, 왼
+        else if (Input.GetAxis("Vertical") >= 0.2 && Input.GetAxis("Horizontal") <= -0.1) //위, 왼
         {
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
@@ -214,7 +214,7 @@ public class WP : Player //물마법사 스크립트
                     wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed +=2f;
+                    speed += 2f;
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
@@ -335,7 +335,7 @@ public class WP : Player //물마법사 스크립트
         }
 
         //좌우 이동
-        if (Input.GetAxis("Horizontal") <= -0.2 && Input.GetAxis("Vertical") ==0) //왼쪽으로 이동할 때
+        if (Input.GetAxis("Horizontal") <= -0.2 && Input.GetAxis("Vertical") == 0) //왼쪽으로 이동할 때
         {
             ani.SetBool("walk", true); //walk 모션 활성
             transform.localScale = new Vector3(-1f, 1f, 1f); //캐릭터 좌우반전
@@ -349,7 +349,7 @@ public class WP : Player //물마법사 스크립트
                     wSoundManager.instance.surfS();
                     canUseDash = false;
                     dashCoolTimer = 0f;
-                    speed +=2f;
+                    speed += 2f;
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
@@ -357,7 +357,7 @@ public class WP : Player //물마법사 스크립트
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
                     canUseDash = true;
             }
-            else if(Input.GetKeyUp(KeyCode.LeftShift))
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 speed = wspeed;
                 wSoundManager.instance.surfEnd();
@@ -473,7 +473,7 @@ public class WP : Player //물마법사 스크립트
 
 
         }
-        else if (Input.GetAxis("Horizontal") == 0.0f&& Input.GetAxis("Vertical") == 0.0f) //멈춰있을 때
+        else if (Input.GetAxis("Horizontal") == 0.0f && Input.GetAxis("Vertical") == 0.0f) //멈춰있을 때
         {
             ani.SetBool("walk", false); //걷는 모션 비활성화
 
@@ -537,7 +537,7 @@ public class WP : Player //물마법사 스크립트
             }
         }
 
-        if (Input.GetAxis("Vertical") <= -0.1f && Input.GetAxis("Horizontal") ==0.0f) //아래로만
+        if (Input.GetAxis("Vertical") <= -0.1f && Input.GetAxis("Horizontal") == 0.0f) //아래로만
         {
             ani.SetBool("walk", true); //walk 모션 활성
 
@@ -698,7 +698,8 @@ public class WP : Player //물마법사 스크립트
     {
         base.TakeDamage(dmg);
 
-        hp -= dmg;
+        if (!GodMode)
+            hp -= dmg;
         Instantiate(wExposion, transform.position, Quaternion.identity);
     }
 
