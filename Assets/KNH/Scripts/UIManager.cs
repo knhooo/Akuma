@@ -25,8 +25,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] finalLevel;//달성 레벨
     [SerializeField] TextMeshProUGUI[] enemyCount;//처치한 적 수
 
+    [Header("기타")]
     [SerializeField] GameObject Timer;//시계
     [SerializeField] GameObject spawner;//스포너
+    [SerializeField] GameObject PauseUI;//일시정지UI
 
     void Start()
     {
@@ -82,6 +84,15 @@ public class UIManager : MonoBehaviour
                 curLevel = player.Level;
                 AugmentUI.SetActive(true);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.instance.isTimeStop = true;//시간 정지
+            PauseUI.SetActive(true);
+        }
+        if(PauseUI.activeSelf == true && GameManager.instance.isTimeStop == false)
+        {
+            PauseUI.SetActive(false);
         }
     }
 
