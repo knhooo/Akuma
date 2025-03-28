@@ -31,8 +31,10 @@ public class WP : Player //물마법사 스크립트
     }
 
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (!ani.GetBool("surf"))
         {
             wspeed = speed;

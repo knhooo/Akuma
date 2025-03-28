@@ -104,12 +104,6 @@ public class HH_Knight : Player
         Vector3 moveDir = new Vector3(inputVec.x, inputVec.y, 0).normalized;
         transform.Translate(moveDir * speed * Time.fixedDeltaTime);
 
-        if (state == KnightState.Roll)
-            rigid.constraints = RigidbodyConstraints2D.None;
-        if (state != KnightState.Roll)
-            rigid.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
-
-
         //Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         //rigid.MovePosition(rigid.position + nextVec);
     }

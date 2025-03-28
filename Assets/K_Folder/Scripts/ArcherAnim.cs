@@ -54,8 +54,10 @@ public class ArcherAnim : Player
             laserHitBox.SetActive(false);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         HandleMovement();
 
         if (exp >= maxExp)
