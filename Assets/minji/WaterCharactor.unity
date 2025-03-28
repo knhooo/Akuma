@@ -600,6 +600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterP
       objectReference: {fileID: 0}
+    - target: {fileID: 4980792436896926943, guid: 48b54f4ee54443b4b8dc184bc756823f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
