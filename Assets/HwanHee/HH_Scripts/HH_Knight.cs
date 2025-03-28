@@ -40,6 +40,7 @@ public class HH_Knight : Player
     SpriteRenderer spriteRenderer;
     Animator anim;
     Rigidbody2D rigid;
+    CircleCollider2D circleCol;
 
     Coroutine shieldCoroutine;
     Vector2 inputVec;
@@ -56,6 +57,7 @@ public class HH_Knight : Player
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        circleCol = GetComponent<CircleCollider2D>();
     }
 
     void Update()
@@ -176,6 +178,7 @@ public class HH_Knight : Player
                 dashCoolTimer = 0f;
                 speed += speedBoost;
 
+                circleCol.isTrigger = true;
                 sword_left.SetActive(false);
                 sword_right.SetActive(false);
 
@@ -325,6 +328,7 @@ public class HH_Knight : Player
     void RollOver()
     {
         speed -= speedBoost;
+        circleCol.isTrigger = false;
 
         state = KnightState.Attack;
         anim.SetBool("Roll", false);

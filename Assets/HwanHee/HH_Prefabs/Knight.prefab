@@ -327,6 +327,8 @@ MonoBehaviour:
   skillCoolTime: 5
   dashCoolTime: 5
   enemyCount: 0
+  isSkillClick: 0
+  isDashClick: 0
   skill: {fileID: 6437888885386387913}
   sword_right: {fileID: 563614996355844578}
   sword_left: {fileID: 6763246700006428421}
@@ -382,7 +384,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: cc6432d2f7bb79143a5e18760d87b75d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
