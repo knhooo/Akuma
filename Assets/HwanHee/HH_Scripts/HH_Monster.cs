@@ -24,6 +24,10 @@ public class HH_Monster : MonoBehaviour
     protected enum State { Idle, Run, Attack, TakeHit, Death }
     protected State state = State.Run;
 
+    public int MaxHp { get { return maxHp; } }
+    public int Hp { get { return hp; } }
+
+
     protected Rigidbody2D rigid;
     protected SpriteRenderer spriteRenderer;
     protected Animator anim;
