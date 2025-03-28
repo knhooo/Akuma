@@ -62,6 +62,9 @@ public class HH_Knight : Player
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.H))
+            hp = MaxHp;
+
         if (state == KnightState.Death)
         {
             return;
