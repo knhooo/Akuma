@@ -58006,8 +58006,8 @@ MonoBehaviour:
   hpBar: {fileID: 776665061}
   expBar: {fileID: 2122726361}
   levelText: {fileID: 1161471763}
-  bossUI: {fileID: 0}
-  bossHpBar: {fileID: 0}
+  bossUI: {fileID: 1513651133}
+  bossHpBar: {fileID: 1251237148}
   gameOverUI: {fileID: 559671227}
   gameClearUI: {fileID: 1889760844}
   AugmentUI: {fileID: 2114443591}
