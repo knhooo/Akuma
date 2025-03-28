@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5532331025948358953}
   - component: {fileID: 2739051673636392190}
   - component: {fileID: 8823207571302759812}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WaterP
   m_TagString: Player
   m_Icon: {fileID: 0}

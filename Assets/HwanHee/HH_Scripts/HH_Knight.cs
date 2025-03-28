@@ -5,6 +5,8 @@ using UnityEngine;
 public class HH_Knight : Player
 {
     [SerializeField]
+    float dashForce = 15f;
+    [SerializeField]
     GameObject skill;
     [SerializeField]
     GameObject sword_right;
@@ -16,8 +18,6 @@ public class HH_Knight : Player
     float defendTime = 3.0f;
     [SerializeField]
     float defendCoolTime = 5.0f;
-    [SerializeField]
-    float speedBoost = 2f;
     [SerializeField]
     GameObject blood;
     [SerializeField]
@@ -108,8 +108,11 @@ public class HH_Knight : Player
             return;
         }
 
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+        Vector3 moveDir = new Vector3(inputVec.x, inputVec.y, 0).normalized;
+        transform.Translate(moveDir * speed * Time.fixedDeltaTime);
+
+        //Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+        //rigid.MovePosition(rigid.position + nextVec);
     }
 
     void LateUpdate()
@@ -164,6 +167,9 @@ public class HH_Knight : Player
                 if (shieldCoroutine != null)
                     StopCoroutine(shieldCoroutine);
                 shieldCoroutine = StartCoroutine(SetShieldAlpha());
+
+                sword_left.SetActive(false);
+                sword_right.SetActive(false);
                 shield.SetActive(true);
                 SetAlpha(1f);
 
@@ -186,11 +192,12 @@ public class HH_Knight : Player
 
                 canUseDash = false;
                 dashCoolTimer = 0f;
-                speed += speedBoost;
 
                 circleCol.isTrigger = true;
                 sword_left.SetActive(false);
                 sword_right.SetActive(false);
+
+                Roll();
 
                 state = KnightState.Roll;
                 anim.SetBool("Attack", false);
@@ -231,6 +238,19 @@ public class HH_Knight : Player
             anim.SetBool("Roll", false);
             anim.SetBool("Attack", true);
         }
+    }
+
+    void Roll()
+    {
+        Vector3 rollDir = Vector3.zero;
+        if (dir == Dir.left)
+            rollDir = Vector3.left;
+        else if (dir == Dir.right)
+            rollDir = Vector3.right;
+
+        rigid.linearDamping= 0f;
+        rigid.linearVelocity = Vector2.zero;
+        rigid.AddForce(rollDir * dashForce, ForceMode2D.Impulse);
     }
 
     void HandleKnightInput()
@@ -317,6 +337,7 @@ public class HH_Knight : Player
         maxExp += levelUpExp;
     }
 
+
     // 애니메이션 이벤트용 함수
     void ActivateSword()
     {
@@ -339,12 +360,12 @@ public class HH_Knight : Player
 
     void RollOver()
     {
-        speed -= speedBoost;
         circleCol.isTrigger = false;
 
         state = KnightState.Attack;
         anim.SetBool("Roll", false);
         anim.SetBool("Attack", true);
+        rigid.linearDamping = 50f;
     }
 
     void AnimationStop() { anim.speed = 0f; }

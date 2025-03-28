@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4509890244571868551}
   - component: {fileID: 3732157889193831702}
   - component: {fileID: -4191726782020821801}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Flyingeye
   m_TagString: Monster
   m_Icon: {fileID: 0}
