@@ -77,7 +77,6 @@ public class BossAI : MonoBehaviour
     {
         if (isDead) return;
 
-        // 체력이 0 이하이면 죽음
         if (currentHP <= 0 && !isDead)
         {
             Die();
@@ -100,15 +99,7 @@ public class BossAI : MonoBehaviour
 
     private void HandleAttack(float distanceToPlayer)
     {
-        // 체력에 따라 공격 쿨다운 조정
-        if (currentHP <= maxHP * 0.6f)
-        {
-            attackCooldown = 1.5f; // 체력이 60% 이하일 때 공격 쿨다운을 1.5초로 줄임
-        }
-        else
-        {
-            attackCooldown = 2f; // 기본 공격 쿨다운
-        }
+        attackCooldown = currentHP <= maxHP * 0.6f ? 1.5f : 2f;
 
         if (distanceToPlayer <= attackRange && Time.time - lastAttackTime >= attackCooldown)
         {

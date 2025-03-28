@@ -23,12 +23,11 @@ public class GameManager : MonoBehaviour
     [Range(0, 10)] public float gameSpeed = 1f;
 
     public GameObject Player { get { return player; } }
-    
+
     [SerializeField]
     AudioSource audioSource;
     [SerializeField]
     private AudioClip bossClip;
-    bool isBGMChange = false;
     float timer = 0f;
 
     //플레이어의 직업을 설정하는 메서드
@@ -76,9 +75,8 @@ public class GameManager : MonoBehaviour
         }
 
         timer += Time.deltaTime;
-        if (timer > 10f && !isBGMChange)
+        if (timer > 300f && audioSource.clip != bossClip)
         {
-            isBGMChange = true;
             audioSource.Stop();
             audioSource.clip = bossClip;
             audioSource.Play();
