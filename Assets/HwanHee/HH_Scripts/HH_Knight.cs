@@ -36,10 +36,12 @@ public class HH_Knight : Player
     KnightState state = KnightState.Attack;
 
     bool canUseDefend = true;
+    bool GodMode = false;
 
     SpriteRenderer spriteRenderer;
     Animator anim;
     Rigidbody2D rigid;
+    CircleCollider2D circleCol;
 
     Coroutine shieldCoroutine;
     Vector2 inputVec;
@@ -56,6 +58,7 @@ public class HH_Knight : Player
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        circleCol = GetComponent<CircleCollider2D>();
     }
 
     void Update()
@@ -63,6 +66,15 @@ public class HH_Knight : Player
         if (state == KnightState.Death)
         {
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.H) && GodMode)
+            GodMode = false;
+
+        else if (Input.GetKeyDown(KeyCode.H) && !GodMode)
+        {
+            hp = maxHp;
+            GodMode = true;
         }
 
         if (state != KnightState.Skill)
@@ -176,6 +188,7 @@ public class HH_Knight : Player
                 dashCoolTimer = 0f;
                 speed += speedBoost;
 
+                circleCol.isTrigger = true;
                 sword_left.SetActive(false);
                 sword_right.SetActive(false);
 
@@ -239,7 +252,9 @@ public class HH_Knight : Player
         if (state == KnightState.Defend || state == KnightState.Death)
             return;
 
-        hp -= dmg;
+        if (!GodMode)
+            hp -= dmg;
+
         if (hp <= 0)
         {
             hp = 0;
@@ -325,6 +340,7 @@ public class HH_Knight : Player
     void RollOver()
     {
         speed -= speedBoost;
+        circleCol.isTrigger = false;
 
         state = KnightState.Attack;
         anim.SetBool("Roll", false);

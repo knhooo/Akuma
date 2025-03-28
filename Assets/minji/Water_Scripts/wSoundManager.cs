@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class wSoundManager : MonoBehaviour
 {
 
@@ -9,6 +9,7 @@ public class wSoundManager : MonoBehaviour
     public AudioClip twp;
     public AudioClip pw;
     public AudioClip tw;
+    public AudioClip s;
 
 
     private void Awake()
@@ -26,6 +27,7 @@ public class wSoundManager : MonoBehaviour
 
     public void pWater()
     {
+        myAudio.loop = false;
         myAudio.PlayOneShot(pw);
     }
 
@@ -44,9 +46,29 @@ public class wSoundManager : MonoBehaviour
     {
         myAudio.PlayOneShot(twp);
     }
-
-    void Update()
+    public void surfS()
     {
+        myAudio.loop = true;
+        myAudio.PlayOneShot(s);
+    }
 
+    public void surfEnd()
+    {
+        StartCoroutine(FadeOut(myAudio,1f));
+    }
+
+    IEnumerator FadeOut(AudioSource audioSource, float duration)
+    {
+        float startVolume = audioSource.volume;
+        myAudio.loop = false;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / duration;
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume; // 볼륨 초기화
     }
 }
