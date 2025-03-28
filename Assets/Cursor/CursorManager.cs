@@ -4,16 +4,16 @@ using UnityEngine.EventSystems;
 
 public class CursorManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Sprite basicCursor;    // 기본 커서 스프라이트
-    public Sprite gameCursor;     // 메인게임 커서 스프라이트
-    public Sprite buttonCursor;   // 버튼 커서 스프라이트
+    public Sprite basicCursor;      // 기본 커서 스프라이트
+    public Sprite gameCursor;       // 게임 커서 스프라이트
+    public Sprite buttonCursor;     // 버튼 커서 스프라이트
 
     private Texture2D basicTexture;
     private Texture2D gameTexture;
     private Texture2D buttonTexture;
 
-    private Texture2D currentCursor; // 현재 커서 추적
-    private bool isOnButton = false; // 버튼 위 확인
+    private Texture2D currentCursor;
+    private bool isOnButton = false; // 버튼 위에 있는지 확인하는 플래그
 
     void Start()
     {
@@ -22,61 +22,55 @@ public class CursorManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         gameTexture = SpriteToTexture(gameCursor);
         buttonTexture = SpriteToTexture(buttonCursor);
 
-        // 기본 커서로 설정
+        // 기본 커서로 초기화
         SetCursor(basicTexture);
     }
 
-    // 버튼 위로 마우스가 올라갔을 때
     public void OnPointerEnter(PointerEventData eventData)
     {
         isOnButton = true;
-        SetCursor(buttonTexture);
+        SetCursor(buttonTexture); // 버튼에 진입하면 버튼 커서로 변경
     }
 
-    // 버튼에서 마우스가 벗어났을 때
     public void OnPointerExit(PointerEventData eventData)
     {
         isOnButton = false;
-        UpdateCursor();
+        UpdateCursor(); // 버튼에서 나가면 상황에 맞는 커서로 변경
     }
 
     void Update()
     {
-        // 버튼 위에 있을 때는 씬 커서 변경 중지
+        // 버튼 위에 있으면 다른 로직 무시
         if (isOnButton) return;
 
-        // 씬에 따라 커서 변경
-        if (SceneManager.GetActiveScene().name == "MainGame"&& Time.timeScale == 1f)
+        // 씬과 게임 정지 여부에 따라 커서 변경
+        UpdateCursor();
+    }
+
+    private void UpdateCursor()
+    {
+        // MainGame 씬에서 게임이 진행 중이면 gameCursor 사용
+        if (SceneManager.GetActiveScene().name == "MainGame" && Time.timeScale == 1f)
         {
             SetCursor(gameTexture);
         }
-        else if(Time.timeScale == 0f || SceneManager.GetActiveScene().name != "MainGame")
+        else
         {
-            SetCursor(basicTexture);
+            SetCursor(basicTexture); // 그 외에는 기본 커서 사용
         }
     }
 
     private void SetCursor(Texture2D newCursor)
     {
-        if (currentCursor == newCursor) return; // 중복 호출 방지
+        // 동일한 커서로의 중복 변경 방지
+        if (currentCursor == newCursor) return;
+
         Cursor.SetCursor(newCursor, Vector2.zero, CursorMode.Auto);
-        currentCursor = newCursor;
+        currentCursor = newCursor; // 현재 커서 업데이트
     }
 
-    private void UpdateCursor()
-    {
-        if (SceneManager.GetActiveScene().name == "MainGame"&& Time.timeScale == 0f)
-        {
-            SetCursor(gameTexture);
-        }
-        else if (Time.timeScale == 1f || SceneManager.GetActiveScene().name != "MainGame")
-        {
-            SetCursor(basicTexture);
-        }
-    }
-
-    // 스프라이트 → Texture2D 변환
-    Texture2D SpriteToTexture(Sprite sprite)
+    // 스프라이트를 Texture2D로 변환하는 유틸리티 함수
+    private Texture2D SpriteToTexture(Sprite sprite)
     {
         Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height, TextureFormat.RGBA32, false);
         Color[] pixels = sprite.texture.GetPixels((int)sprite.rect.x, (int)sprite.rect.y,
