@@ -1,22 +1,45 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class HH_CameraShake : MonoBehaviour
 {
-    public static HH_CameraShake instance;
-    private CinemachineImpulseSource impulseSource;
+    [SerializeField]
+    private float shakeTime;
+    [SerializeField]
+    private float shakeIntensity;
+    private float bossTimer;
 
-    void Start()
+    bool isCameraShake = false;
+    private void Update()
     {
-        instance = this;
-        impulseSource = GetComponent<CinemachineImpulseSource>();
+        bossTimer += Time.deltaTime;
+        if (bossTimer >= 300f && !isCameraShake)
+        {
+            isCameraShake = true;
+            OnShakeCamera(0.75f, 0.5f);
+        }
     }
 
-    public void CameraShakeShow()
+    public void OnShakeCamera(float _shakeTime = 1f, float _shakeIntensity = 0.1f)
     {
-        if (impulseSource != null)
+        shakeTime = _shakeTime;
+        shakeIntensity = _shakeIntensity;
+
+        StopCoroutine(ShakeByPosition());
+        StartCoroutine(ShakeByPosition());
+    }
+
+    IEnumerator ShakeByPosition()
+    {
+        Vector3 startPos = transform.position;
+        while (shakeTime > 0f)
         {
-            impulseSource.GenerateImpulse();
+            transform.position = startPos + Random.insideUnitSphere * shakeIntensity;
+            shakeTime -= Time.deltaTime;
+            yield return null;
         }
+        transform.position = startPos;
     }
 }
