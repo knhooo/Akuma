@@ -7,16 +7,15 @@ public class ArcherAnim : Player
     private Animator animator;
     private Rigidbody2D rb;
 
-    public GameObject hitEffectPrefab; // �ǰ� ����Ʈ
+    public GameObject hitEffectPrefab;
     public GameObject arrowPrefab;
     public Transform firePoint;
     public float arrowSpeed = 10f;
-    public float shootInterval = 2f;
+    public float shootInterval = 1f;
 
     public AudioClip shootSound;
     public AudioClip skillSound;
-    private AudioSource audioSource; 
-    
+    private AudioSource audioSource;
 
     private bool canDash = true;
     private bool canSkill = true;
@@ -24,9 +23,13 @@ public class ArcherAnim : Player
 
     [SerializeField] private int skillAttackBoost = 20;
     [SerializeField] private float skillDuration = 1f;
-    [SerializeField] private float skillSoundDelay = 0.2f;
+    [SerializeField] private float skillSoundDelay = 0.3f;
     [SerializeField] private int levelUpExp = 10;
     [SerializeField] private GameObject laserHitBox;
+    [SerializeField] private float dashSpeedMultiplier = 1.5f;
+    [SerializeField] private float dashDuration = 0.5f;
+    [SerializeField] private float shootIntervalDecrease = 0.05f;
+    [SerializeField] private float minShootInterval = 0.5f;
 
     void Awake()
     {
@@ -42,6 +45,8 @@ public class ArcherAnim : Player
     {
         rb.gravityScale = 0;
         StartCoroutine(AutoShoot());
+        if (laserHitBox != null)
+            laserHitBox.SetActive(false);
     }
 
     void Update()
@@ -90,10 +95,8 @@ public class ArcherAnim : Player
     public override void TakeDamage(int dmg)
     {
         hp -= dmg;
-        // �ǰ� �ִϸ��̼�
-        animator.SetTrigger("isTakeDamage");
+        animator.SetTrigger("isDamaged");
 
-        // �׾��� ��
         if (hp <= 0)
         {
             animator.SetTrigger("isDeath");
@@ -166,7 +169,12 @@ public class ArcherAnim : Player
         isPerformingSkill = true;
         dashCoolTimer = 0f;
 
-        yield return new WaitForSeconds(0.5f);
+        float originalSpeed = speed;
+        speed *= dashSpeedMultiplier;
+
+        yield return new WaitForSeconds(dashDuration);
+
+        speed = originalSpeed;
         isPerformingSkill = false;
 
         while (dashCoolTimer < dashCoolTime)
@@ -193,15 +201,13 @@ public class ArcherAnim : Player
 
         if (laserHitBox != null)
         {
-            laserHitBox.SetActive(false); // ���� ����
-            laserHitBox.SetActive(true);  // �ٽ� �Ѽ� OnTriggerEnter2D ����
+            laserHitBox.SetActive(false);
+            laserHitBox.SetActive(true);
 
             LaserHitBox laser = laserHitBox.GetComponent<LaserHitBox>();
             if (laser != null)
                 laser.SetDamage(attack + skillAttackBoost);
         }
-
-
 
         yield return new WaitForSeconds(skillDuration);
 
@@ -233,5 +239,10 @@ public class ArcherAnim : Player
         level++;
         exp = maxExp - exp;
         maxExp += levelUpExp;
+
+        if (shootInterval > minShootInterval)
+        {
+            shootInterval = Mathf.Max(minShootInterval, shootInterval - shootIntervalDecrease);
+        }
     }
 }
