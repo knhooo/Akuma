@@ -237,4 +237,27 @@ public class HH_Monster : MonoBehaviour
     {
         isTakeHitOver = true;
     }
+
+    public void TakeDamageFromArrow(int dmg)
+    {
+        hp -= dmg;
+
+        // 로그 출력이나 데미지 표시
+        Vector3 vec = new Vector3(transform.position.x, transform.position.y + 1, 0);
+        GameObject log = Instantiate(logPrefab, vec, Quaternion.identity);
+        log.transform.SetParent(gameObject.transform);
+        log.GetComponent<LogText>().SetDmgLog(dmg);
+
+        if (hp <= 0)
+        {
+            Death();
+            return;
+        }
+
+        state = State.TakeHit;
+        anim.SetBool("Run", false);
+        anim.SetBool("Attack", false);
+        anim.SetBool("TakeHit", true);
+    }
+
 }

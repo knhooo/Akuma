@@ -7,14 +7,16 @@ public class ArcherAnim : Player
     private Animator animator;
     private Rigidbody2D rb;
 
+    public GameObject hitEffectPrefab; // �ǰ� ����Ʈ
     public GameObject arrowPrefab;
     public Transform firePoint;
     public float arrowSpeed = 10f;
     public float shootInterval = 2f;
 
     public AudioClip shootSound;
-    public AudioClip skillSound; // 스킬 사운드 추가
-    private AudioSource audioSource;
+    public AudioClip skillSound;
+    private AudioSource audioSource; 
+    
 
     private bool canDash = true;
     private bool canSkill = true;
@@ -53,13 +55,16 @@ public class ArcherAnim : Player
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isPerformingSkill)
         {
+            if (!isDashClick)
+                isDashClick = true;
             animator.SetTrigger("isDash");
             StartCoroutine(StartDashCooldown());
         }
 
         if (Input.GetMouseButtonDown(1) && canSkill && !isPerformingSkill)
         {
-
+            if (!isSkillClick)
+                isSkillClick = true;
             animator.SetTrigger("isLaser");
             StartCoroutine(StartSkillCooldown());
         }
@@ -80,6 +85,22 @@ public class ArcherAnim : Player
             transform.localScale = new Vector3(1, 1, 1);
         else if (moveX < 0)
             transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+    public override void TakeDamage(int dmg)
+    {
+        hp -= dmg;
+        // �ǰ� �ִϸ��̼�
+        animator.SetTrigger("isTakeDamage");
+
+        // �׾��� ��
+        if (hp <= 0)
+        {
+            animator.SetTrigger("isDeath");
+            StopAllCoroutines();
+            this.enabled = false;
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     IEnumerator AutoShoot()
@@ -170,9 +191,17 @@ public class ArcherAnim : Player
         if (skillSound != null && audioSource != null)
             audioSource.PlayOneShot(skillSound);
 
-        // 👉 레이저 판정 활성화
         if (laserHitBox != null)
-            laserHitBox.SetActive(true);
+        {
+            laserHitBox.SetActive(false); // ���� ����
+            laserHitBox.SetActive(true);  // �ٽ� �Ѽ� OnTriggerEnter2D ����
+
+            LaserHitBox laser = laserHitBox.GetComponent<LaserHitBox>();
+            if (laser != null)
+                laser.SetDamage(attack + skillAttackBoost);
+        }
+
+
 
         yield return new WaitForSeconds(skillDuration);
 
