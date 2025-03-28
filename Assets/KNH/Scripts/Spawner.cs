@@ -49,10 +49,10 @@ public class Spawner : MonoBehaviour
             spawnIndex = Random.Range(3, 5);
             frequency = 1f;
         }
-        else if (timer > 1)//보스
+        else if (timer >= 300)//보스
         {
             isSpawn = false;
-            if (bossCount >= 300)
+            if (bossCount < 1)
             {
                 // 랜덤한 방향 (0~360도)
                 float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
