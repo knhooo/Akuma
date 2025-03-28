@@ -681,7 +681,7 @@ public class WP : Player //물마법사 스크립트
 
     }
 
-    IEnumerator skill1() //10초 뒤 <임시로 정해둠. 첫번째 자동 스킬 발동
+    IEnumerator skill1() //자동 스킬 발동
     {
         while (true)
         {
