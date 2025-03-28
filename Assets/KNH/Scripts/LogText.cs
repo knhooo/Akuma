@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using Unity.Burst.Intrinsics;
 
 public class LogText : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class LogText : MonoBehaviour
     }
     public void SetHpLog(int amount)//체력 회복 아이템 획득시
     {
-        text.text = "<color=green>+"+amount+ "</color>";
+        text.text = "<color=green>+" + amount + "</color>";
     }
 
     public void SetDmgLog(int amount)//몬스터가 받는 데미지
@@ -38,8 +40,18 @@ public class LogText : MonoBehaviour
 
     private void Update()
     {
+        if (transform.parent != null)
+        {
+            HH_Monster mon = transform.parent.GetComponent<HH_Monster>();
+            if (mon != null && mon.isActiveAndEnabled && mon.MaxHp == mon.Hp)
+            {
+                Destroy(gameObject);
+            }
+        }
+
         time += Time.deltaTime;
         transform.localScale = transform.parent.localScale;
+
         if (time >= endTime)
         {
             Destroy(gameObject);
