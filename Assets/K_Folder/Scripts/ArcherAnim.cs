@@ -172,7 +172,14 @@ public class ArcherAnim : Player
         float originalSpeed = speed;
         speed *= dashSpeedMultiplier;
 
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.isTrigger = true;
+
         yield return new WaitForSeconds(dashDuration);
+
+        if (col != null)
+            col.isTrigger = false;
 
         speed = originalSpeed;
         isPerformingSkill = false;
