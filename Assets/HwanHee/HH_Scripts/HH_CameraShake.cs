@@ -42,6 +42,6 @@ public class HH_CameraShake : MonoBehaviour
             shakeTime -= Time.deltaTime;
             yield return null;
         }
-        transform.position = startPos;
+        transform.position = new Vector3(0f, 0f, startPos.z);
     }
 }
