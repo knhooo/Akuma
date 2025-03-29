@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,7 @@ public class HH_CameraShake : MonoBehaviour
     private float bossTimer;
 
     bool isCameraShake = false;
+
     private void Update()
     {
         bossTimer += Time.deltaTime;
