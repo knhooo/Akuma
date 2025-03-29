@@ -60,7 +60,7 @@ public class wSoundManager : MonoBehaviour
         if (!loopAudio.isPlaying) // 중복 실행 방지
         {
             loopAudio.clip = s;
-            loopAudio.volume = 1f; // 볼륨 초기화
+            loopAudio.volume = 0.1f; // 볼륨 초기화
             loopAudio.Play();
         }
     }
