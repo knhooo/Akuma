@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
             //플레이어 사망
             if (player.Hp <= 0)
             {
-               
+                GameManager.instance.pool.ClearAll();
             }
             //레벨업
             if (player.Level > curLevel)
