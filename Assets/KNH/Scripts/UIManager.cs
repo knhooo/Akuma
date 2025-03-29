@@ -57,9 +57,7 @@ public class UIManager : MonoBehaviour
             //보스 클리어
             if (boss.currentHP <= 0)
             {
-                GameManager.instance.isClear = true;
-                GameManager.instance.isBoss = false;
-                Invoke("SetClear", 1f);//1초 지연
+                
             }
         }
         if (player != null)
@@ -73,9 +71,7 @@ public class UIManager : MonoBehaviour
             //플레이어 사망
             if (player.Hp <= 0)
             {
-                GameManager.instance.isTimeStop = true;//시간 정지
-                gameOverUI.SetActive(true);//게임 오버 UI 활성화
-                SetUIText(0);
+               
             }
             //레벨업 증강
             if (player.Level > curLevel)
@@ -96,6 +92,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    //게임 오버
+    public void GameOver()
+    {
+        GameManager.instance.isTimeStop = true;//시간 정지
+        gameOverUI.SetActive(true);//게임 오버 UI 활성화
+        SetUIText(0);
+    }
+
+    //게임 클리어
+    public void GameClear()
+    {
+        GameManager.instance.isClear = true;
+        GameManager.instance.isBoss = false;
+        Invoke("SetClear", 1f);//1초 지연
+    }
+
+    public void SetClear()
+    {
+        bossUI.SetActive(false);
+        GameManager.instance.isTimeStop = true;//시간 정지
+        gameClearUI.SetActive(true);//게임 오버 UI 활성화
+        SetUIText(1);
+    }
     void SetUIText(int n)
     {
         //생존 시간
@@ -109,13 +128,5 @@ public class UIManager : MonoBehaviour
 
         //처치한 적
         enemyCount[n].text = "처치한 적: " + player.EnemyCount.ToString();
-    }
-
-    public void SetClear()
-    {
-        bossUI.SetActive(false);
-        GameManager.instance.isTimeStop = true;//시간 정지
-        gameClearUI.SetActive(true);//게임 오버 UI 활성화
-        SetUIText(1);
     }
 }

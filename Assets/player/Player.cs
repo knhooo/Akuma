@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     protected GameObject logPrefab;
 
+    private GameObject canvas;
+
     public bool GodMode = false;
 
     protected virtual void Update()
@@ -81,5 +83,11 @@ public class Player : MonoBehaviour
     public virtual void GetExperience(int ex)
     {
 
+    }
+
+    public void GameOver()
+    {
+        canvas = GameObject.Find("Canvas");
+        canvas.GetComponent<UIManager>().GameOver();
     }
 }
