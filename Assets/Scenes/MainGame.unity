@@ -58113,6 +58113,8 @@ MonoBehaviour:
   Timer: {fileID: 2123372402}
   spawner: {fileID: 0}
   PauseUI: {fileID: 314280973}
+  chest: {fileID: 2474102969078282357, guid: faf1b7db26d346942a686fdc0c2d1c33, type: 3}
+  effect: {fileID: 6541896461781754852, guid: 5a433ad3b08d28949b92ab478eaca81f, type: 3}
 --- !u!1 &1104837622
 GameObject:
   m_ObjectHideFlags: 0

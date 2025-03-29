@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject Timer;//시계
     [SerializeField] GameObject spawner;//스포너
     [SerializeField] GameObject PauseUI;//일시정지UI
+    [SerializeField] GameObject chest;//증강 상자
+    [SerializeField] GameObject effect;//레벨업 이펙트
 
     void Start()
     {
@@ -73,12 +75,13 @@ public class UIManager : MonoBehaviour
             {
                
             }
-            //레벨업 증강
+            //레벨업
             if (player.Level > curLevel)
-            {
-                GameManager.instance.isTimeStop = true;//시간 정지
+            { 
+                GameObject ob = Instantiate(effect, player.transform.position, Quaternion.identity);//이펙트 생성
+                Destroy(ob, 1f);
+                Instantiate(chest, player.transform.position, Quaternion.identity);//상자 생성
                 curLevel = player.Level;
-                AugmentUI.SetActive(true);
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -128,5 +131,11 @@ public class UIManager : MonoBehaviour
 
         //처치한 적
         enemyCount[n].text = "처치한 적: " + player.EnemyCount.ToString();
+    }
+
+    public void AugmentChest()
+    {
+        GameManager.instance.isTimeStop = true;//시간 정지
+        AugmentUI.SetActive(true);
     }
 }
