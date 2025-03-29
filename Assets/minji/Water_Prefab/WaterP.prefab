@@ -161,7 +161,7 @@ MonoBehaviour:
   level: 1
   exp: 0
   maxExp: 10
-  attack: 20
+  attack: 10
   speed: 2
   skillCoolTime: 5
   dashCoolTime: 7
