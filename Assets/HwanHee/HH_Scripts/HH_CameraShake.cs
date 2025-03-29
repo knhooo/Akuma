@@ -14,12 +14,21 @@ public class HH_CameraShake : MonoBehaviour
 
     bool isCameraShake = false;
 
+    GameObject player;
+    Vector3 startPos;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     private void Update()
     {
         bossTimer += Time.deltaTime;
         if (bossTimer >= 300f && !isCameraShake)
         {
             isCameraShake = true;
+            startPos = transform.position;
             OnShakeCamera(0.75f, 0.5f);
         }
     }
@@ -29,19 +38,18 @@ public class HH_CameraShake : MonoBehaviour
         shakeTime = _shakeTime;
         shakeIntensity = _shakeIntensity;
 
-        StopCoroutine(ShakeByPosition());
         StartCoroutine(ShakeByPosition());
     }
 
     IEnumerator ShakeByPosition()
     {
-        Vector3 startPos = transform.position;
         while (shakeTime > 0f)
         {
-            transform.position = startPos + Random.insideUnitSphere * shakeIntensity;
-            shakeTime -= Time.deltaTime;
+            Vector3 shakePos = new Vector3(player.transform.position.x, player.transform.position.y, startPos.z);
+            transform.position = shakePos + Random.insideUnitSphere * shakeIntensity;
+            shakeTime = Mathf.Max(shakeTime - Time.deltaTime, 0f);
             yield return null;
         }
-        transform.position = new Vector3(0f, 0f, startPos.z);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, startPos.z);
     }
 }
