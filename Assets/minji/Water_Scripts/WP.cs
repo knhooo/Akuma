@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class WP : Player //물마법사 스크립트
 {
@@ -16,6 +17,9 @@ public class WP : Player //물마법사 스크립트
     public GameObject waterbulletD; //물미사일 객체 선언
 
     public float wspeed;
+    public float surfing=1f;
+    public float surfingTime = 0f;
+    private bool isDashing=false;
 
     public Transform pos1 = null;
     public Transform pos2 = null;
@@ -37,6 +41,7 @@ public class WP : Player //물마법사 스크립트
         if (!ani.GetBool("surf"))
         {
             wspeed = speed;
+            surfing = 2f;
             if (dashCoolTimer < dashCoolTime) dashCoolTimer += Time.deltaTime;
             if (dashCoolTimer >= dashCoolTime) canUseDash = false;
 
@@ -46,6 +51,27 @@ public class WP : Player //물마법사 스크립트
             if (skillCoolTimer < skillCoolTime) skillCoolTimer += Time.deltaTime;
             if (skillCoolTimer >= skillCoolTime) canUseSkill = false;
 
+        }
+
+        //대쉬중일때
+        if (isDashing)
+        {
+            surfing -= Time.deltaTime;
+
+            // 대쉬 종료 조건
+            if (surfing <= 0)
+            {
+                isDashing = false;
+            }
+        }
+
+        //대쉬가 끝나면
+        if (!isDashing)
+        {
+            canUseDash = true;
+            speed = wspeed;
+            wSoundManager.instance.surfEnd();
+            ani.SetBool("surf", false);
         }
 
 
@@ -85,10 +111,15 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
-
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
                     canUseDash = true;
+               
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
@@ -97,6 +128,7 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
+
             if (Input.GetMouseButtonDown(0)) //아래로 이동하면서 마우스 왼쪽 버튼 누를 때
             {
                 wSoundManager.instance.pWater();
@@ -152,6 +184,11 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
 
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -164,6 +201,7 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
+
             if (Input.GetMouseButtonDown(0)) //아래로 이동하면서 마우스 왼쪽 버튼 누를 때
             {
                 wSoundManager.instance.pWater();
@@ -219,6 +257,11 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
 
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -231,6 +274,7 @@ public class WP : Player //물마법사 스크립트
                 ani.SetBool("walk", true);
                 ani.SetBool("surf", false);
             }
+
             if (Input.GetMouseButtonDown(0)) //올라가면서 마우스 왼쪽 버튼 누를 때
             {
                 wSoundManager.instance.pWater();
@@ -285,6 +329,11 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
 
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -354,6 +403,13 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
+
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
+
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
                     canUseDash = true;
@@ -422,6 +478,12 @@ public class WP : Player //물마법사 스크립트
 
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
+
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
 
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -555,6 +617,12 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
+
 
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -621,6 +689,12 @@ public class WP : Player //물마법사 스크립트
                     ani.SetBool("walk", false);
                     ani.SetBool("surf", true);
 
+                    if (!isDashing)
+                    {
+                        isDashing = true;
+                        surfingTime = surfing; // 대쉬 시간 초기화
+                    }
+
 
                 }
                 else if (dashCoolTimer < dashCoolTime && !canUseDash)
@@ -677,6 +751,7 @@ public class WP : Player //물마법사 스크립트
 
         if (hp <= 0)
         {
+            hp = 0;
             ani.SetBool("death", true);
         }
 
