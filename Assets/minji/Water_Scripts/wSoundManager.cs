@@ -1,70 +1,85 @@
 using UnityEngine;
 using System.Collections;
+
 public class wSoundManager : MonoBehaviour
 {
-
     public static wSoundManager instance;
-    AudioSource myAudio;
+    private AudioSource wAudio;       // 단발 사운드 전용 AudioSource
+    private AudioSource loopAudio;    // 반복 사운드 전용 AudioSource
+
     public AudioClip pwp;
     public AudioClip twp;
     public AudioClip pw;
     public AudioClip tw;
     public AudioClip s;
 
+    private Coroutine fadeCoroutine; // 현재 실행 중인 페이드 아웃 코루틴 추적
 
     private void Awake()
     {
-        if (wSoundManager.instance == null)
+        if (instance == null)
         {
-            wSoundManager.instance = this;
+            instance = this;
         }
     }
 
-    void Start()
+    private void Start()
     {
-        myAudio = GetComponent<AudioSource>();
+        // 단발성 재생용 AudioSource
+        wAudio = gameObject.AddComponent<AudioSource>();
+
+        // 반복 재생용 AudioSource
+        loopAudio = gameObject.AddComponent<AudioSource>();
+        loopAudio.loop = true; // 반복 재생 설정
     }
 
+    // 단발성 사운드 재생
     public void pWater()
     {
-        myAudio.loop = false;
-        myAudio.PlayOneShot(pw);
+        wAudio.PlayOneShot(pw);
     }
 
     public void tWater()
     {
-        myAudio.PlayOneShot(tw);
+        wAudio.PlayOneShot(tw);
     }
-
 
     public void pWaterP()
     {
-        myAudio.PlayOneShot(pwp);
+        wAudio.PlayOneShot(pwp);
     }
 
     public void tWaterP()
     {
-        myAudio.PlayOneShot(twp);
+        wAudio.PlayOneShot(twp);
     }
+
+    // 반복 사운드 시작 (surfS)
     public void surfS()
     {
-        myAudio.loop = true;
-        myAudio.PlayOneShot(s);
+        if (!loopAudio.isPlaying) // 중복 실행 방지
+        {
+            loopAudio.clip = s;
+            loopAudio.volume = 1f; // 볼륨 초기화
+            loopAudio.Play();
+        }
     }
 
+    // 반복 사운드 종료 (페이드 아웃)
     public void surfEnd()
     {
-        StartCoroutine(FadeOut(myAudio,1f));
+        if (fadeCoroutine != null) StopCoroutine(fadeCoroutine); // 기존 코루틴 중지
+        fadeCoroutine = StartCoroutine(FadeOut(loopAudio, 1f));
     }
 
+    // 오디오 서서히 끄기 (부드러운 페이드 아웃)
     IEnumerator FadeOut(AudioSource audioSource, float duration)
     {
         float startVolume = audioSource.volume;
-        myAudio.loop = false;
 
-        while (audioSource.volume > 0)
+        for (float t = 0; t < duration; t += Time.deltaTime)
         {
-            audioSource.volume -= startVolume * Time.deltaTime / duration;
+            audioSource.volume = Mathf.Lerp(startVolume, 0, t / duration);
             yield return null;
         }
 
