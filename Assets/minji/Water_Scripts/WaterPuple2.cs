@@ -15,7 +15,6 @@ public class WaterPuple2 : MonoBehaviour
 
         dir = mousePos - transform.position; //마우스로 클릭한 위치로 향하는 벡터 추출
         dirNo = dir.normalized; //마우스로 클릭한 위치 가리키는 방향
-        StartCoroutine(Waterpp());
     }
 
 
@@ -43,13 +42,6 @@ public class WaterPuple2 : MonoBehaviour
     //        Speed = 0; //즉시 정지
     //    }
     //}
-
-    IEnumerator Waterpp()
-    {
-        yield return new WaitForSeconds(2);
-        waterPstay();
-        Destroy(gameObject);
-    }
 
     public void waterPstay()
     {
@@ -89,6 +81,11 @@ public class WaterPuple2 : MonoBehaviour
             waterPstay();
             Destroy(gameObject);
         }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
 
