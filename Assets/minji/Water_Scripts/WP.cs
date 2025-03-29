@@ -41,7 +41,7 @@ public class WP : Player //물마법사 스크립트
         if (!ani.GetBool("surf"))
         {
             wspeed = speed;
-            surfing = 2f;
+            surfing = 1f;
             if (dashCoolTimer < dashCoolTime) dashCoolTimer += Time.deltaTime;
             if (dashCoolTimer >= dashCoolTime) canUseDash = false;
 
