@@ -101,9 +101,13 @@ public class HH_Knight : Player
             return;
         }
 
+        if (state != KnightState.Roll)
+        {
+            rigid.linearVelocity = Vector2.zero;
+        }
+
         Vector3 moveDir = new Vector3(inputVec.x, inputVec.y, 0).normalized;
         transform.Translate(moveDir * speed * Time.fixedDeltaTime);
-
 
         //Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         //rigid.MovePosition(rigid.position + nextVec);
@@ -281,7 +285,8 @@ public class HH_Knight : Player
         }
 
         StartCoroutine(TakeHitFlash());
-        Instantiate(blood, transform.position, Quaternion.Euler(0, 0, 0));
+        GameObject obj = Instantiate(blood, transform.position, Quaternion.Euler(0, 0, 0));
+        Destroy(obj, 0.6f);
     }
 
     protected IEnumerator TakeHitFlash()
