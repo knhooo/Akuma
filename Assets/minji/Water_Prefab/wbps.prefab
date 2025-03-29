@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9147108702225680647
+--- !u!1 &2725663770704909460
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1979127475377001293}
-  - component: {fileID: 107934061079873453}
-  - component: {fileID: 5236947190977488986}
-  - component: {fileID: 4296260106728321212}
-  - component: {fileID: 6254348786570799150}
+  - component: {fileID: 2307465479464890908}
+  - component: {fileID: 8329247056364172483}
+  - component: {fileID: 5159760137147353020}
+  - component: {fileID: 2075205976520251489}
   m_Layer: 0
-  m_Name: waterballP
+  m_Name: wbps
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1979127475377001293
+--- !u!4 &2307465479464890908
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147108702225680647}
+  m_GameObject: {fileID: 2725663770704909460}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.88, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &107934061079873453
+--- !u!212 &8329247056364172483
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147108702225680647}
+  m_GameObject: {fileID: 2725663770704909460}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -79,38 +78,38 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8559697829525461904, guid: 5b866f0125566054eaacc06c876fb1a2, type: 3}
+  m_Sprite: {fileID: -1133776332089168519, guid: dc61cee08fee4244aa3bfc911e41a3c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.06, y: 1.0742857}
+  m_Size: {x: 7.47, y: 7.37}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5236947190977488986
+--- !u!114 &5159760137147353020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147108702225680647}
+  m_GameObject: {fileID: 2725663770704909460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce64d98465ca0c94e88a0058bab97234, type: 3}
+  m_Script: {fileID: 11500000, guid: ea7102f6eb0c8174e8d268e5a4ac5961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 6
-  wps: {fileID: 2725663770704909460, guid: 043be913ee9e2fa40a955b9540962e85, type: 3}
---- !u!58 &4296260106728321212
+  Speed: 5
+  wbsmll: {fileID: 3691430360337855151, guid: 365ca37026b71964bb213431f4fe359e, type: 3}
+--- !u!58 &2075205976520251489
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147108702225680647}
+  m_GameObject: {fileID: 2725663770704909460}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -139,31 +138,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5371429
---- !u!50 &6254348786570799150
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147108702225680647}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 25
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Radius: 0.2334375
