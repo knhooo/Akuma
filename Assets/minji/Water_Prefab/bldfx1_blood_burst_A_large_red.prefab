@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2794204857766699247}
   - component: {fileID: 8147790963898768159}
   - component: {fileID: 7286575624689108024}
-  - component: {fileID: 6759076934604988972}
+  - component: {fileID: 7058791560735460182}
   m_Layer: 0
   m_Name: bldfx1_blood_burst_A_large_red
   m_TagString: Untagged
@@ -111,7 +111,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6759076934604988972
+--- !u!114 &7058791560735460182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
