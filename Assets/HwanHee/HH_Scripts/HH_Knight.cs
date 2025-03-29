@@ -180,7 +180,6 @@ public class HH_Knight : Player
         else if (defendCoolTimer < defendCoolTime && !canUseDefend)
             canUseDefend = true;
 
-
         if (dashCoolTimer >= dashCoolTime)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -268,10 +267,10 @@ public class HH_Knight : Player
 
     public override void TakeDamage(int dmg)
     {
-        base.TakeDamage(dmg);
-
         if (state == KnightState.Defend || state == KnightState.Death)
             return;
+
+        base.TakeDamage(dmg);
 
         if (!GodMode)
             hp -= dmg;
