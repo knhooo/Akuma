@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     protected float dashCoolTime = 5.0f;
     [SerializeField]
     protected int enemyCount = 0;
-    
+
     protected float dashCoolTimer = 0f;
     protected float skillCoolTimer = 0f;
 
@@ -68,11 +68,14 @@ public class Player : MonoBehaviour
 
     public virtual void TakeDamage(int dmg)
     {
-        //·Î±× ¶ç¿ì±â
-        Vector3 vec = new Vector3(transform.position.x, transform.position.y + 1, 0);
-        GameObject log = Instantiate(logPrefab, vec, Quaternion.identity);
-        log.transform.SetParent(transform);
-        log.GetComponent<LogText>().SetPlayerDmgLog(dmg);
+        if (!GodMode)
+        {
+            //·Î±× ¶ç¿ì±â
+            Vector3 vec = new Vector3(transform.position.x, transform.position.y + 1, 0);
+            GameObject log = Instantiate(logPrefab, vec, Quaternion.identity);
+            log.transform.SetParent(transform);
+            log.GetComponent<LogText>().SetPlayerDmgLog(dmg);
+        }
     }
 
     public virtual void GetExperience(int ex)
