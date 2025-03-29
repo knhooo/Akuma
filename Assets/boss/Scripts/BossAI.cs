@@ -400,4 +400,10 @@ public class BossAI : MonoBehaviour
             Destroy(redDot);
         }
     }
+
+    public void GameClear()
+    {
+        GameObject canvas = GameObject.Find("Canvas");
+        canvas.GetComponent<UIManager>().GameClear();
+    }
 }
