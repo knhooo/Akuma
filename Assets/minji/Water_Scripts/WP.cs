@@ -36,6 +36,9 @@ public class WP : Player //물마법사 스크립트
 
     protected override void Update()
     {
+        if (GameManager.instance.isAugementActive)
+            return;
+
         base.Update();
 
         if (!ani.GetBool("surf"))

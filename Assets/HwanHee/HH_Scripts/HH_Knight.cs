@@ -36,6 +36,7 @@ public class HH_Knight : Player
     KnightState state = KnightState.Attack;
 
     bool canUseDefend = true;
+    bool isSwordActive = false;
 
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -62,6 +63,9 @@ public class HH_Knight : Player
 
     protected override void Update()
     {
+        if (GameManager.instance.isAugementActive)
+            return;
+
         base.Update();
 
         if (state == KnightState.Death)
@@ -69,6 +73,12 @@ public class HH_Knight : Player
             return;
         }
 
+        if (state != KnightState.Attack && isSwordActive)
+        {
+            isSwordActive = false;
+            sword_left.SetActive(false);
+            sword_right.SetActive(false);
+        }
 
         if (state != KnightState.Skill)
             skillCoolTimer += Time.deltaTime;
@@ -166,8 +176,6 @@ public class HH_Knight : Player
                     StopCoroutine(shieldCoroutine);
                 shieldCoroutine = StartCoroutine(SetShieldAlpha());
 
-                sword_left.SetActive(false);
-                sword_right.SetActive(false);
                 shield.SetActive(true);
                 SetAlpha(1f);
 
@@ -189,9 +197,6 @@ public class HH_Knight : Player
 
                 canUseDash = false;
                 dashCoolTimer = 0f;
-
-                sword_left.SetActive(false);
-                sword_right.SetActive(false);
 
                 Roll();
 
@@ -342,6 +347,7 @@ public class HH_Knight : Player
     // 애니메이션 이벤트용 함수
     void ActivateSword()
     {
+        isSwordActive = true;
         if (dir == Dir.left)
         {
             sword_left.SetActive(true);
@@ -355,6 +361,7 @@ public class HH_Knight : Player
 
     void InctivateSword()
     {
+        isSwordActive = false;
         sword_right.SetActive(false);
         sword_left.SetActive(false);
     }

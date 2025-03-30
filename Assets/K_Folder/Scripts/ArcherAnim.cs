@@ -56,6 +56,9 @@ public class ArcherAnim : Player
 
     protected override void Update()
     {
+        if (GameManager.instance.isAugementActive)
+            return;
+
         base.Update();
 
         HandleMovement();

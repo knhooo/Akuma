@@ -137,5 +137,6 @@ public class UIManager : MonoBehaviour
     {
         GameManager.instance.isTimeStop = true;//시간 정지
         AugmentUI.SetActive(true);
+        GameManager.instance.isAugementActive = true;
     }
 }

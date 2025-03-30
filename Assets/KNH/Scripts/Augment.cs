@@ -33,5 +33,6 @@ public class Augment : MonoBehaviour
         GameManager.instance.isTimeStop = false;//시간 정지 해제
         augmentListUI.gameObject.transform.GetComponent<AugmentList>().AddAugmentIcon();
         gameObject.SetActive(false);
+        GameManager.instance.isAugementActive = false;
     }
 }

@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] CinemachineCamera cinemachineCamera; // 시네머신 카메라
 
+    public bool isAugementActive = false;
+
     //플레이어의 직업을 설정하는 메서드
     public void SetClass(int classNo)
     {
