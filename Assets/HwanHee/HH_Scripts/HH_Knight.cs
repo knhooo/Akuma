@@ -45,6 +45,7 @@ public class HH_Knight : Player
 
     Coroutine shieldCoroutine;
     Vector2 inputVec;
+    Color originColor;
 
     float defendCoolTimer = 0f;
     float defendTimer = 0f;
@@ -59,6 +60,8 @@ public class HH_Knight : Player
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         circleCol = GetComponent<CircleCollider2D>();
+
+        originColor = spriteRenderer.color;
     }
 
     protected override void Update()
@@ -295,11 +298,10 @@ public class HH_Knight : Player
 
     protected IEnumerator TakeHitFlash()
     {
-        Color origin = spriteRenderer.color;
         spriteRenderer.color = Color.red;
 
         yield return new WaitForSeconds(0.1f);
-        spriteRenderer.color = origin;
+        spriteRenderer.color = originColor;
     }
 
     IEnumerator SetShieldAlpha()
