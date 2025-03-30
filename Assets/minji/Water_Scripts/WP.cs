@@ -7,6 +7,7 @@ public class WP : Player //물마법사 스크립트
 
     Animator ani; //애니메이션 객체 선언
     private Rigidbody2D rb;
+    private Vector2 lastPosition;
 
     public GameObject wExposion; //피 이펙트
 
@@ -34,9 +35,14 @@ public class WP : Player //물마법사 스크립트
         skillCoolTimer = skillCoolTime;
         wspeed = speed;
         rb = GetComponent<Rigidbody2D>();
+        lastPosition = rb.position;
 
     }
 
+    void FixedUpdate()
+    {
+        lastPosition = rb.position;
+    }
 
     protected override void Update()
     {
@@ -791,21 +797,25 @@ public class WP : Player //물마법사 스크립트
         exp += ex; //경험치 상승
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Monster")||collision.gameObject.CompareTag("Ground"))
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Monster")||collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    //    }
+    //}
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Ground"))
         {
+            // 위치 복원해서 밀리지 않도록 설정
+            rb.position = lastPosition;
             rb.linearVelocity = Vector2.zero;
+
+            // **회전 속도도 0으로 고정** (빙글빙글 도는 문제 해결)
             rb.angularVelocity = 0f;
+            rb.rotation = 0f;  // 각도도 초기화
         }
     }
 }
