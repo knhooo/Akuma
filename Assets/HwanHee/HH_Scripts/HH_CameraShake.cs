@@ -30,6 +30,8 @@ public class HH_CameraShake : MonoBehaviour
             isCameraShake = true;
             startPos = transform.position;
             OnShakeCamera(0.75f, 0.5f);
+            GameObject canvas = GameObject.Find("Canvas");
+            canvas.GetComponent<UIManager>().FillBossHP();
         }
     }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -138,5 +139,29 @@ public class UIManager : MonoBehaviour
         GameManager.instance.isTimeStop = true;//시간 정지
         AugmentUI.SetActive(true);
         GameManager.instance.isAugementActive = true;
+    }
+
+
+    public void FillBossHP()
+    {
+        StartCoroutine("BossEffect");
+    }
+    IEnumerator BossEffect()
+    {
+        //GameManager.instance.isTimeStop = true;  // 시간 정지
+        float elapsedTime = 0f;  // 경과 시간
+        float duration = 2f;  // 1초 동안 애니메이션
+
+        // fillAmount를 0에서 1로 서서히 증가시킴
+        while (elapsedTime < duration)
+        {
+            bossHpBar.fillAmount = Mathf.Lerp(0f, 1f, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;  // 프레임 간 경과 시간 더하기
+            yield return null;  // 매 프레임마다 1번씩 갱신
+        }
+
+        // 마지막 값(1)으로 보장
+        bossHpBar.fillAmount = 1f;
+        yield return null;
     }
 }
