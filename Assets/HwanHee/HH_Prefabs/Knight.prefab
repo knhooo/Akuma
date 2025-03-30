@@ -330,7 +330,8 @@ MonoBehaviour:
   isSkillClick: 0
   isDashClick: 0
   logPrefab: {fileID: 8598306700551854173, guid: 31367cb4ca2b4c64aab5c9bedcab4202, type: 3}
-  dashForce: 50
+  GodMode: 0
+  dashForce: 2000
   skill: {fileID: 6437888885386387913}
   sword_right: {fileID: 563614996355844578}
   sword_left: {fileID: 6763246700006428421}
@@ -431,7 +432,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 15
+  m_Mass: 500
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
