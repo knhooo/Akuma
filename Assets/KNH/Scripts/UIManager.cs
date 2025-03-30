@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
             //보스 클리어
             if (boss.currentHP <= 0)
             {
-                
+                GameManager.instance.isBoss = false;
             }
         }
         if (player != null)
