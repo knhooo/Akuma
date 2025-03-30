@@ -6,6 +6,7 @@ public class WP : Player //물마법사 스크립트
 {
 
     Animator ani; //애니메이션 객체 선언
+    private Rigidbody2D rb;
 
     public GameObject wExposion; //피 이펙트
 
@@ -20,6 +21,7 @@ public class WP : Player //물마법사 스크립트
     public float surfing=1f;
     public float surfingTime = 0f;
     private bool isDashing=false;
+    private bool speedzero = false;
 
     public Transform pos1 = null;
     public Transform pos2 = null;
@@ -31,6 +33,8 @@ public class WP : Player //물마법사 스크립트
         dashCoolTimer = dashCoolTime;
         skillCoolTimer = skillCoolTime;
         wspeed = speed;
+        rb = GetComponent<Rigidbody2D>();
+
     }
 
 
@@ -787,5 +791,22 @@ public class WP : Player //물마법사 스크립트
         exp += ex; //경험치 상승
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Monster")||collision.gameObject.CompareTag("Ground"))
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Monster") || collision.gameObject.CompareTag("Ground"))
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+    }
 }
 
