@@ -295,17 +295,11 @@ public class HH_Knight : Player
 
     protected IEnumerator TakeHitFlash()
     {
-        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-
-        spriteRenderer.GetPropertyBlock(mpb);
-        mpb.SetColor("_Color", Color.red);
-        spriteRenderer.SetPropertyBlock(mpb);
+        Color origin = spriteRenderer.color;
+        spriteRenderer.color = Color.red;
 
         yield return new WaitForSeconds(0.1f);
-
-        spriteRenderer.GetPropertyBlock(mpb);
-        mpb.SetColor("_Color", Color.white);
-        spriteRenderer.SetPropertyBlock(mpb);
+        spriteRenderer.color = origin;
     }
 
     IEnumerator SetShieldAlpha()
