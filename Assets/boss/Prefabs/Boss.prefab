@@ -127,12 +127,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerAttack: {fileID: 0}
-  followRange: 10
   attackRange: 5
   attackDamage: 10
   moveSpeed: 1.5
-  maxHP: 10000
-  currentHP: 10000
+  maxHP: 5000
+  currentHP: 5000
   redDotPrefab: {fileID: 2157965776959129687, guid: ad678a7e7d47b8a4a8fd1bf9ec412ca0, type: 3}
   bossSpellPrefab: {fileID: 3119721857919333299, guid: 27e7a62b28417904b8e95b0dfe18da5b, type: 3}
   spellSpawnPoint: {fileID: 0}

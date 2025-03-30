@@ -16,7 +16,7 @@ public class BossAI : MonoBehaviour
     [Header("추적 및 근접공격")]
     public Transform player;
     public Transform playerAttack;
-    public float followRange = float.MaxValue;
+    private float followRange = float.MaxValue;
     public float attackRange = 5f;
     public float attackDamage = 10f;
     private float attackCooldown = 2f;
