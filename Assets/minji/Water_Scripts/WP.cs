@@ -22,7 +22,6 @@ public class WP : Player //물마법사 스크립트
     public float surfing=1f;
     public float surfingTime = 0f;
     private bool isDashing=false;
-    private bool speedzero = false;
 
     public Transform pos1 = null;
     public Transform pos2 = null;
